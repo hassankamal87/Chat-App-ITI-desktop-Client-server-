@@ -1,0 +1,114 @@
+CREATE DATABASE IF NOT EXISTS db_chat_app;
+USE db_chat_app;
+
+CREATE TABLE IF NOT EXISTS `db_chat_app`.`user` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `phone_number` VARCHAR(11) NOT NULL,
+  `password` VARCHAR(20) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `user_name` VARCHAR(45) NOT NULL,
+  `gender` ENUM('male', 'female') NOT NULL,
+  `date_of_birth` DATETIME NULL,
+  `country` VARCHAR(45) NOT NULL,
+  `bio` VARCHAR(400) NULL,
+  `mode` ENUM('avalible', 'away', 'busy', 'offline') NOT NULL DEFAULT 'avalible',
+  `status` ENUM('online', 'offline') NOT NULL DEFAULT 'online',
+  UNIQUE INDEX `ID_UNIQUE` (`user_id` ASC) VISIBLE,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `phone_number_UNIQUE` (`phone_number` ASC) VISIBLE);
+  
+  CREATE TABLE `db_chat_app`.`notification` (
+  `notification_id` INT NOT NULL AUTO_INCREMENT,
+  `to_user_id` INT NOT NULL,
+  `from_user_name` VARCHAR(50) NOT NULL,
+  `type` ENUM('msg', 'inv', 'broad') NOT NULL,
+  `body` TEXT NULL,
+  PRIMARY KEY (`notification_id`),
+  UNIQUE INDEX `notification_id_UNIQUE` (`notification_id` ASC) VISIBLE,
+  INDEX `fk_user_notification_idx` (`to_user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_notification`
+    FOREIGN KEY (`to_user_id`)
+    REFERENCES `db_chat_app`.`user` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+    
+    CREATE TABLE `db_chat_app`.`room_chat` (
+  `room_chat_id` INT NOT NULL AUTO_INCREMENT,
+  `created_date` DATETIME NOT NULL,
+  `time_stamp` ENUM('true', 'false') NOT NULL,
+  `group_name` VARCHAR(45) NULL,
+  `photo` BLOB NULL,
+  `admin_id` INT NOT NULL,
+  `description` VARCHAR(100) NULL,
+  PRIMARY KEY (`room_chat_id`),
+  UNIQUE INDEX `id_UNIQUE` (`room_chat_id` ASC) VISIBLE,
+  INDEX `fk_room_chat_user_idx` (`admin_id` ASC) VISIBLE,
+  CONSTRAINT `fk_room_chat_user`
+    FOREIGN KEY (`admin_id`)
+    REFERENCES `db_chat_app`.`user` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
+    CREATE TABLE `db_chat_app`.`contact` (
+  `contact_id` int NOT NULL,
+  `friendship_status` enum('blocked','friend') NOT NULL,
+  `contact_date` datetime NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`contact_id`,`user_id`),
+  UNIQUE KEY `contactcol_UNIQUE` (`user_id`),
+  CONSTRAINT `fk_contact_id` FOREIGN KEY (`contact_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE);
+  
+  CREATE TABLE db_chat_app.message (
+    message_id INT PRIMARY KEY,
+    to_chat_id INT,
+    sent_date DATETIME,
+    from_user INT,
+    body TEXT,
+    FOREIGN KEY (from_user) REFERENCES user(user_id),
+    FOREIGN KEY (to_chat_id) REFERENCES room_chat(room_chat_id));
+    
+    CREATE TABLE db_chat_app.room_chat_member (
+  room_chat_id INT NOT NULL,
+  member_id INT NOT NULL,
+  PRIMARY KEY (room_chat_id, member_id),
+  CONSTRAINT fk_room_chat_id
+    FOREIGN KEY (room_chat_id)
+    REFERENCES db_chat_app.room_chat (room_chat_id)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_member_user_id
+    FOREIGN KEY (member_id)
+    REFERENCES db_chat_app.user (user_id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+    
+    CREATE TABLE db_chat_app.pending_request (
+    to_user_id INT,
+    from_user_id INT,
+    sent_date DATETIME,
+    body TEXT,
+    PRIMARY KEY (to_user_id, from_user_id),
+    CONSTRAINT FOREIGN KEY (to_user_id) REFERENCES User(user_id)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+    CONSTRAINT FOREIGN KEY (from_user_id) REFERENCES User(user_id)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+    
+    CREATE TABLE `db_chat_app`.`room_chat_user` (
+  `room_chat_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`room_chat_id`, `user_id`),
+  INDEX `fk_user_id_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT
+    FOREIGN KEY (`room_chat_id`)
+    REFERENCES `db_chat_app`.`room_chat` (`room_chat_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT
+    FOREIGN KEY (`user_id`)
+    REFERENCES `db_chat_app`.`user` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
