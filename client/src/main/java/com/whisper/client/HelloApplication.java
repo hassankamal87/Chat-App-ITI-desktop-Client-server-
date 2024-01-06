@@ -1,4 +1,4 @@
-package com.wisper.client;
+package com.whisper.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

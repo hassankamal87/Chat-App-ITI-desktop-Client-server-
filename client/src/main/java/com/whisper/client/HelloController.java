@@ -1,4 +1,4 @@
-package com.wisper.client;
+package com.whisper.client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

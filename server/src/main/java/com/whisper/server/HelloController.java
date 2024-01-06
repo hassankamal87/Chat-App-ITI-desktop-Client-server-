@@ -1,4 +1,4 @@
-package com.wisper.server;
+package com.whisper.server;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
