@@ -10,6 +10,10 @@
     <packaging>pom</packaging>
     <name>ChatApplication</name>
 
+    <modules>
+        <module>client</module>
+        <module>server</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.9.2</junit.version>

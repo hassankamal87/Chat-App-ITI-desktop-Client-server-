@@ -39,3 +39,4 @@ build/
 
 ### edited ###
 .idea/vcs.xml
+.misc/vcs.xml
