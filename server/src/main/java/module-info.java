@@ -1,8 +1,8 @@
-module com.wisper.server {
+module com.whisper.server {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.wisper.server to javafx.fxml;
-    exports com.wisper.server;
+    opens com.whisper.server to javafx.fxml;
+    exports com.whisper.server;
 }
