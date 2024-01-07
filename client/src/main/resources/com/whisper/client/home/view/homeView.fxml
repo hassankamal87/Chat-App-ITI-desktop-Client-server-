@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -15,162 +14,92 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="pb" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.home.controller.homeController">
-   <top>
-      <AnchorPane fx:id="navigationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="800.0" styleClass="linear-grad" stylesheets="@../../lineargrad.css" BorderPane.alignment="CENTER">
+<AnchorPane fx:id="homePane" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.home.controller.HomeController">
+   <children>
+      <AnchorPane fx:id="chatsPane" layoutY="31.0" prefHeight="545.0" prefWidth="260.0" styleClass="linear-grad-radius" stylesheets="@../../lineargrad.css" AnchorPane.topAnchor="0.0">
          <children>
-            <Line endX="800.0" endY="55.0" fill="#fefeff" startY="55.0" stroke="#fffbfb" />
-            <Button fx:id="homeBtn" layoutX="752.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onHomeClicked" onMouseEntered="#onMouseEnteredHomeBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
+            <TextField fx:id="searchTF" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="210.0" promptText="Search" styleClass="text-field" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font></TextField>
+            <Button fx:id="searchBtn" layoutX="227.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseEntered="#onMouseEnteredSearchBtn" prefHeight="25.0" prefWidth="25.0" styleClass="ripple">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/home.png" />
+                        <Image url="@../../images/search.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="contactsBtn" layoutX="680.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onContactsClicked" onMouseEntered="#onMouseEnteredContactBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/contacts.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="profileBtn" layoutX="608.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onProfileClicked" onMouseEntered="#onMouseEnteredProfileBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/profile.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="signOutBtn" layoutX="30.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSignOutClicked" onMouseEntered="#onMouseEnteredSignOutBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
-               <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/logout.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Text fill="#fcf9f9" layoutX="372.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Whisper">
-               <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="27.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="331.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/wlogo.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="749.0" layoutY="35.0" text="Home" textFill="#f8f6f6">
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="670.0" layoutY="35.0" text="Contacts" textFill="#f8f6f6">
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="604.0" layoutY="35.0" text="Profile" textFill="#f8f6f6">
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="23.0" layoutY="35.0" text="Logout" textFill="#f8f6f6">
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font>
-            </Label>
+            <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutY="52.0" prefHeight="490.0" prefWidth="250.0" styleClass="scroll-pane" stylesheets="@../../lineargrad.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="52.0">
+               <content>
+                  <VBox fx:id="chatList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="230.0" />
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
-   </top>
-   <center>
-      <AnchorPane fx:id="homePane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="roomChatPane" layoutX="261.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="539.0" style="-fx-background-color: #f9f9f9;">
          <children>
-            <AnchorPane fx:id="chatsPane" layoutY="31.0" prefHeight="545.0" prefWidth="260.0" styleClass="linear-grad-radius" stylesheets="@../../lineargrad.css" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="49.0" prefWidth="539.0">
                <children>
-                  <TextField fx:id="searchTF" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="200.0" promptText="Search" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="10.0" />
-                  <Button fx:id="searchBtn" layoutX="209.0" layoutY="11.0" mnemonicParsing="false" onMouseEntered="#onMouseEnteredSearchBtn" style="-fx-background-color: transparent;">
+                  <Line endX="539.0" layoutY="48.0" stroke="#00000076" />
+                  <ImageView fx:id="personalImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                     <image>
+                        <Image url="@../../images/person.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="nameText" layoutX="55.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mo">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="modeText" fill="#757272" layoutX="55.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="callBtn" layoutX="484.0" layoutY="7.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" styleClass="ripple" stylesheets="@../../lineargrad.css" AnchorPane.rightAnchor="14.0">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../images/search.png" />
+                              <Image url="@../../images/call.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <ScrollPane fx:id="scrollPane" layoutY="52.0" prefHeight="490.0" prefWidth="240.0" hbarPolicy="NEVER" styleClass="scroll-pane" stylesheets="@../../lineargrad.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="52.0">
-                     <content>
-                        <VBox fx:id="chatList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="230.0" />
-                     </content></ScrollPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="roomChatPane" layoutX="261.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="539.0" style="-fx-background-color: #f9f9f9;">
-               <children>
-                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="49.0" prefWidth="539.0">
+            <BorderPane layoutX="101.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+               <top>
+                  <AnchorPane fx:id="textRichContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="539.0" BorderPane.alignment="TOP_LEFT" />
+               </top>
+               <bottom>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="539.0" BorderPane.alignment="TOP_LEFT">
                      <children>
-                        <Line endX="539.0" layoutY="48.0" stroke="#00000076" />
-                        <ImageView fx:id="personalImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
-                           <image>
-                              <Image url="@../../images/person.png" />
-                           </image>
-                        </ImageView>
-                        <Text fx:id="nameText" layoutX="55.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ali Mohamed">
+                        <TextField fx:id="messageTextArea" layoutX="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="474.0" promptText="Message" styleClass="text-field" stylesheets="@../../lineargrad.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="0.0">
                            <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="modeText" fill="#757272" layoutX="55.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="callBtn" layoutX="484.0" layoutY="7.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="14.0">
+                              <Font name="Arial" size="14.0" />
+                           </font></TextField>
+                        <Button fx:id="sendBtn" layoutX="491.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseEntered="#onMouseEnteredSendBtn" prefHeight="30.0" prefWidth="40.0" styleClass="ripple" stylesheets="@../../lineargrad.css">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../images/call.png" />
+                                    <Image url="@../../images/send.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
                      </children>
+                     <BorderPane.margin>
+                        <Insets bottom="7.0" left="3.0" />
+                     </BorderPane.margin>
                   </AnchorPane>
-                  <BorderPane layoutX="101.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
-                     <top>
-                        <AnchorPane fx:id="textRichContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="539.0" BorderPane.alignment="TOP_LEFT" />
-                     </top>
-                     <bottom>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="539.0" BorderPane.alignment="TOP_LEFT">
-                           <children>
-                              <TextField fx:id="messageTextArea" layoutX="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="467.0" promptText="Message" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="0.0" />
-                              <Button fx:id="sendBtn" layoutX="491.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseEntered="#onMouseEnteredSendBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
-                                 <graphic>
-                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../images/send.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                           <BorderPane.margin>
-                              <Insets bottom="7.0" left="3.0" />
-                           </BorderPane.margin>
-                        </AnchorPane>
-                     </bottom>
-                     <center>
-                        <ListView fx:id="messagesListView" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="539.0" BorderPane.alignment="CENTER_LEFT" />
-                     </center>
-                  </BorderPane>
-               </children>
-            </AnchorPane>
+               </bottom>
+               <center>
+                  <ListView fx:id="messagesListView" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="389.0" prefWidth="539.0" BorderPane.alignment="CENTER_LEFT" />
+               </center>
+            </BorderPane>
          </children>
       </AnchorPane>
-   </center>
-</BorderPane>
+   </children>
+</AnchorPane>

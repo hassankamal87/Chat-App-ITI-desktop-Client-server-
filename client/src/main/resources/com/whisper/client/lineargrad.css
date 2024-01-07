@@ -38,3 +38,28 @@
     -fx-background-color: #808080;
     -fx-background-radius: 8.0;
 }
+
+.text-field {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.ripple {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-transition: background-color 0.5s ease-in-out;
+}
+
+.ripple:hover {
+    -fx-background-color: #fe3554;
+}
+
+.ripple:pressed {
+    -fx-background-color: #fe7d6b;
+}
+
+.listBK {
+  -fx-background-image:url('file:/C:/Users/Documents/page_background.gif');
+}

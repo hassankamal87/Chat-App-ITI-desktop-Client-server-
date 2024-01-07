@@ -12,7 +12,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -21,27 +20,17 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-
-public class homeController implements Initializable {
-
-    @FXML
-    private BorderPane pb;
-    @FXML
-    private AnchorPane navigationPane;
-    @FXML
-    private Button homeBtn;
-    @FXML
-    private Button contactsBtn;
-    @FXML
-    private Button profileBtn;
+public class HomeController implements Initializable {
     @FXML
     private AnchorPane homePane;
     @FXML
     private AnchorPane chatsPane;
     @FXML
+    private TextField searchTF;
+    @FXML
     private Button searchBtn;
     @FXML
-    public ScrollPane scrollPane;
+    private ScrollPane scrollPane;
     @FXML
     private VBox chatList;
     @FXML
@@ -62,10 +51,6 @@ public class homeController implements Initializable {
     private Button sendBtn;
     @FXML
     private ListView messagesListView;
-    @FXML
-    private Button signOutBtn;
-    @FXML
-    private TextField searchTF;
 
     @FXML
     public void initialize() {
@@ -96,45 +81,10 @@ public class homeController implements Initializable {
     }
 
     @FXML
-    public void onHomeClicked(Event event) {
-    }
-
-    @FXML
-    public void onMouseEnteredHomeBtn(Event event) {
-
-    }
-
-    @FXML
-    public void onContactsClicked(Event event) {
-    }
-
-    @FXML
-    public void onMouseEnteredContactBtn(Event event) {
-    }
-
-    @FXML
-    public void onProfileClicked(Event event) {
-    }
-
-    @FXML
-    public void onMouseEnteredProfileBtn(Event event) {
-    }
-
-    @FXML
-    public void onSignOutClicked(Event event) {
-    }
-
-    @FXML
-    public void onMouseEnteredSignOutBtn(Event event) {
-    }
-
-    @FXML
     public void onMouseEnteredSearchBtn(Event event) {
     }
 
     @FXML
     public void onMouseEnteredSendBtn(Event event) {
     }
-
-
 }
