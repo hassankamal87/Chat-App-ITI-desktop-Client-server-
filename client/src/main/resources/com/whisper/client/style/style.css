@@ -1,0 +1,76 @@
+.add-button{
+   -fx-background-color: linear-gradient(to bottom left,#402e58 ,#634789 );
+    -fx-background-radius:25;
+     -fx-text-fill: #ffffff;
+}
+.add-button:hover{
+    -fx-text-fill: #402e58;
+  }
+  .add-button:pressed{
+    -fx-text-fill: #350772;
+  }
+  .add-button:active{
+    -fx-text-fill: #402e58;
+  }
+.white-background{
+    -fx-background-color : #fff;
+}
+.transparent{
+    -fx-background-color :rgba(0,0,0,0);
+}
+.light-gray-background{
+    -fx-background-color:#F3F3F3;
+}
+
+
+
+
+  .button1{
+    -fx-background-color: #8061c5;
+    -fx-background-radius: 20;
+    -fx-text-fill: #ffffff;
+  }
+  .button1:hover{
+    -fx-text-fill: #402e58;
+  }
+  .button1:pressed{
+    -fx-text-fill: #350772;
+  }
+  .button1:active{
+    -fx-text-fill: #402e58;
+  }
+
+  .button2{
+    -fx-background-color: #8061c5;
+    -fx-background-radius: 25;
+    -fx-text-fill: #ffffff;
+  }
+  .button2:hover{
+    -fx-text-fill: #402e58;
+  }
+  .button2:pressed{
+    -fx-text-fill: #350772;
+  }
+  .button2:active{
+    -fx-text-fill: #402e58;
+  }
+
+  .linear-grad{
+    -fx-background-color: linear-gradient(to bottom left,#402e58 ,#634789 );
+  }
+
+  .logo-text {
+    -fx-font-size: 48px; /* Increase the font size */
+    -fx-font-weight: bold; /* Make the font weight heavier */
+    -fx-fill: #5B4280; /* Change the text color to tomato red */
+    -fx-text-transform: uppercase; /* Keep the text in uppercase */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 2, 2); /* Add a subtle shadow to the text */
+    -fx-font-family: 'Berlin Sans FB Demi'; /* Change the font to 'Courier New' */
+    /*-fx-font-family: 'Courier New';*/
+  }
+
+.normal-text {
+  -fx-font-weight: normal; /* Set the font weight */
+  -fx-font-family: 'Arial'; /* Set the font to 'Arial' */
+}
+
