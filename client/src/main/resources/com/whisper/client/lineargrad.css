@@ -1,0 +1,65 @@
+.linear-grad{
+    -fx-background-color: linear-gradient(to bottom left,#402e58 ,#634789 );
+}
+
+.linear-grad-radius {
+    -fx-background-color: linear-gradient(to bottom left,#402e58 ,#634789 );
+    -fx-background-radius: 0 15 15 0; /* top-left, top-right, bottom-right, bottom-left */
+}
+
+.bktransparent {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: #402e58;
+    -fx-pref-width: 15px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: #808080;
+    -fx-background-radius: 8.0;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: #402e58;
+    -fx-pref-height: 15px;
+}
+
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: #808080;
+    -fx-background-radius: 8.0;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.ripple {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-transition: background-color 0.5s ease-in-out;
+}
+
+.ripple:hover {
+    -fx-background-color: #fe3554;
+}
+
+.ripple:pressed {
+    -fx-background-color: #fe7d6b;
+}
+
+.listBK {
+  -fx-background-image:url('file:/C:/Users/Documents/page_background.gif');
+}

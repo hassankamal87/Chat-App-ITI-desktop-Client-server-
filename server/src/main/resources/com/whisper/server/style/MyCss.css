@@ -1,0 +1,140 @@
+  .button1{
+    -fx-background-color: #8061c5;
+    -fx-background-radius: 20;
+    -fx-text-fill: #ffffff;
+  }
+  .button1:hover{
+    -fx-text-fill: #402e58;
+  }
+  .button1:pressed{
+    -fx-text-fill: #350772;
+  }
+  .button1:active{
+    -fx-text-fill: #402e58;
+  }
+
+  .button2{
+    -fx-background-color: #8061c5;
+    -fx-background-radius: 25;
+    -fx-text-fill: #ffffff;
+  }
+  .button2:hover{
+    -fx-text-fill: #402e58;
+  }
+  .button2:pressed{
+    -fx-text-fill: #350772;
+  }
+  .button2:active{
+    -fx-text-fill: #402e58;
+  }
+
+    .button3{
+        -fx-background-color: trsparent;
+        -fx-background-radius: 30;
+        -fx-text-fill: #000000;
+    }
+    .button3:hover{
+        -fx-text-fill: #402e58;
+        -fx-underline: true;
+    }
+  .linear-grad{
+    -fx-background-color: linear-gradient(to bottom left,#225C57 ,#224E5C );
+  }
+  .linear-grad2{
+      -fx-background-color: linear-gradient(to bottom left,#2F3859 ,#3F405C );
+    }
+  .linear-grad3{
+      -fx-background-color: linear-gradient(to bottom left,#224E5C ,#224E5C );
+  }
+
+  .logo-text {
+    -fx-font-size: 48px; /* Increase the font size */
+    -fx-font-weight: bold; /* Make the font weight heavier */
+    /*-fx-fill: #5B4280; /* Change the text color to tomato red */
+    -fx-text-transform: uppercase; /* Keep the text in uppercase */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 2, 2); /* Add a subtle shadow to the text */
+    -fx-font-family: 'Berlin Sans FB Demi'; /* Change the font to 'Courier New' */
+    /*-fx-font-family: 'Courier New';*/
+  }
+
+.normal-text {
+  -fx-font-weight: normal; /* Set the font weight */
+  -fx-font-family: 'Arial'; /* Set the font to 'Arial' */
+}
+
+
+.check-box {
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 30px;
+
+}
+
+.check-box .box {
+    -fx-background-color: red;
+    -fx-background-radius: 30px;
+}
+
+.check-box .mark {
+    -fx-background-color: #000000;
+    -fx-padding: 12px; /* adjust this value to fit the new size */
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #4caf50;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #ffffff;
+}
+.toggle-button {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 30px;
+    -fx-padding: 5px;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #0D47A1;
+}
+
+.toggle-button .text {
+    -fx-fill: #000000;
+    -fx-stroke: none;
+}
+
+.toggle-button:selected .text {
+    -fx-fill: #ffffff;
+    -fx-stroke: none;
+}
+
+.toggle-button .thumb {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 30px;
+    -fx-shape: "M 0 0 h 60 v 60 h -60 z";
+}
+
+.toggle-button:selected .thumb {
+    -fx-background-color: #0D47A1;
+    -fx-translate-x: 60px;
+}
+
+
+.html-editor {
+    -fx-font-family: Arial;
+    -fx-font-size: 14px;
+    -fx-control-inner-background: white;
+}
+
+.html-editor .top-toolbar {
+    -fx-background-color: #222A5C;
+    -fx-text-fill: white;
+}
+
+.html-editor .bottom-toolbar {
+    -fx-background-color: #222A5C;
+    -fx-text-fill: white;
+}
