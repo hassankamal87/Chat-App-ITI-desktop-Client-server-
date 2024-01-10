@@ -13,7 +13,7 @@
 
 <AnchorPane fx:id="" prefHeight="600.0" prefWidth="500.0" stylesheets="@../../style/MyCss.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.whisper.client.signup.controller.continuingSignUpController">
+            fx:controller="com.whisper.client.signup.controller.ContinuingSignUpController">
    <children>
       <Text fill="#402e58" layoutX="163.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="Whisper">
          <font>

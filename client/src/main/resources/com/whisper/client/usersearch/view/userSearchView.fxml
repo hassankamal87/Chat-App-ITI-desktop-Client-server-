@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="545.0" prefWidth="800.0" styleClass="linear-grad" stylesheets="@../../style/MyCss.css"
             xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.whisper.client.usersearch.controller.userSearchController">
+            fx:controller="com.whisper.client.usersearch.controller.UserSearchController">
     <children>
         <Text fill="#fcfcfc" layoutX="58.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
             <font>
@@ -28,7 +28,7 @@
         <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="714.0" layoutY="35.0"
                    onMouseClicked="#onSearchMouseClicked" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../style/search-icon.png"/>
+                <Image url="@../../images/search-icon.png"/>
             </image>
         </ImageView>
     </children>

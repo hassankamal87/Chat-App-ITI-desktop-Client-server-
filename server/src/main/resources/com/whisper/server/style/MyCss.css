@@ -38,7 +38,13 @@
         -fx-underline: true;
     }
   .linear-grad{
-    -fx-background-color: linear-gradient(to bottom left,#402e58 ,#634789 );
+    -fx-background-color: linear-gradient(to bottom left,#225C57 ,#224E5C );
+  }
+  .linear-grad2{
+      -fx-background-color: linear-gradient(to bottom left,#2F3859 ,#3F405C );
+    }
+  .linear-grad3{
+      -fx-background-color: linear-gradient(to bottom left,#224E5C ,#224E5C );
   }
 
   .logo-text {
@@ -114,4 +120,21 @@
 .toggle-button:selected .thumb {
     -fx-background-color: #0D47A1;
     -fx-translate-x: 60px;
+}
+
+
+.html-editor {
+    -fx-font-family: Arial;
+    -fx-font-size: 14px;
+    -fx-control-inner-background: white;
+}
+
+.html-editor .top-toolbar {
+    -fx-background-color: #222A5C;
+    -fx-text-fill: white;
+}
+
+.html-editor .bottom-toolbar {
+    -fx-background-color: #222A5C;
+    -fx-text-fill: white;
 }

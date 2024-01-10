@@ -10,14 +10,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.whisper.server.homeserver.controller.homeServerController">
+<BorderPane fx:id="mainNavigatorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.server.homeserver.controller.HomeServerController">
     <top>
-        <HBox prefHeight="50.0" prefWidth="800.0" styleClass="linear-grad" stylesheets="@../../style/MyCss.css" BorderPane.alignment="CENTER">
+        <HBox prefHeight="50.0" prefWidth="800.0" styleClass="linear-grad3" stylesheets="@../../style/MyCss.css" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="button1" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #8061c5; -fx-background-radius: 20;">
+                <Button fx:id="button1" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #225C30; -fx-background-radius: 20;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -29,7 +26,7 @@
                         <Insets left="20.0" right="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="button2" mnemonicParsing="false" prefHeight="82.0" prefWidth="66.0" style="-fx-background-color: #8061c5; -fx-background-radius: 20;">
+                <Button fx:id="button2" mnemonicParsing="false" prefHeight="82.0" prefWidth="66.0" style="-fx-background-color: #225C30; -fx-background-radius: 20;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -41,7 +38,7 @@
                         <Insets left="10.0" right="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="button3" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #8061c5; -fx-background-radius: 20;">
+                <Button fx:id="button3" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #225C30; -fx-background-radius: 20;">
                     <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <image>

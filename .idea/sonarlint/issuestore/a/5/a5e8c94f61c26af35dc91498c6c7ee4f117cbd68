@@ -1,7 +1,0 @@
-
-i	java:S101
-"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(²½§Á8É’™ŸÎ1
-£
-java:S1186'"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µŒÁ¸úÿÿÿÿ8°×™ŸÎ1
-O
-java:S1172"2Remove this unused method parameter "actionEvent".(º¥©û8µ×™ŸÎ1
