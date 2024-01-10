@@ -16,6 +16,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.9.2</junit.version>
+        <myMainClass>com.whisper.server/com.whisper.server.HelloApplication</myMainClass>
     </properties>
 
     <dependencies>
@@ -26,25 +27,5 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.whisper.server/com.whisper.server.HelloApplication</mainClass>
-                </configuration>
-            </plugin>
 
-        </plugins>
-    </build>
 </project>
