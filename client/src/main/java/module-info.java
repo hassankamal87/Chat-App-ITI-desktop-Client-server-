@@ -1,6 +1,7 @@
 module com.whisper.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
 
 
 
