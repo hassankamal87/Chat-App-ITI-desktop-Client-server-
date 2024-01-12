@@ -1,5 +1,6 @@
 package com.whisper.server.services.db;
 
+import com.whisper.server.services.db.dao.DaoInterface;
 import com.whisper.server.services.db.models.*;
 import com.whisper.server.services.db.models.enums.Mode;
 import com.whisper.server.services.db.models.enums.Status;
@@ -73,12 +74,12 @@ public class ConcreteLocalSource implements LocalSource{
 
     @Override
     public List<Message> getMessagesFromUser(int userId) throws SQLException {
-        return dao.getMessagesForUser(userId);
+        return dao.getMessagesFromUser(userId);
     }
 
     @Override
     public List<Message> getMessagesForRoomChat(int roomChatId) throws SQLException {
-        return dao.getMessagesForUser(roomChatId);
+        return dao.getMessagesForRoomChat(roomChatId);
     }
 
     @Override
