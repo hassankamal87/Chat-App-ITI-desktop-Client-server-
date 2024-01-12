@@ -4,6 +4,6 @@ module com.whisper.client {
     requires javafx.web;
     requires org.jsoup;
 
-    opens com.whisper.client to javafx.fxml;
+    opens com.whisper.client.signin.controller to javafx.fxml;
     exports com.whisper.client;
 }
