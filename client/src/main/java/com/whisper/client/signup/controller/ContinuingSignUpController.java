@@ -26,7 +26,7 @@ public class ContinuingSignUpController
     }
     @FXML
     public void onProfilePicMouseClicked(Event event) {
-        System.out.println("a7a");
+        System.out.println("");
     }
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
