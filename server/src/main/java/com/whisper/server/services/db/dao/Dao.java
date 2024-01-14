@@ -1,10 +1,10 @@
 package com.whisper.server.services.db.dao;
 
+import com.whisper.server.model.*;
 import com.whisper.server.services.db.MyDatabase;
-import com.whisper.server.services.db.models.*;
-import com.whisper.server.services.db.models.enums.Gender;
-import com.whisper.server.services.db.models.enums.Mode;
-import com.whisper.server.services.db.models.enums.Status;
+import com.whisper.server.model.enums.Gender;
+import com.whisper.server.model.enums.Mode;
+import com.whisper.server.model.enums.Status;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 // *note: here we should write out functions to get result from database
@@ -20,14 +21,14 @@ import java.util.List;
 public class Dao implements DaoInterface {
 
     private static DaoInterface instance = null;
+    private MyDatabase myDatabase = MyDatabase.getInstance();
 
-    private Dao(){
-
-    }
+    private Dao(){}
 
     public synchronized static DaoInterface getInstance(){
-        if (instance == null)
+        if (instance == null){
             instance = new Dao();
+        }
         return instance;
     }
 
@@ -36,7 +37,8 @@ public class Dao implements DaoInterface {
         List<User> users = new ArrayList<>();
 
         String query = "SELECT * FROM User";
-        PreparedStatement ps = MyDatabase.getInstance().getConnection().prepareStatement(query);
+        myDatabase.startConnection();
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()){
@@ -45,12 +47,20 @@ public class Dao implements DaoInterface {
             String password = rs.getString(3);
             String email = rs.getString(4);
             String userName = rs.getString(5);
-            Gender gender = /*rs.getObject(6, Gender.class);*/Gender.male;
+            String genderStr = rs.getString(6);
+            Gender gender = Objects.equals(genderStr, "female") ? Gender.female : Gender.male;
             Date date = rs.getDate(7);
             String country = rs.getString(8);
             String bio = rs.getString(9);
-            Mode mode = /*rs.getObject(10, Mode.class);*/Mode.away;
-            Status status = /*rs.getObject(11, Status.class);*/Status.online;
+            String modeStr = rs.getString(10);
+            Mode mode = switch (modeStr) {
+                case "away" -> Mode.away;
+                case "busy" -> Mode.busy;
+                case "offline" -> Mode.offline;
+                default -> Mode.avalible;
+            };
+            String statusStr = rs.getString(11);
+            Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
 
             User user = new User(userId,phoneNumber,password,email,userName,gender,date,country,bio,mode,status);
 
@@ -58,6 +68,7 @@ public class Dao implements DaoInterface {
         }
         rs.close();
         ps.close();
+        myDatabase.closeConnection();
 
         return users;
     }

@@ -81,6 +81,7 @@
                 </executions>
                 <configuration>
                     <mainClass>${myMainClass}</mainClass>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
             </plugin>
 

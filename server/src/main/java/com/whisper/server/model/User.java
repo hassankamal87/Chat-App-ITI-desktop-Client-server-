@@ -1,8 +1,8 @@
-package com.whisper.server.services.db.models;
+package com.whisper.server.model;
 
-import com.whisper.server.services.db.models.enums.Gender;
-import com.whisper.server.services.db.models.enums.Mode;
-import com.whisper.server.services.db.models.enums.Status;
+import com.whisper.server.model.enums.Gender;
+import com.whisper.server.model.enums.Status;
+import com.whisper.server.model.enums.Mode;
 
 import java.sql.Date;
 
