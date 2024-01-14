@@ -1,4 +1,4 @@
-package com.whisper.server.services.db.models;
+package com.whisper.server.model;
 
 public class RoomMember {
     private int roomChatId;

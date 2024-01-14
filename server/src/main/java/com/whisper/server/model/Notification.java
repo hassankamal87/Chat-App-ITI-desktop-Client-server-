@@ -1,6 +1,6 @@
-package com.whisper.server.services.db.models;
+package com.whisper.server.model;
 
-import com.whisper.server.services.db.models.enums.NotifactionType;
+import com.whisper.server.model.enums.NotifactionType;
 
 public class Notification {
     private int notificationId;

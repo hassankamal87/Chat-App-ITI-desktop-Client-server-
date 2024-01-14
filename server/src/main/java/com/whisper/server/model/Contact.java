@@ -1,6 +1,6 @@
-package com.whisper.server.services.db.models;
+package com.whisper.server.model;
 
-import com.whisper.server.services.db.models.enums.FriendshipStatus;
+import com.whisper.server.model.enums.FriendshipStatus;
 
 public class Contact {
     private FriendshipStatus friendshipStatus;

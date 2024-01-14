@@ -1,8 +1,8 @@
 package com.whisper.server.services.db.dao;
 
-import com.whisper.server.services.db.models.*;
-import com.whisper.server.services.db.models.enums.Mode;
-import com.whisper.server.services.db.models.enums.Status;
+import com.whisper.server.model.*;
+import com.whisper.server.model.enums.Mode;
+import com.whisper.server.model.enums.Status;
 
 import java.sql.SQLException;
 import java.util.List;
