@@ -1,24 +1,24 @@
-package com.whisper.server.services.db;
+package com.whisper.server.model.repo;
 
+
+import com.whisper.server.model.*;
 import com.whisper.server.services.db.dao.DaoInterface;
-import com.whisper.server.services.db.models.*;
-import com.whisper.server.services.db.models.enums.Mode;
-import com.whisper.server.services.db.models.enums.Status;
+import com.whisper.server.model.enums.Mode;
+import com.whisper.server.model.enums.Status;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ConcreteLocalSource implements LocalSource{
-
-    private static LocalSource instance;
+public class Repository implements RepositoryInterface{
+    private static RepositoryInterface instance = null;
     private DaoInterface dao = null;
 
-    private ConcreteLocalSource(DaoInterface dao){
+    private Repository(DaoInterface dao){
         this.dao = dao;
     }
-    public static synchronized LocalSource getInstance(DaoInterface dao){
+    public static synchronized RepositoryInterface getInstance(DaoInterface dao){
         if (instance == null)
-            instance = new ConcreteLocalSource(dao);
+            instance = new Repository(dao);
         return instance;
     }
 

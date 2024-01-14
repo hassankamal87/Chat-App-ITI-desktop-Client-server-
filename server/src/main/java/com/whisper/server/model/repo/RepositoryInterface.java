@@ -1,13 +1,13 @@
-package com.whisper.server.services.db;
+package com.whisper.server.model.repo;
 
-import com.whisper.server.services.db.models.*;
-import com.whisper.server.services.db.models.enums.Mode;
-import com.whisper.server.services.db.models.enums.Status;
+import com.whisper.server.model.*;
+import com.whisper.server.model.enums.Mode;
+import com.whisper.server.model.enums.Status;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface LocalSource {
+public interface RepositoryInterface {
     List<User> getUsers() throws SQLException;
 
     User getUserById(int userId) throws SQLException;

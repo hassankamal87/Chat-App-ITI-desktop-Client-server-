@@ -1,4 +1,4 @@
-package com.whisper.server.services.db.models;
+package com.whisper.server.model;
 
 import javafx.scene.image.Image;
 

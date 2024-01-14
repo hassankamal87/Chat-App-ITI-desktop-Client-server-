@@ -52,6 +52,7 @@ public class MainController {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("home/view/homeView.fxml"));
 
+
                 root = fxmlLoader.load();
             } catch (IOException e) {
                 e.printStackTrace();
