@@ -30,7 +30,7 @@ public class contactController implements Initializable
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         List<contact> contacts = new ArrayList<>(contacts());
         for(int i=0;i<contacts.size();i++){
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("contact/view/contact_item.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("contact/view/contactItemView.fxml"));
 
             try{
                 HBox hBox=fxmlLoader.load();

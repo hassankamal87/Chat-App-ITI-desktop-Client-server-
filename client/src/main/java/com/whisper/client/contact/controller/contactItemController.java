@@ -32,9 +32,9 @@ public class contactItemController implements Initializable {
     public void setData(contact contact ){
         try{
 
-            modeImg.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/mode_photo/"+contact.getMode()+".jpg")));
+            modeImg.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/modePhoto/" +contact.getMode()+".jpg")));
 
-            photo.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/personal_photo/"+contact.getImgSrc())));
+            photo.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/personalPhoto/" +contact.getImgSrc())));
 
 
         }catch (Exception e){
