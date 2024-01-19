@@ -1,10 +1,8 @@
 package com.whisper.server.services.db.dao;
 
 import com.whisper.server.model.*;
+import com.whisper.server.model.enums.*;
 import com.whisper.server.services.db.MyDatabase;
-import com.whisper.server.model.enums.Gender;
-import com.whisper.server.model.enums.Mode;
-import com.whisper.server.model.enums.Status;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -65,6 +63,7 @@ public class Dao implements DaoInterface {
             User user = new User(userId,phoneNumber,password,email,userName,gender,date,country,bio,mode,status);
 
             users.add(user);
+            System.out.println(user);
         }
         rs.close();
         ps.close();
@@ -94,13 +93,39 @@ public class Dao implements DaoInterface {
     }
 
     @Override
-    public Status getUserStatus(int userId) {
-        return null;
+    public Status getUserStatus(int userId) throws SQLException {
+        String query = "Select status from user where user_id = ?";
+        Status userStatus = null;
+        myDatabase.startConnection();
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                String status = rs.getString(1);
+                userStatus = Status.valueOf(status);
+            }
+        }
+        myDatabase.closeConnection();
+        return userStatus;
     }
 
     @Override
-    public List<Contact> getContactsForUser(int userId) {
-        return null;
+    public List<Contact> getContactsForUser(int userId) throws SQLException {
+        List<Contact> contacts = new ArrayList<>();
+        String query = "Select * from contact where contact_id = ?";
+        myDatabase.startConnection();
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                FriendshipStatus friendshipStatus = FriendshipStatus.valueOf(rs.getString("friendship_status"));
+                String contactDate = rs.getString("contact_date");
+                int contactId = rs.getInt("contact_id");
+                contacts.add(new Contact(friendshipStatus, contactDate, contactId));
+            }
+        }
+        myDatabase.closeConnection();
+        return contacts;
     }
 
     @Override
@@ -109,8 +134,23 @@ public class Dao implements DaoInterface {
     }
 
     @Override
-    public List<Notification> getNotificationForUser(int userId) {
-        return null;
+    public List<Notification> getNotificationForUser(int userId) throws SQLException {
+        List<Notification> notifications = new ArrayList<>();
+        String query = "Select * from notification where to_user_id = ?";
+        myDatabase.startConnection();
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int notificationId = rs.getInt("notification_id");
+                String username = rs.getString("from_user_name");
+                NotifactionType type = NotifactionType.valueOf(rs.getString("type"));
+                String body = rs.getString("body");
+                notifications.add(new Notification(notificationId, userId, username, type, body));
+            }
+        }
+        myDatabase.closeConnection();
+        return notifications;
     }
 
     @Override
@@ -129,17 +169,45 @@ public class Dao implements DaoInterface {
     }
 
     @Override
-    public List<PendingRequest> getUserPendingRequests(int toUserId) {
-        return null;
+    public List<PendingRequest> getUserPendingRequests(int toUserId) throws SQLException {
+        List<PendingRequest> pendingRequests = new ArrayList<>();
+        String query = "Select * from pending_request where to_user_id = ?";
+        myDatabase.startConnection();
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setInt(1, toUserId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int fromUserId = rs.getInt("from_user_id");
+                String sentDate = rs.getString("sent_date");
+                String body = rs.getString("body");
+                pendingRequests.add(new PendingRequest(toUserId, fromUserId, sentDate, body));
+            }
+        }
+        myDatabase.closeConnection();
+        return pendingRequests;
     }
 
     @Override
-    public List<PendingRequest> getUserSendingRequest(int fromUserId) {
-        return null;
+    public List<PendingRequest> getUserSendingRequest(int fromUserId) throws SQLException {
+        List<PendingRequest> pendingRequests = new ArrayList<>();
+        String query = "Select * from pending_request where from_user_id = ?";
+        myDatabase.startConnection();
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setInt(1, fromUserId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                int toUserId = rs.getInt("to_user_id");
+                String sentDate = rs.getString("sent_date");
+                String body = rs.getString("body");
+                pendingRequests.add(new PendingRequest(toUserId, fromUserId, sentDate, body));
+            }
+        }
+        myDatabase.closeConnection();
+        return pendingRequests;
     }
 
     @Override
-    public List<RoomMember> getRoomChatMembers(int roomChatId) {
+    public List<RoomMember> getRoomChatMembers(int roomChatId) throws SQLException {
         return null;
     }
 

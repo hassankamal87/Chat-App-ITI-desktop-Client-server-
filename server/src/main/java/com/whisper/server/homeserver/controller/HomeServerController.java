@@ -2,6 +2,12 @@ package com.whisper.server.homeserver.controller;
 
 import com.whisper.server.HelloApplication;
 import com.whisper.server.announcer.controller.AnnouncerHomeController;
+import com.whisper.server.model.Contact;
+import com.whisper.server.model.Notification;
+import com.whisper.server.model.PendingRequest;
+import com.whisper.server.model.User;
+import com.whisper.server.services.db.dao.Dao;
+import com.whisper.server.services.db.dao.DaoInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +23,9 @@ import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeServerController {
 
@@ -80,6 +89,60 @@ public class HomeServerController {
             }
             translateTransition.play();
             handleToggleSwitchChange(isSwitchOn);
+
+            DaoInterface testDao = Dao.getInstance();
+            try {
+                //getUsers test
+//                List<User> users = testDao.getUsers();
+//                users.forEach(user -> {
+//                    System.out.println(user.getUserName());
+//                    System.out.println(user.getUserId());
+//                    System.out.println(user.getCountry());
+//                    System.out.println(user.getGender());
+//                    System.out.println(user.getPhoneNumber());
+//                    System.out.println(user.getPassword());
+//                    System.out.println(user.getEmail());
+//                    System.out.println("......................");
+//                });
+
+                //getUserStatus test
+                int userId = 1;
+//                testDao.getUserStatus(userId);
+//                System.out.println("Status: " + testDao.getUserStatus(userId));
+
+                //getContactsForUser test
+                List<Contact> contacts = testDao.getContactsForUser(userId);
+                contacts.forEach(contact -> {
+                    System.out.println(contact.getFriendshipStatus());
+                    System.out.println(contact.getContactDate());
+                    System.out.println(contact.getUserId());
+                    System.out.println("......................");
+                });
+
+                //getNotificationForUser test
+//                List<Notification> notifications = testDao.getNotificationForUser(userId);
+//                notifications.forEach(notification -> {
+//                    System.out.println(notification.getNotificationId());
+//                    System.out.println(notification.getToUserId());
+//                    System.out.println(notification.getFromUserName());
+//                    System.out.println(notification.getType());
+//                    System.out.println(notification.getBody());
+//                    System.out.println("......................");
+//                });
+
+                //getUserPendingRequests(toUser)
+//                List<PendingRequest> pendingRequests = testDao.getUserPendingRequests(userId);
+//                pendingRequests.forEach(request -> {
+//                    System.out.println(request.getToUserId());
+//                    System.out.println(request.getFromUserId());
+//                    System.out.println(request.getSentDate());
+//                    System.out.println(request.getBody());
+//                    System.out.println("......................");
+//                });
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
 
             toggleSwitch.setDisable(true);
             disableButtons();
