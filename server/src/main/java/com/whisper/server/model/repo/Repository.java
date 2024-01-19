@@ -98,6 +98,26 @@ public class Repository implements RepositoryInterface{
     }
 
     @Override
+    public boolean createUser(User user) throws SQLException {
+        return dao.createUser(user);
+    }
+
+    @Override
+    public boolean updateUser(User newUser) {
+        return dao.updateUser(newUser);
+    }
+
+    @Override
+    public boolean deleteUserById(int userId) {
+        return dao.deleteUserById(userId);
+    }
+
+    @Override
+    public boolean addContact(int userId, int contactId) {
+        return dao.addContact(userId, contactId);
+    }
+
+    @Override
     public void closeConnection() throws SQLException {
         dao.closeConnection();
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="linear-grad" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.notification.controller.notificationController">
+   <children>
+      <Label layoutX="25.0" layoutY="40.0" styleClass="linear-grad" stylesheets="@../../style/style.css" text="Notifications" textFill="WHITE">
+         <font>
+            <Font name="Corbel Bold" size="28.0" />
+         </font>
+      </Label>
+      <Separator layoutX="124.0" layoutY="93.0" prefWidth="800.0" AnchorPane.bottomAnchor="503.33333333333337" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="93.0" />
+      <ScrollPane fx:id="scrollPane" layoutY="96.0" prefHeight="504.0" prefWidth="800.0" styleClass="light-gray-background" stylesheets="@../../style/style.css">
+         <content>
+            <VBox fx:id="notificationLayout" prefHeight="504.0" prefWidth="800.0" spacing="10.0" />
+         </content></ScrollPane>
+   </children>
+</AnchorPane>
