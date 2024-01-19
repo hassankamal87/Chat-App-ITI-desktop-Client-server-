@@ -41,6 +41,11 @@ public interface DaoInterface {
 
     void closeConnection() throws SQLException;
 
+    boolean createUser(User user) throws SQLException;
+    boolean updateUser(User newUser);
+    boolean deleteUserById(int userId);
+    boolean addContact(int userId, int contactId);
+
     //create new user
     //create new chat
     //create new notification

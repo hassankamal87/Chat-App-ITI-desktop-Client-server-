@@ -37,5 +37,11 @@ public interface RepositoryInterface {
     List<PendingRequest> getUserSendingRequest(int fromUserId) throws SQLException;
 
     List<RoomMember> getRoomChatMembers(int roomChatId) throws SQLException;
+
+    boolean createUser(User user) throws SQLException;
+    boolean updateUser(User newUser);
+    boolean deleteUserById(int userId);
+    boolean addContact(int userId, int contactId);
+
     void closeConnection() throws SQLException;
 }

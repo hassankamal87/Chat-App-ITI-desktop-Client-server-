@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -382,6 +383,113 @@ public class Dao implements DaoInterface {
     @Override
     public void closeConnection() throws SQLException {
         MyDatabase.getInstance().closeConnection();
+    }
+
+    @Override
+    public boolean createUser(User user) throws SQLException {
+        String query = "INSERT INTO user (phone_number, password, email, user_name, gender, date_of_birth, country, bio, mode, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        myDatabase.startConnection();
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, user.getPhoneNumber());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getUserName());
+            ps.setString(5, user.getGender().toString()); // Convert enum to string
+            ps.setDate(6, user.getDateOfBirth()); // Assuming Date type for date_of_birth
+            ps.setString(7, user.getCountry());
+            ps.setString(8, user.getBio());
+            ps.setString(9, user.getMode().toString()); // Convert enum to string
+            ps.setString(10, user.getStatus().toString()); // Convert enum to string
+
+            int rowsInserted = ps.executeUpdate();
+            return rowsInserted > 0; // If rowsInserted > 0, insertion was successful
+        } catch (SQLException e) {
+            // Handle database-related exceptions
+            System.out.println("Error while inserting new user into database");
+            e.printStackTrace();
+            return false; // Return false on failure
+        }
+    }
+    @Override
+    public boolean deleteUserById(int userId) {
+        String query = "DELETE FROM user WHERE user_id = ?";
+
+        try {
+            myDatabase.startConnection();
+            PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+            ps.setInt(1, userId);
+
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0; // If rowsDeleted > 0, deletion was successful
+        } catch (SQLException e) {
+            // Handle database-related exceptions
+            e.printStackTrace();
+            return false; // Return false on failure
+        }
+    }
+
+    @Override
+    public boolean addContact(int userId, int contactId) {
+        String query = "INSERT INTO contact " +
+                "(contact_id, friendship_status," +
+                " contact_date, user_id)" +
+                " VALUES (?, ?, ?, ?)";
+
+        try {
+            myDatabase.startConnection();
+
+            PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setString(2,"friend"); // Set friendship_status to "friend"
+            ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
+            ps.setInt(4, contactId);
+            int rowsInserted = ps.executeUpdate();
+
+            ps.setInt(4, userId);
+            ps.setString(2,"friend"); // Set friendship_status to "friend"
+            ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
+            ps.setInt(1, contactId);
+
+            rowsInserted = ps.executeUpdate();
+
+            return rowsInserted > 1; // If rowsInserted > 0, insertion was successful
+        } catch (SQLException e) {
+            // Handle database-related exceptions
+            e.printStackTrace();
+            return false; // Return false on failure
+        }
+    }
+
+    @Override
+    public boolean updateUser(User newUser) {
+        String query = "UPDATE user SET phone_number = ?, password = ?, email = ?, user_name = ?, " +
+                "gender = ?, date_of_birth = ?, country = ?, bio = ?, mode = ?, status = ? " +
+                "WHERE user_id = ?";
+
+        try{
+            myDatabase.startConnection();
+            PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+
+            ps.setString(1, newUser.getPhoneNumber());
+            ps.setString(2, newUser.getPassword());
+            ps.setString(3, newUser.getEmail());
+            ps.setString(4, newUser.getUserName());
+            ps.setString(5, newUser.getGender().toString()); // Convert enum to string
+            ps.setDate(6, newUser.getDateOfBirth()); // Assuming Date type for date_of_birth
+            ps.setString(7, newUser.getCountry());
+            ps.setString(8, newUser.getBio());
+            ps.setString(9, newUser.getMode().toString()); // Convert enum to string
+            ps.setString(10, newUser.getStatus().toString()); // Convert enum to string
+            ps.setInt(11, newUser.getUserId()); // Assuming userId is a property in the User class
+
+            int rowsUpdated = ps.executeUpdate();
+            return rowsUpdated > 0; // If rowsUpdated > 0, update was successful
+        } catch (SQLException e) {
+            // Handle database-related exceptions
+            e.printStackTrace();
+            return false; // Return false on failure
+        }
     }
 
 }
