@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `db_chat_app`.`user` (
   `photo` BLOB NULL,
   `admin_id` INT NOT NULL,
   `description` VARCHAR(100) NULL,
+  `type` ENUM('individual', 'group') NOT NULL DEFAULT 'individual',
   PRIMARY KEY (`room_chat_id`),
   UNIQUE INDEX `id_UNIQUE` (`room_chat_id` ASC) VISIBLE,
   INDEX `fk_room_chat_user_idx` (`admin_id` ASC) VISIBLE,
@@ -65,11 +66,12 @@ CREATE TABLE IF NOT EXISTS `db_chat_app`.`user` (
     to_chat_id INT,
     sent_date DATETIME,
     from_user INT,
-    body TEXT,
+    body TEXT NULL,
+	attachment TEXT NULL,
     FOREIGN KEY (from_user) REFERENCES user(user_id),
     FOREIGN KEY (to_chat_id) REFERENCES room_chat(room_chat_id));
     
-    CREATE TABLE db_chat_app.room_chat_member (
+   /* CREATE TABLE db_chat_app.room_chat_member (
   room_chat_id INT NOT NULL,
   member_id INT NOT NULL,
   PRIMARY KEY (room_chat_id, member_id),
@@ -82,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `db_chat_app`.`user` (
     FOREIGN KEY (member_id)
     REFERENCES db_chat_app.user (user_id)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION);*/
     
     CREATE TABLE db_chat_app.pending_request (
     to_user_id INT,

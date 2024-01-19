@@ -1,8 +1,9 @@
 package com.whisper.server.services.db.dao;
 
+import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.model.*;
+import com.whisper.server.datalayer.db.MyDatabase;
 import com.whisper.server.model.enums.*;
-import com.whisper.server.services.db.MyDatabase;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,17 +23,18 @@ public class Dao implements DaoInterface {
     private static DaoInterface instance = null;
     private MyDatabase myDatabase = MyDatabase.getInstance();
 
-    private Dao(){}
+    private Dao() {
+    }
 
-    public synchronized static DaoInterface getInstance(){
-        if (instance == null){
+    public synchronized static DaoInterface getInstance() {
+        if (instance == null) {
             instance = new Dao();
         }
         return instance;
     }
 
     @Override
-    public List<User> getUsers() throws SQLException{
+    public List<User> getUsers() throws SQLException {
         List<User> users = new ArrayList<>();
 
         String query = "SELECT * FROM User";
@@ -40,7 +42,7 @@ public class Dao implements DaoInterface {
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        while (rs.next()){
+        while (rs.next()) {
             int userId = rs.getInt(1);
             String phoneNumber = rs.getString(2);
             String password = rs.getString(3);
@@ -61,10 +63,9 @@ public class Dao implements DaoInterface {
             String statusStr = rs.getString(11);
             Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
 
-            User user = new User(userId,phoneNumber,password,email,userName,gender,date,country,bio,mode,status);
+            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
 
             users.add(user);
-            System.out.println(user);
         }
         rs.close();
         ps.close();
@@ -78,26 +79,23 @@ public class Dao implements DaoInterface {
         String phoneNumber = new String();
         String password = new String();
         String email = new String();
-        String userName= new String() ;
+        String userName = new String();
         String genderStr = new String();
         Gender gender = null;
         Date date = null;
-        String country= new String();
-        String bio= new String() ;
+        String country = new String();
+        String bio = new String();
         String modeStr = new String();
         Mode mode = null;
-        String statusStr= new String();
-        Status status= null ;
+        String statusStr = new String();
+        Status status = null;
 
-
-        String query = String.format("SELECT * FROM User WHERE user_id=%d",userId);
+        String query = String.format("SELECT * FROM User WHERE user_id=%d", userId);
         myDatabase.startConnection();
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-
-        if(rs.next()){
-
+        if (rs.next()) {
             phoneNumber = rs.getString(2);
             password = rs.getString(3);
             email = rs.getString(4);
@@ -119,39 +117,38 @@ public class Dao implements DaoInterface {
 
         }
 
-
-        User user = new User(userId,phoneNumber,password,email,userName,gender,date,country,bio,mode,status);
+        User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
 
         rs.close();
         ps.close();
         myDatabase.closeConnection();
 
-        return user ;
+        return user;
     }
 
     @Override
     public User getUserByPhone(String phoneNumber) throws SQLException {
 
-        int userId = 0 ;
+        int userId = 0;
         String password = new String();
         String email = new String();
-        String userName= new String() ;
+        String userName = new String();
         String genderStr = new String();
         Gender gender = null;
         Date date = null;
-        String country= new String();
-        String bio= new String() ;
+        String country = new String();
+        String bio = new String();
         String modeStr = new String();
         Mode mode = null;
-        String statusStr= new String();
-        Status status= null ;
+        String statusStr = new String();
+        Status status = null;
 
-        String query = String.format("SELECT * FROM User WHERE phone_number=%s",phoneNumber);
+        String query = String.format("SELECT * FROM User WHERE phone_number=%s", phoneNumber);
         myDatabase.startConnection();
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        if(rs.next()){
+        if (rs.next()) {
             userId = rs.getInt(1);
 
             password = rs.getString(3);
@@ -175,14 +172,13 @@ public class Dao implements DaoInterface {
         }
 
 
-
-        User user = new User(userId,phoneNumber,password,email,userName,gender,date,country,bio,mode,status);
+        User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
 
         rs.close();
         ps.close();
         myDatabase.closeConnection();
 
-        return user ;
+        return user;
     }
 
     @Override
@@ -191,15 +187,15 @@ public class Dao implements DaoInterface {
 
         String query = "SELECT * FROM User WHERE LOCATE(?, phone_number) > 0";
         myDatabase.startConnection();
-        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-        ps.setString(1,subPhoneNumber);
+        ps.setString(1, subPhoneNumber);
 
 
         ResultSet rs = ps.executeQuery();
 
 
-        while (rs.next()){
+        while (rs.next()) {
 
             int userId = rs.getInt(1);
             String phoneNumber = rs.getString(2);
@@ -221,7 +217,7 @@ public class Dao implements DaoInterface {
             String statusStr = rs.getString(11);
             Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
 
-            User user = new User(userId,phoneNumber,password,email,userName,gender,date,country,bio,mode,status);
+            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
 
             users.add(user);
         }
@@ -234,26 +230,22 @@ public class Dao implements DaoInterface {
 
     @Override
     public Mode getUserMode(int userId) throws SQLException {
-        String modeStr =new String();
-        Mode mode = null ;
-        String query = String.format("SELECT mode FROM User WHERE user_id = %d",userId);
+        String modeStr = new String();
+        Mode mode = null;
+        String query = String.format("SELECT mode FROM User WHERE user_id = %d", userId);
         myDatabase.startConnection();
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-
-        if(rs.next()){
-             modeStr = rs.getString(1);
-             mode = switch (modeStr) {
+        if (rs.next()) {
+            modeStr = rs.getString(1);
+            mode = switch (modeStr) {
                 case "away" -> Mode.away;
                 case "busy" -> Mode.busy;
                 case "offline" -> Mode.offline;
                 default -> Mode.avalible;
             };
-
         }
-
-
         rs.close();
         ps.close();
         myDatabase.closeConnection();
@@ -269,7 +261,7 @@ public class Dao implements DaoInterface {
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 String status = rs.getString(1);
                 userStatus = Status.valueOf(status);
             }
@@ -283,10 +275,10 @@ public class Dao implements DaoInterface {
         List<Contact> contacts = new ArrayList<>();
         String query = "Select * from contact where user_id = ?";
         myDatabase.startConnection();
-        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 FriendshipStatus friendshipStatus = FriendshipStatus.valueOf(rs.getString("friendship_status"));
                 String contactDate = rs.getString("contact_date");
                 int contactId = rs.getInt("contact_id");
@@ -307,15 +299,16 @@ public class Dao implements DaoInterface {
         List<Notification> notifications = new ArrayList<>();
         String query = "Select * from notification where to_user_id = ?";
         myDatabase.startConnection();
-        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 int notificationId = rs.getInt("notification_id");
                 String username = rs.getString("from_user_name");
                 NotifactionType type = NotifactionType.valueOf(rs.getString("type"));
                 String body = rs.getString("body");
                 notifications.add(new Notification(notificationId, userId, username, type, body));
+                rs.close();
             }
         }
         myDatabase.closeConnection();
@@ -342,16 +335,17 @@ public class Dao implements DaoInterface {
         List<PendingRequest> pendingRequests = new ArrayList<>();
         String query = "Select * from pending_request where to_user_id = ?";
         myDatabase.startConnection();
-        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
-            ps.setInt(1, toUserId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                int fromUserId = rs.getInt("from_user_id");
-                String sentDate = rs.getString("sent_date");
-                String body = rs.getString("body");
-                pendingRequests.add(new PendingRequest(toUserId, fromUserId, sentDate, body));
-            }
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, toUserId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int fromUserId = rs.getInt("from_user_id");
+            String sentDate = rs.getString("sent_date");
+            String body = rs.getString("body");
+            pendingRequests.add(new PendingRequest(toUserId, fromUserId, sentDate, body));
         }
+        rs.close();
+        ps.close();
         myDatabase.closeConnection();
         return pendingRequests;
     }
@@ -361,16 +355,18 @@ public class Dao implements DaoInterface {
         List<PendingRequest> pendingRequests = new ArrayList<>();
         String query = "Select * from pending_request where from_user_id = ?";
         myDatabase.startConnection();
-        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
-            ps.setInt(1, fromUserId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                int toUserId = rs.getInt("to_user_id");
-                String sentDate = rs.getString("sent_date");
-                String body = rs.getString("body");
-                pendingRequests.add(new PendingRequest(toUserId, fromUserId, sentDate, body));
-            }
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, fromUserId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int toUserId = rs.getInt("to_user_id");
+            String sentDate = rs.getString("sent_date");
+            String body = rs.getString("body");
+            pendingRequests.add(new PendingRequest(toUserId, fromUserId, sentDate, body));
         }
+
+        rs.close();
+        ps.close();
         myDatabase.closeConnection();
         return pendingRequests;
     }
@@ -390,106 +386,93 @@ public class Dao implements DaoInterface {
         String query = "INSERT INTO user (phone_number, password, email, user_name, gender, date_of_birth, country, bio, mode, status) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         myDatabase.startConnection();
-        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
-            ps.setString(1, user.getPhoneNumber());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getUserName());
-            ps.setString(5, user.getGender().toString()); // Convert enum to string
-            ps.setDate(6, user.getDateOfBirth()); // Assuming Date type for date_of_birth
-            ps.setString(7, user.getCountry());
-            ps.setString(8, user.getBio());
-            ps.setString(9, user.getMode().toString()); // Convert enum to string
-            ps.setString(10, user.getStatus().toString()); // Convert enum to string
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setString(1, user.getPhoneNumber());
+        ps.setString(2, user.getPassword());
+        ps.setString(3, user.getEmail());
+        ps.setString(4, user.getUserName());
+        ps.setString(5, user.getGender().toString()); // Convert enum to string
+        ps.setDate(6, user.getDateOfBirth()); // Assuming Date type for date_of_birth
+        ps.setString(7, user.getCountry());
+        ps.setString(8, user.getBio());
+        ps.setString(9, user.getMode().toString()); // Convert enum to string
+        ps.setString(10, user.getStatus().toString()); // Convert enum to string
 
-            int rowsInserted = ps.executeUpdate();
-            return rowsInserted > 0; // If rowsInserted > 0, insertion was successful
-        } catch (SQLException e) {
-            // Handle database-related exceptions
-            System.out.println("Error while inserting new user into database");
-            e.printStackTrace();
-            return false; // Return false on failure
-        }
+        int rowsInserted = ps.executeUpdate();
+        ps.close();
+        myDatabase.closeConnection();
+        return rowsInserted > 0; // If rowsInserted > 0, insertion was successful
+
     }
+
     @Override
-    public boolean deleteUserById(int userId) {
+    public boolean deleteUserById(int userId) throws SQLException {
         String query = "DELETE FROM user WHERE user_id = ?";
 
-        try {
-            myDatabase.startConnection();
-            PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
-            ps.setInt(1, userId);
 
-            int rowsDeleted = ps.executeUpdate();
-            return rowsDeleted > 0; // If rowsDeleted > 0, deletion was successful
-        } catch (SQLException e) {
-            // Handle database-related exceptions
-            e.printStackTrace();
-            return false; // Return false on failure
-        }
+        myDatabase.startConnection();
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+
+        int rowsDeleted = ps.executeUpdate();
+        ps.close();
+        myDatabase.closeConnection();
+        return rowsDeleted > 0; // If rowsDeleted > 0, deletion was successful
     }
 
     @Override
-    public boolean addContact(int userId, int contactId) {
+    public boolean addContact(int userId, int contactId) throws SQLException {
         String query = "INSERT INTO contact " +
                 "(contact_id, friendship_status," +
                 " contact_date, user_id)" +
                 " VALUES (?, ?, ?, ?)";
 
-        try {
-            myDatabase.startConnection();
+        myDatabase.startConnection();
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setString(2, "friend"); // Set friendship_status to "friend"
+        ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
+        ps.setInt(4, contactId);
+        int rowsInserted = ps.executeUpdate();
 
-            PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
-            ps.setInt(1, userId);
-            ps.setString(2,"friend"); // Set friendship_status to "friend"
-            ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
-            ps.setInt(4, contactId);
-            int rowsInserted = ps.executeUpdate();
+        ps.setInt(4, userId);
+        ps.setString(2, "friend"); // Set friendship_status to "friend"
+        ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
+        ps.setInt(1, contactId);
 
-            ps.setInt(4, userId);
-            ps.setString(2,"friend"); // Set friendship_status to "friend"
-            ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
-            ps.setInt(1, contactId);
+        rowsInserted = ps.executeUpdate();
 
-            rowsInserted = ps.executeUpdate();
-
-            return rowsInserted > 1; // If rowsInserted > 0, insertion was successful
-        } catch (SQLException e) {
-            // Handle database-related exceptions
-            e.printStackTrace();
-            return false; // Return false on failure
-        }
+        ps.close();
+        myDatabase.closeConnection();
+        return rowsInserted > 1; // If rowsInserted > 0, insertion was successful
     }
 
     @Override
-    public boolean updateUser(User newUser) {
+    public boolean updateUser(User newUser) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?, user_name = ?, " +
                 "gender = ?, date_of_birth = ?, country = ?, bio = ?, mode = ?, status = ? " +
                 "WHERE user_id = ?";
 
-        try{
-            myDatabase.startConnection();
-            PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        myDatabase.startConnection();
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
 
-            ps.setString(1, newUser.getPhoneNumber());
-            ps.setString(2, newUser.getPassword());
-            ps.setString(3, newUser.getEmail());
-            ps.setString(4, newUser.getUserName());
-            ps.setString(5, newUser.getGender().toString()); // Convert enum to string
-            ps.setDate(6, newUser.getDateOfBirth()); // Assuming Date type for date_of_birth
-            ps.setString(7, newUser.getCountry());
-            ps.setString(8, newUser.getBio());
-            ps.setString(9, newUser.getMode().toString()); // Convert enum to string
-            ps.setString(10, newUser.getStatus().toString()); // Convert enum to string
-            ps.setInt(11, newUser.getUserId()); // Assuming userId is a property in the User class
+        ps.setString(1, newUser.getPhoneNumber());
+        ps.setString(2, newUser.getPassword());
+        ps.setString(3, newUser.getEmail());
+        ps.setString(4, newUser.getUserName());
+        ps.setString(5, newUser.getGender().toString()); // Convert enum to string
+        ps.setDate(6, newUser.getDateOfBirth()); // Assuming Date type for date_of_birth
+        ps.setString(7, newUser.getCountry());
+        ps.setString(8, newUser.getBio());
+        ps.setString(9, newUser.getMode().toString()); // Convert enum to string
+        ps.setString(10, newUser.getStatus().toString()); // Convert enum to string
+        ps.setInt(11, newUser.getUserId()); // Assuming userId is a property in the User class
 
-            int rowsUpdated = ps.executeUpdate();
-            return rowsUpdated > 0; // If rowsUpdated > 0, update was successful
-        } catch (SQLException e) {
-            // Handle database-related exceptions
-            e.printStackTrace();
-            return false; // Return false on failure
-        }
+        int rowsUpdated = ps.executeUpdate();
+        ps.close();
+        myDatabase.closeConnection();
+        return rowsUpdated > 0; // If rowsUpdated > 0, update was successful
+
     }
 
 }

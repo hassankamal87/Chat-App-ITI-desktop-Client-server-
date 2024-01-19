@@ -1,4 +1,4 @@
-package com.whisper.server.services.db;
+package com.whisper.server.datalayer.db;
 
 import com.whisper.server.utils.Constants;
 
@@ -11,7 +11,9 @@ public class MyDatabase {
     private static MyDatabase instance = null;
     private Connection connection = null;
 
-    private MyDatabase(){}
+    private MyDatabase(){
+
+    }
     public static synchronized MyDatabase getInstance(){
         if(instance == null)
             instance = new MyDatabase();

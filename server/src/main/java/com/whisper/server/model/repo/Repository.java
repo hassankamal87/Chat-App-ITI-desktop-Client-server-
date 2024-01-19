@@ -2,7 +2,7 @@ package com.whisper.server.model.repo;
 
 
 import com.whisper.server.model.*;
-import com.whisper.server.services.db.dao.DaoInterface;
+import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.model.enums.Mode;
 import com.whisper.server.model.enums.Status;
 
