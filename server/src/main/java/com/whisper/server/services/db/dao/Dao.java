@@ -112,7 +112,7 @@ public class Dao implements DaoInterface {
     @Override
     public List<Contact> getContactsForUser(int userId) throws SQLException {
         List<Contact> contacts = new ArrayList<>();
-        String query = "Select * from contact where contact_id = ?";
+        String query = "Select * from contact where user_id = ?";
         myDatabase.startConnection();
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
             ps.setInt(1, userId);
