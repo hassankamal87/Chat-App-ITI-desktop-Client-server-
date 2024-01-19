@@ -6,7 +6,4 @@ module com.whisper.client {
 
     opens com.whisper.client.signin.controller to javafx.fxml;
     exports com.whisper.client;
-
-
-
 }

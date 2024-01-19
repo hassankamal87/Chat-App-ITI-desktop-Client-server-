@@ -1,7 +1,9 @@
 package com.whisper.server.homeserver.controller;
 
 import com.whisper.server.HelloApplication;
-import com.whisper.server.announcer.controller.AnnouncerHomeController;
+import com.whisper.server.datalayer.db.dao.Dao;
+import com.whisper.server.model.repo.Repository;
+import com.whisper.server.model.repo.RepositoryInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HomeServerController {
 
@@ -112,9 +115,15 @@ public class HomeServerController {
 
 
     private void performOperation() {
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        RepositoryInterface repo = Repository.getInstance(Dao.getInstance());
         try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
+            repo.getUsers().forEach(e-> System.out.println(e.getUserName()));
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }

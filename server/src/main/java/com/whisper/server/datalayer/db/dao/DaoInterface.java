@@ -1,4 +1,4 @@
-package com.whisper.server.services.db.dao;
+package com.whisper.server.datalayer.db.dao;
 
 import com.whisper.server.model.*;
 import com.whisper.server.model.enums.Mode;
@@ -40,6 +40,11 @@ public interface DaoInterface {
     List<RoomMember> getRoomChatMembers(int roomChatId) throws SQLException;
 
     void closeConnection() throws SQLException;
+
+    boolean createUser(User user) throws SQLException;
+    boolean updateUser(User newUser) throws SQLException;
+    boolean deleteUserById(int userId) throws SQLException;
+    boolean addContact(int userId, int contactId) throws SQLException;
 
     //create new user
     //create new chat
