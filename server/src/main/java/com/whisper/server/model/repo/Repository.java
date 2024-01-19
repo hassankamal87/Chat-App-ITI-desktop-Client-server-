@@ -103,17 +103,17 @@ public class Repository implements RepositoryInterface{
     }
 
     @Override
-    public boolean updateUser(User newUser) {
+    public boolean updateUser(User newUser) throws SQLException {
         return dao.updateUser(newUser);
     }
 
     @Override
-    public boolean deleteUserById(int userId) {
+    public boolean deleteUserById(int userId) throws SQLException {
         return dao.deleteUserById(userId);
     }
 
     @Override
-    public boolean addContact(int userId, int contactId) {
+    public boolean addContact(int userId, int contactId) throws SQLException{
         return dao.addContact(userId, contactId);
     }
 
