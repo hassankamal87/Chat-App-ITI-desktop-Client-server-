@@ -1,0 +1,118 @@
+.linear-grad{
+    -fx-background-color: linear-gradient(to bottom left,#FFDAB9 ,#FFE4C4 );
+}
+.linear-grad2{
+    -fx-background-color: linear-gradient(to bottom left,#597E52 ,#89A381 );
+}
+/* General Styling */
+.root {
+    -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -fx-background-color: #FFFFEC; /* Light yellow background */
+    -fx-text-fill: #333333; /* Dark text color */
+}
+
+.logo-text {
+    -fx-font-size: 48px; /* Increase the font size */
+    -fx-font-weight: bold; /* Make the font weight heavier */
+    -fx-text-transform: uppercase; /* Keep the text in uppercase */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0, 2, 2); /* Add a subtle shadow to the text */
+    -fx-font-family: 'Berlin Sans FB Demi'; /* Change the font to 'Courier New' */
+    /*-fx-font-family: 'Courier New';*/
+  }
+
+/* Buttons */
+.button {
+    -fx-background-color: #C6A969; /* Light brown accent color */
+    -fx-text-fill: #ffffff;
+    -fx-padding: 8px 15px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #597E52; /* Darker green on hover */
+}
+
+/* Text Fields */
+.text-field {
+    -fx-background-color: #FFFFEC;
+    -fx-text-fill: #333333;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+}
+
+
+/* Labels */
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+}
+
+/* Headers */
+.header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 10px 0;
+}
+
+/* TableView */
+.table-view {
+    -fx-control-inner-background: #FFFFEC; /* Light yellow background */
+    -fx-table-cell-border-color: #F1E4C3; /* Cream border */
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #C6A969; /* Light brown for column headers */
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #F1E4C3; /* Alternate row color */
+}
+
+.table-row-cell:even {
+    -fx-background-color: #FFFFEC;
+}
+
+/* ScrollPane */
+.scroll-pane {
+    -fx-background: #FFFFEC;
+}
+
+/* TitledPane */
+.titled-pane {
+    -fx-text-fill: #333333;
+    -fx-background-color: #F1E4C3; /* Cream color */
+    -fx-border-color: #C6A969; /* Light brown border */
+}
+
+/* MenuBar */
+.menu-bar {
+    -fx-background-color: #FFFFEC;
+}
+
+/* Menu */
+.menu {
+    -fx-background-color: #FFFFEC;
+}
+
+/* MenuItem */
+.menu-item {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #C6A969; /* Slightly darker brown on hover */
+}
+
+/* Darker color on hover for buttons and other interactive elements */
+.button{
+    -fx-background-radius: 15px;
+}
+.button:hover,
+.table-row-cell:hover {
+    -fx-background-color: #597E52; /* Darker green on hover */
+}

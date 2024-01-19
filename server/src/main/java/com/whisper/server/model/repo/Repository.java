@@ -2,7 +2,7 @@ package com.whisper.server.model.repo;
 
 
 import com.whisper.server.model.*;
-import com.whisper.server.services.db.dao.DaoInterface;
+import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.model.enums.Mode;
 import com.whisper.server.model.enums.Status;
 
@@ -95,6 +95,26 @@ public class Repository implements RepositoryInterface{
     @Override
     public List<RoomMember> getRoomChatMembers(int roomChatId) throws SQLException {
         return dao.getRoomChatMembers(roomChatId);
+    }
+
+    @Override
+    public boolean createUser(User user) throws SQLException {
+        return dao.createUser(user);
+    }
+
+    @Override
+    public boolean updateUser(User newUser) {
+        return dao.updateUser(newUser);
+    }
+
+    @Override
+    public boolean deleteUserById(int userId) {
+        return dao.deleteUserById(userId);
+    }
+
+    @Override
+    public boolean addContact(int userId, int contactId) {
+        return dao.addContact(userId, contactId);
     }
 
     @Override

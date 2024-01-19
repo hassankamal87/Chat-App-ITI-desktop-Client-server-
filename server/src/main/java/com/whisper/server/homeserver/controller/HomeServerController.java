@@ -2,6 +2,14 @@ package com.whisper.server.homeserver.controller;
 
 import com.whisper.server.HelloApplication;
 import com.whisper.server.announcer.controller.AnnouncerHomeController;
+import com.whisper.server.model.Contact;
+import com.whisper.server.model.Notification;
+import com.whisper.server.model.PendingRequest;
+import com.whisper.server.model.User;
+import com.whisper.server.model.repo.Repository;
+import com.whisper.server.model.repo.RepositoryInterface;
+import com.whisper.server.services.db.dao.Dao;
+import com.whisper.server.services.db.dao.DaoInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +25,9 @@ import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeServerController {
 
@@ -112,10 +123,17 @@ public class HomeServerController {
 
 
     private void performOperation() {
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        RepositoryInterface repo = Repository.getInstance(Dao.getInstance());
         try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            //repo.createUser(newUser);
+            repo.getUsers().forEach(user -> System.out.println(user.getUserName()+" "+user.getUserId()+" "+user.getPhoneNumber()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
