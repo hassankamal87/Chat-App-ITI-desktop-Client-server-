@@ -39,9 +39,9 @@ public interface RepositoryInterface {
     List<RoomMember> getRoomChatMembers(int roomChatId) throws SQLException;
 
     boolean createUser(User user) throws SQLException;
-    boolean updateUser(User newUser);
-    boolean deleteUserById(int userId);
-    boolean addContact(int userId, int contactId);
+    boolean updateUser(User newUser) throws SQLException;
+    boolean deleteUserById(int userId) throws SQLException;
+    boolean addContact(int userId, int contactId) throws SQLException;
 
     void closeConnection() throws SQLException;
 }

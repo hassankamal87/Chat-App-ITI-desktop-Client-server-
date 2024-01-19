@@ -1,6 +1,5 @@
-package com.whisper.server.services.db.dao;
+package com.whisper.server.datalayer.db.dao;
 
-import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.model.*;
 import com.whisper.server.datalayer.db.MyDatabase;
 import com.whisper.server.model.enums.*;
@@ -76,19 +75,7 @@ public class Dao implements DaoInterface {
 
     @Override
     public User getUserById(int userId) throws SQLException {
-        String phoneNumber = new String();
-        String password = new String();
-        String email = new String();
-        String userName = new String();
-        String genderStr = new String();
-        Gender gender = null;
-        Date date = null;
-        String country = new String();
-        String bio = new String();
-        String modeStr = new String();
-        Mode mode = null;
-        String statusStr = new String();
-        Status status = null;
+        List<User> list = new ArrayList<>();
 
         String query = String.format("SELECT * FROM User WHERE user_id=%d", userId);
         myDatabase.startConnection();
@@ -96,52 +83,40 @@ public class Dao implements DaoInterface {
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            phoneNumber = rs.getString(2);
-            password = rs.getString(3);
-            email = rs.getString(4);
-            userName = rs.getString(5);
-            genderStr = rs.getString(6);
-            gender = Objects.equals(genderStr, "female") ? Gender.female : Gender.male;
-            date = rs.getDate(7);
-            country = rs.getString(8);
-            bio = rs.getString(9);
-            modeStr = rs.getString(10);
-            mode = switch (modeStr) {
+            String phoneNumber = rs.getString(2);
+            String password = rs.getString(3);
+            String email = rs.getString(4);
+            String userName = rs.getString(5);
+            String genderStr = rs.getString(6);
+            Gender gender = Objects.equals(genderStr, "female") ? Gender.female : Gender.male;
+            Date date = rs.getDate(7);
+            String country = rs.getString(8);
+            String bio = rs.getString(9);
+            String modeStr = rs.getString(10);
+            Mode mode = switch (modeStr) {
                 case "away" -> Mode.away;
                 case "busy" -> Mode.busy;
                 case "offline" -> Mode.offline;
                 default -> Mode.avalible;
             };
-            statusStr = rs.getString(11);
-            status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
+            String statusStr = rs.getString(11);
+            Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
 
+            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
+            list.add(user);
         }
 
-        User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
 
         rs.close();
         ps.close();
         myDatabase.closeConnection();
 
-        return user;
+        return list.get(0);
     }
 
     @Override
     public User getUserByPhone(String phoneNumber) throws SQLException {
-
-        int userId = 0;
-        String password = new String();
-        String email = new String();
-        String userName = new String();
-        String genderStr = new String();
-        Gender gender = null;
-        Date date = null;
-        String country = new String();
-        String bio = new String();
-        String modeStr = new String();
-        Mode mode = null;
-        String statusStr = new String();
-        Status status = null;
+        List<User> list = new ArrayList<>();
 
         String query = String.format("SELECT * FROM User WHERE phone_number=%s", phoneNumber);
         myDatabase.startConnection();
@@ -149,36 +124,35 @@ public class Dao implements DaoInterface {
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            userId = rs.getInt(1);
+            int userId = rs.getInt(1);
 
-            password = rs.getString(3);
-            email = rs.getString(4);
-            userName = rs.getString(5);
-            genderStr = rs.getString(6);
-            gender = Objects.equals(genderStr, "female") ? Gender.female : Gender.male;
-            date = rs.getDate(7);
-            country = rs.getString(8);
-            bio = rs.getString(9);
-            modeStr = rs.getString(10);
-            mode = switch (modeStr) {
+            String password = rs.getString(3);
+            String email = rs.getString(4);
+            String userName = rs.getString(5);
+            String genderStr = rs.getString(6);
+            Gender gender = Objects.equals(genderStr, "female") ? Gender.female : Gender.male;
+            Date date = rs.getDate(7);
+            String country = rs.getString(8);
+            String bio = rs.getString(9);
+            String modeStr = rs.getString(10);
+            Mode mode = switch (modeStr) {
                 case "away" -> Mode.away;
                 case "busy" -> Mode.busy;
                 case "offline" -> Mode.offline;
                 default -> Mode.avalible;
             };
-            statusStr = rs.getString(11);
-            status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
+            String statusStr = rs.getString(11);
+            Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
 
+            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
+            list.add(user);
         }
-
-
-        User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
 
         rs.close();
         ps.close();
         myDatabase.closeConnection();
 
-        return user;
+        return list.get(0);
     }
 
     @Override
@@ -191,9 +165,7 @@ public class Dao implements DaoInterface {
 
         ps.setString(1, subPhoneNumber);
 
-
         ResultSet rs = ps.executeQuery();
-
 
         while (rs.next()) {
 
@@ -409,7 +381,6 @@ public class Dao implements DaoInterface {
     public boolean deleteUserById(int userId) throws SQLException {
         String query = "DELETE FROM user WHERE user_id = ?";
 
-
         myDatabase.startConnection();
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ps.setInt(1, userId);
@@ -472,7 +443,6 @@ public class Dao implements DaoInterface {
         ps.close();
         myDatabase.closeConnection();
         return rowsUpdated > 0; // If rowsUpdated > 0, update was successful
-
     }
 
 }
