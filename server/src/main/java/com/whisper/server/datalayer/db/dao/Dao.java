@@ -1,7 +1,7 @@
-package com.whisper.server.services.db.dao;
+package com.whisper.server.datalayer.db.dao;
 
 import com.whisper.server.model.*;
-import com.whisper.server.services.db.MyDatabase;
+import com.whisper.server.datalayer.db.MyDatabase;
 import com.whisper.server.model.enums.Gender;
 import com.whisper.server.model.enums.Mode;
 import com.whisper.server.model.enums.Status;

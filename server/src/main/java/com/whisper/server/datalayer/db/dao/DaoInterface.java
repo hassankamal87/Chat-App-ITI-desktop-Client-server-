@@ -1,4 +1,4 @@
-package com.whisper.server.services.db.dao;
+package com.whisper.server.datalayer.db.dao;
 
 import com.whisper.server.model.*;
 import com.whisper.server.model.enums.Mode;
