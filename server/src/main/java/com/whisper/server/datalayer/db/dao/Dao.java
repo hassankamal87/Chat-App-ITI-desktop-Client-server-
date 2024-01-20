@@ -22,12 +22,12 @@ public class Dao implements DaoInterface {
     private static DaoInterface instance = null;
     private MyDatabase myDatabase = MyDatabase.getInstance();
 
-    private Dao() {
+    private Dao(MyDatabase myDatabase) {
     }
 
-    public synchronized static DaoInterface getInstance() {
+    public synchronized static DaoInterface getInstance(MyDatabase myDatabase) {
         if (instance == null) {
-            instance = new Dao();
+            instance = new Dao(myDatabase);
         }
         return instance;
     }
@@ -37,7 +37,7 @@ public class Dao implements DaoInterface {
         List<User> users = new ArrayList<>();
 
         String query = "SELECT * FROM User";
-        myDatabase.startConnection();
+        //myDatabase.startConnection();
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
@@ -68,7 +68,7 @@ public class Dao implements DaoInterface {
         }
         rs.close();
         ps.close();
-        myDatabase.closeConnection();
+       myDatabase.closeConnection();
 
         return users;
     }

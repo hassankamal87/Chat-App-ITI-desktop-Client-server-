@@ -1,4 +1,4 @@
-package com.whisper.server.services.db;
+package com.whisper.server.datalayer.db;
 
 import java.sql.Connection;
 import java.sql.SQLException;

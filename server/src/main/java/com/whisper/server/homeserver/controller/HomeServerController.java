@@ -1,6 +1,7 @@
 package com.whisper.server.homeserver.controller;
 
 import com.whisper.server.HelloApplication;
+import com.whisper.server.datalayer.db.MyDatabase;
 import com.whisper.server.datalayer.db.dao.Dao;
 import com.whisper.server.model.repo.Repository;
 import com.whisper.server.model.repo.RepositoryInterface;
@@ -40,6 +41,7 @@ public class HomeServerController {
     private BorderPane mainNavigatorPane;
     private Parent announcementPane = null;
 
+    private MyDatabase myDatabase = MyDatabase.getInstance();
     public void initialize() {
         gettingPanes();
         disableButtons();
@@ -120,7 +122,7 @@ public class HomeServerController {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        RepositoryInterface repo = Repository.getInstance(Dao.getInstance());
+        RepositoryInterface repo = Repository.getInstance(Dao.getInstance(myDatabase));
         try {
             repo.getUsers().forEach(e-> System.out.println(e.getUserName()));
         }catch (SQLException e){
