@@ -82,7 +82,7 @@ public class Dao implements DaoInterface {
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
+        rs.next() ;
             String phoneNumber = rs.getString(2);
             String password = rs.getString(3);
             String email = rs.getString(4);
@@ -104,7 +104,7 @@ public class Dao implements DaoInterface {
 
             User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
             list.add(user);
-        }
+
 
 
         rs.close();
@@ -123,7 +123,7 @@ public class Dao implements DaoInterface {
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
+        rs.next();
             int userId = rs.getInt(1);
 
             String password = rs.getString(3);
@@ -146,7 +146,7 @@ public class Dao implements DaoInterface {
 
             User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
             list.add(user);
-        }
+
 
         rs.close();
         ps.close();
