@@ -68,7 +68,7 @@ public class Dao implements DaoInterface {
         }
         rs.close();
         ps.close();
-       myDatabase.closeConnection();
+       //myDatabase.closeConnection();
 
         return users;
     }

@@ -23,9 +23,6 @@ public class MyDatabase {
 
     public void startConnection() throws SQLException{
 
-//        connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%d/%s",
-//                Constants.HOST, Constants.PORT, Constants.DB_NAME), Constants.USERNAME, Constants.PASSWORD);
-
 
         connectionPool = BasicConnectionPool
                 .create(String.format("jdbc:mysql://%s:%d/%s",
@@ -40,10 +37,6 @@ public class MyDatabase {
     public void closeConnection() throws SQLException{
         connectionPool.closeAllConnections();
 
-//        if (isConnectionValidAndNotNull()){
-//            connection.close();
-//            System.out.println("Connection closed");
-//        }
     }
 
 

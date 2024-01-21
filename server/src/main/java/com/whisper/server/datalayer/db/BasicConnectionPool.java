@@ -15,7 +15,7 @@ public class BasicConnectionPool implements ConnectionPool {
     private String password;
     private List<Connection> connectionPool;
     private List<Connection> usedConnections = new ArrayList<>();
-    private static int INITIAL_POOL_SIZE = 10;
+    private static int INITIAL_POOL_SIZE = Runtime.getRuntime().availableProcessors();
 
     public BasicConnectionPool(String url, String user, String password, List<Connection> connectionPool) {
         this.url = url;
@@ -35,7 +35,7 @@ public class BasicConnectionPool implements ConnectionPool {
         return new BasicConnectionPool(url, user, password, pool);
     }
 
-    // standard constructors
+
 
     @Override
     public Connection getConnection() {
@@ -94,5 +94,5 @@ public class BasicConnectionPool implements ConnectionPool {
         usedConnections.clear();
     }
 
-    // standard getters
+
 }
