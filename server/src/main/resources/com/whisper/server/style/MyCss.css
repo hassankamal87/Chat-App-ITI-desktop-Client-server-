@@ -138,3 +138,8 @@
     -fx-background-color: #222A5C;
     -fx-text-fill: white;
 }
+
+.container {
+    -fx-background-color:
+    -fx-background-radius: 10;
+}
