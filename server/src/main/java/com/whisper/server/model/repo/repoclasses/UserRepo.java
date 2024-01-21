@@ -3,8 +3,6 @@ package com.whisper.server.model.repo.repoclasses;
 import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.datalayer.db.dao.daointerfaces.UserDaoInterface;
 import com.whisper.server.model.User;
-import com.whisper.server.model.repo.Repository;
-import com.whisper.server.model.repo.RepositoryInterface;
 import com.whisper.server.model.repo.repointerfaces.UserRepoInterface;
 
 import java.sql.SQLException;
