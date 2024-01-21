@@ -22,12 +22,12 @@ public class Dao implements DaoInterface {
     private static DaoInterface instance = null;
     private MyDatabase myDatabase = MyDatabase.getInstance();
 
-    private Dao() {
+    private Dao(MyDatabase myDatabase) {
     }
 
-    public synchronized static DaoInterface getInstance() {
+    public synchronized static DaoInterface getInstance(MyDatabase myDatabase) {
         if (instance == null) {
-            instance = new Dao();
+            instance = new Dao(myDatabase);
         }
         return instance;
     }
@@ -37,7 +37,7 @@ public class Dao implements DaoInterface {
         List<User> users = new ArrayList<>();
 
         String query = "SELECT * FROM User";
-        myDatabase.startConnection();
+        //myDatabase.startConnection();
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
@@ -68,7 +68,7 @@ public class Dao implements DaoInterface {
         }
         rs.close();
         ps.close();
-        myDatabase.closeConnection();
+       //myDatabase.closeConnection();
 
         return users;
     }
@@ -82,7 +82,7 @@ public class Dao implements DaoInterface {
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
+        rs.next() ;
             String phoneNumber = rs.getString(2);
             String password = rs.getString(3);
             String email = rs.getString(4);
@@ -104,7 +104,7 @@ public class Dao implements DaoInterface {
 
             User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
             list.add(user);
-        }
+
 
 
         rs.close();
@@ -123,7 +123,7 @@ public class Dao implements DaoInterface {
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
+        rs.next();
             int userId = rs.getInt(1);
 
             String password = rs.getString(3);
@@ -146,7 +146,7 @@ public class Dao implements DaoInterface {
 
             User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
             list.add(user);
-        }
+
 
         rs.close();
         ps.close();
