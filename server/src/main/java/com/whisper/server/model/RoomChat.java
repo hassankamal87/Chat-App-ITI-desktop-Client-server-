@@ -1,5 +1,6 @@
 package com.whisper.server.model;
 
+import com.whisper.server.model.enums.Type;
 import javafx.scene.image.Image;
 
 import java.util.List;
@@ -14,8 +15,10 @@ public class RoomChat {
     private String description;
     private List<RoomMember> roomMembers;
 
+    private Type type;
 
-    public RoomChat(int roomChatId, String createdDate, String timeStamp, String groupName, Image photo, int adminId, String description) {
+
+    public RoomChat(int roomChatId, String createdDate, String timeStamp, String groupName, Image photo, int adminId, String description, Type type) {
         this.roomChatId = roomChatId;
         this.createdDate = createdDate;
         this.timeStamp = timeStamp;
@@ -23,6 +26,7 @@ public class RoomChat {
         this.photo = photo;
         this.adminId = adminId;
         this.description = description;
+        this.type = type;
     }
 
     public List<RoomMember> getRoomMembers() {
