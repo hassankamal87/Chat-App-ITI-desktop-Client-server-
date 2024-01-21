@@ -19,8 +19,11 @@ public class User {
     private String bio;
     private Mode mode;
     private Status status;
+    public User() {}
 
-    public User(int userId, String phoneNumber, String password, String email, String userName, Gender gender, Date dateOfBirth, String country, String bio, Mode mode, Status status) {
+    public User(int userId, String phoneNumber, String password, String email,
+                String userName, Gender gender, Date dateOfBirth, String country,
+                String bio, Mode mode, Status status) {
         this.userId = userId;
         this.phoneNumber = phoneNumber;
         this.password = password;
