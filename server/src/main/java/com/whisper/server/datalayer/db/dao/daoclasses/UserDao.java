@@ -1,21 +1,17 @@
 package com.whisper.server.datalayer.db.dao.daoclasses;
 
 import com.whisper.server.datalayer.db.MyDatabase;
-import com.whisper.server.datalayer.db.dao.Dao;
-import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.datalayer.db.dao.daointerfaces.UserDaoInterface;
 import com.whisper.server.model.User;
 import com.whisper.server.model.enums.Gender;
 import com.whisper.server.model.enums.Mode;
 import com.whisper.server.model.enums.Status;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class UserDao implements UserDaoInterface {
     private MyDatabase myDatabase = null;
