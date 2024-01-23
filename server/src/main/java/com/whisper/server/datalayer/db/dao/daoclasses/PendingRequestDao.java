@@ -25,7 +25,7 @@ public class PendingRequestDao implements PendingRequestDaoInterface {
     }
 
     @Override
-    public int create(PendingRequest request) throws SQLException {
+    public int createPendingRequest(PendingRequest request) throws SQLException {
         String query = "Insert into pending_request (to_user_id, from_user_id, sent_date, body) " +
                 "values (?, ?, ?, ?)";
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){

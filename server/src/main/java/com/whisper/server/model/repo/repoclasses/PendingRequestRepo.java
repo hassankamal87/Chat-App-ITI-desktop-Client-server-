@@ -22,8 +22,8 @@ public class PendingRequestRepo implements PendingRequestRepoInterface {
     }
 
     @Override
-    public int create(PendingRequest request) throws SQLException {
-        return requestDao.create(request);
+    public int createPendingRequest(PendingRequest request) throws SQLException {
+        return requestDao.createPendingRequest(request);
     }
 
     @Override

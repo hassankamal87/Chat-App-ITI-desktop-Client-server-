@@ -3,6 +3,7 @@ package com.whisper.server.model;
 import com.whisper.server.model.enums.Type;
 import javafx.scene.image.Image;
 
+import java.sql.Blob;
 import java.util.List;
 
 public class RoomChat {
@@ -10,16 +11,16 @@ public class RoomChat {
     private String createdDate;
     private String timeStamp; // mktoba fel database Enum !!
     private String groupName;
-    private Image photo;
-    private int adminId;
+    private Blob photo;
+    private Integer adminId;
     private String description;
     private List<RoomMember> roomMembers;
 
     private Type type;
 
 
-    public RoomChat(int roomChatId, String createdDate, String timeStamp, String groupName, Image photo, int adminId, String description, Type type) {
-        this.roomChatId = roomChatId;
+    public RoomChat(String createdDate, String timeStamp, String groupName, Blob photo, Integer adminId, String description, Type type) {
+//        this.roomChatId = roomChatId;
         this.createdDate = createdDate;
         this.timeStamp = timeStamp;
         this.groupName = groupName;
@@ -69,20 +70,28 @@ public class RoomChat {
         this.groupName = groupName;
     }
 
-    public Image getPhoto() {
+    public Blob getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Image photo) {
+    public void setPhoto(Blob photo) {
         this.photo = photo;
     }
 
-    public int getAdminId() {
+    public Integer getAdminId() {
         return adminId;
     }
 
-    public void setAdminId(int adminId) {
+    public void setAdminId(Integer adminId) {
         this.adminId = adminId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getDescription() {

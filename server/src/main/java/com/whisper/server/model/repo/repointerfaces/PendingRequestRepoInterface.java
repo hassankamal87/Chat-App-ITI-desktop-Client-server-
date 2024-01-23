@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface PendingRequestRepoInterface {
-    int create (PendingRequest request) throws SQLException;
+    int createPendingRequest (PendingRequest request) throws SQLException;
 
     List<PendingRequest> getAllPendingRequest(int toUserId) throws SQLException;
 

@@ -9,7 +9,7 @@ public interface PendingRequestDaoInterface {
     //create PendingRequest
     //Read PendingRequest
     //delete PendingRequest
-    int create (PendingRequest request) throws SQLException;
+    int createPendingRequest (PendingRequest request) throws SQLException;
 
     List<PendingRequest> getAllPendingRequest(int toUserId) throws SQLException;
 
