@@ -16,6 +16,7 @@ public class RoomChat {
     private List<RoomMember> roomMembers;
     private Type type;
 
+
     public RoomChat(int roomChatId, String createdDate, boolean timeStamp, String groupName, Blob photo, int adminId, String description, Type type) {
         this.roomChatId = roomChatId;
         this.createdDate = createdDate;
@@ -78,6 +79,7 @@ public class RoomChat {
         this.groupName = groupName;
     }
 
+
     public Blob getPhotoBlob() {
         return photoBlob;
     }
@@ -86,12 +88,20 @@ public class RoomChat {
         this.photoBlob = photoBlob;
     }
 
-    public int getAdminId() {
+    public Integer getAdminId() {
         return adminId;
     }
 
-    public void setAdminId(int adminId) {
+    public void setAdminId(Integer adminId) {
         this.adminId = adminId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getDescription() {
