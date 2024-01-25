@@ -32,9 +32,9 @@
                                 <Font size="38.0" />
                             </font>
                         </Text>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="76.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="221.0" fitWidth="210.0" layoutX="45.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../images/logo.png" />
+                                <Image url="@../../images/wlogo.png" />
                             </image>
                         </ImageView>
                     </children>

@@ -1,7 +1,6 @@
 package com.whisper.server.model;
 
 import com.whisper.server.model.enums.Type;
-import javafx.scene.image.Image;
 
 import java.sql.Blob;
 import java.util.List;
@@ -9,22 +8,21 @@ import java.util.List;
 public class RoomChat {
     private int roomChatId;
     private String createdDate;
-    private String timeStamp; // mktoba fel database Enum !!
+    private boolean timeStamp;
     private String groupName;
-    private Blob photo;
-    private Integer adminId;
+    private Blob photoBlob;
+    private int adminId;
     private String description;
     private List<RoomMember> roomMembers;
-
     private Type type;
 
 
-    public RoomChat(String createdDate, String timeStamp, String groupName, Blob photo, Integer adminId, String description, Type type) {
-//        this.roomChatId = roomChatId;
+    public RoomChat(int roomChatId, String createdDate, boolean timeStamp, String groupName, Blob photo, int adminId, String description, Type type) {
+        this.roomChatId = roomChatId;
         this.createdDate = createdDate;
         this.timeStamp = timeStamp;
         this.groupName = groupName;
-        this.photo = photo;
+        this.photoBlob = photo;
         this.adminId = adminId;
         this.description = description;
         this.type = type;
@@ -54,12 +52,23 @@ public class RoomChat {
         this.createdDate = createdDate;
     }
 
-    public String getTimeStamp() {
+    public boolean getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(boolean timeStamp) {
         this.timeStamp = timeStamp;
+    }
+    public boolean isTimeStamp() {
+        return timeStamp;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getGroupName() {
@@ -70,12 +79,13 @@ public class RoomChat {
         this.groupName = groupName;
     }
 
-    public Blob getPhoto() {
-        return photo;
+
+    public Blob getPhotoBlob() {
+        return photoBlob;
     }
 
-    public void setPhoto(Blob photo) {
-        this.photo = photo;
+    public void setPhotoBlob(Blob photoBlob) {
+        this.photoBlob = photoBlob;
     }
 
     public Integer getAdminId() {

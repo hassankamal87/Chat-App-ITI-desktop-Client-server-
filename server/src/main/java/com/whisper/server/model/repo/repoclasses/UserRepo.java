@@ -3,8 +3,6 @@ package com.whisper.server.model.repo.repoclasses;
 import com.whisper.server.datalayer.db.dao.DaoInterface;
 import com.whisper.server.datalayer.db.dao.daointerfaces.UserDaoInterface;
 import com.whisper.server.model.User;
-import com.whisper.server.model.repo.Repository;
-import com.whisper.server.model.repo.RepositoryInterface;
 import com.whisper.server.model.repo.repointerfaces.UserRepoInterface;
 
 import java.sql.SQLException;
@@ -23,19 +21,20 @@ public class UserRepo implements UserRepoInterface {
             instance = new UserRepo(dao);
         return instance;
     }
+
     @Override
     public int create(User user) throws SQLException {
-        return userDao.create(user);
+        return userDao.createUser(user);
     }
 
     @Override
     public User getById(int id) throws SQLException {
-        return userDao.getById(id);
+        return userDao.getUserById(id);
     }
 
     @Override
     public int update(User user) throws SQLException {
-        return userDao.update(user);
+        return userDao.updateUser(user);
     }
 
     @Override

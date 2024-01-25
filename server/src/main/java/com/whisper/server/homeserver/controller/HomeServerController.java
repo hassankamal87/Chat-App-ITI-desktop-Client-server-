@@ -3,8 +3,14 @@ package com.whisper.server.homeserver.controller;
 import com.whisper.server.HelloApplication;
 import com.whisper.server.datalayer.db.MyDatabase;
 import com.whisper.server.datalayer.db.dao.Dao;
+import com.whisper.server.model.User;
+import com.whisper.server.model.enums.Gender;
+import com.whisper.server.model.enums.Mode;
+import com.whisper.server.model.enums.Status;
 import com.whisper.server.model.repo.Repository;
 import com.whisper.server.model.repo.RepositoryInterface;
+import com.whisper.server.model.repo.repoclasses.UserRepo;
+import com.whisper.server.model.repo.repointerfaces.UserRepoInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +26,9 @@ import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 public class HomeServerController {
 
@@ -40,8 +48,11 @@ public class HomeServerController {
     @FXML
     private BorderPane mainNavigatorPane;
     private Parent announcementPane = null;
+    private Parent welcomePane = null;
 
     private MyDatabase myDatabase = MyDatabase.getInstance();
+    @FXML
+
     public void initialize() {
         gettingPanes();
         disableButtons();
@@ -53,6 +64,9 @@ public class HomeServerController {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication
                     .class.getResource("announcer/view/announcerHomeView.fxml"));
             announcementPane = fxmlLoader.load();
+            fxmlLoader = new FXMLLoader(HelloApplication
+                    .class.getResource("welcome/view/welcomeView.fxml"));
+            welcomePane = fxmlLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,9 +124,9 @@ public class HomeServerController {
 
     private void handleButtonClick(Button clickedButton, Button otherButton1, Button otherButton2) {
 
-        clickedButton.setStyle("-fx-background-color: #fe3554; -fx-background-radius: 20;");
-        otherButton1.setStyle("-fx-background-color: #8061c5; -fx-background-radius: 20;");
-        otherButton2.setStyle("-fx-background-color: #8061c5; -fx-background-radius: 20;");
+        clickedButton.setStyle("-fx-background-color: #597E52; -fx-background-radius: 25;");
+        otherButton1.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
+        otherButton2.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
     }
 
 
@@ -122,6 +136,9 @@ public class HomeServerController {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
+        User myUser = new User(3,"0111111111","123","email"
+                ,"hassan", Gender.male,new Date(System.currentTimeMillis())
+                ,"Algeria","bio", Mode.avalible, Status.online);
         RepositoryInterface repo = Repository.getInstance(Dao.getInstance(myDatabase));
         try {
             repo.getUsers().forEach(e-> System.out.println(e.getUserName()));
@@ -136,6 +153,10 @@ public class HomeServerController {
             setupButtonHandlers();
         } else {
             disableButtons();
+            mainNavigatorPane.setCenter(welcomePane);
+            button1.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
+            button2.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
+            button3.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
         }
     }
 
