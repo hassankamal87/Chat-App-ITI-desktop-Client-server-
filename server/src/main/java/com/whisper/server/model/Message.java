@@ -1,15 +1,19 @@
 package com.whisper.server.model;
 
+import java.util.Date;
+
 public class Message {
     private int messageId;
     private int toChatId;
-    private String sentDate;
+    private Date sentDate;
     private int fromUserId;
     private String body;
 
     private String attachment;
 
-    public Message(int messageId, int toChatId, String sentDate, int fromUserId, String body, String attachment) {
+    public Message() {}
+
+    public Message(int messageId, int toChatId, Date sentDate, int fromUserId, String body, String attachment) {
         this.messageId = messageId;
         this.toChatId = toChatId;
         this.sentDate = sentDate;
@@ -34,11 +38,11 @@ public class Message {
         this.toChatId = toChatId;
     }
 
-    public String getSentDate() {
+    public Date getSentDate() {
         return sentDate;
     }
 
-    public void setSentDate(String sentDate) {
+    public void setSentDate(Date sentDate) {
         this.sentDate = sentDate;
     }
 
