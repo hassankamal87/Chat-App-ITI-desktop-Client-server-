@@ -21,19 +21,20 @@ public class UserRepo implements UserRepoInterface {
             instance = new UserRepo(dao);
         return instance;
     }
+
     @Override
     public int create(User user) throws SQLException {
-        return userDao.create(user);
+        return userDao.createUser(user);
     }
 
     @Override
     public User getById(int id) throws SQLException {
-        return userDao.getById(id);
+        return userDao.getUserById(id);
     }
 
     @Override
     public int update(User user) throws SQLException {
-        return userDao.update(user);
+        return userDao.updateUser(user);
     }
 
     @Override
