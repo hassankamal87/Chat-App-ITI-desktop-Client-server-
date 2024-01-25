@@ -9,6 +9,8 @@ import com.whisper.server.model.enums.Mode;
 import com.whisper.server.model.enums.Status;
 import com.whisper.server.model.repo.Repository;
 import com.whisper.server.model.repo.RepositoryInterface;
+import com.whisper.server.model.repo.repoclasses.UserRepo;
+import com.whisper.server.model.repo.repointerfaces.UserRepoInterface;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +28,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.List;
 
 public class HomeServerController {
 

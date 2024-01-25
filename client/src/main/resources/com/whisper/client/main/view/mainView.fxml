@@ -72,7 +72,7 @@
                   <Image url="@../../images/wlogo.png" />
                </image>
             </ImageView>
-            <Button fx:id="contactsBtn1" contentDisplay="TOP" layoutX="533.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#onAddContactClicked" prefHeight="52.0" prefWidth="89.0" styleClass="ripple" text="Add Contact" textFill="WHITE" underline="true">
+            <Button fx:id="addContactBtn" contentDisplay="TOP" layoutX="533.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#onAddContactClicked" prefHeight="52.0" prefWidth="89.0" styleClass="ripple" text="Add Contact" textFill="WHITE" underline="true">
                <graphic>
                   <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
