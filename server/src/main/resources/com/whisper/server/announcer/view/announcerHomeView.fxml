@@ -6,17 +6,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane fx:id="announcmentPane" prefHeight="550.0" prefWidth="800.0" styleClass="linear-grad2" stylesheets="@../../style/MyCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.server.announcer.controller.AnnouncerHomeController">
+<AnchorPane fx:id="announcmentPane" prefHeight="550.0" prefWidth="800.0" stylesheets="@../../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.server.announcer.controller.AnnouncerHomeController">
     <HTMLEditor fx:id="htmlEditor" layoutX="56.0" layoutY="97.0" prefHeight="329.0" prefWidth="686.0" />
-   <Label layoutX="204.0" layoutY="28.0" prefHeight="47.0" prefWidth="391.0" style="-fx-background-color: white; -fx-background-radius: 30;" styleClass="normal-text" text="  Your announcment!" textFill="#fe3554">
+   <Label layoutX="162.0" layoutY="27.0" prefHeight="69.0" prefWidth="474.0" styleClass="header" text="  Your announcment!" textFill="#fe3554">
       <font>
          <Font size="40.0" />
       </font>
    </Label>
-   <Button layoutX="309.0" layoutY="438.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="181.0" styleClass="button1" stylesheets="@../../style/MyCss.css" text="Announce">
+   <Button layoutX="309.0" layoutY="438.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="181.0" text="Announce">
       <font>
          <Font size="28.0" />
       </font>
    </Button>
-   <Label layoutX="239.0" layoutY="512.0" text="The announce u will send will be delivered to all online users" textFill="#fcfcfc" />
+   <Label layoutX="176.0" layoutY="520.0" styleClass="label2" text="The announce u will send will be delivered to all online users" textFill="#fcfcfc" />
 </AnchorPane>
