@@ -1,4 +1,5 @@
-package com.whisper.server.services.db;
+
+package com.whisper.server.datalayer.db;
 
 import com.whisper.server.utils.Constants;
 
@@ -11,6 +12,8 @@ public class MyDatabase {
     private static MyDatabase instance = null;
     private Connection connection = null;
 
+
+    private BasicConnectionPool  connectionPool = null ;
     private MyDatabase(){}
     public static synchronized MyDatabase getInstance(){
         if(instance == null)
@@ -19,19 +22,21 @@ public class MyDatabase {
     }
 
     public void startConnection() throws SQLException{
-        connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%d/%s",
-                Constants.HOST, Constants.PORT, Constants.DB_NAME), Constants.USERNAME, Constants.PASSWORD);
 
+
+        connectionPool = BasicConnectionPool
+                .create(String.format("jdbc:mysql://%s:%d/%s",
+                        Constants.HOST, Constants.PORT, Constants.DB_NAME), Constants.USERNAME, Constants.PASSWORD);
+
+        connection = connectionPool.getConnection();
     }
     public Connection getConnection() {
         return connection;
     }
 
     public void closeConnection() throws SQLException{
-        if (isConnectionValidAndNotNull()){
-            connection.close();
-            System.out.println("Connection closed");
-        }
+        connectionPool.closeAllConnections();
+
     }
 
 

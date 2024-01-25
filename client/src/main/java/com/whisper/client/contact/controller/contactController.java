@@ -27,6 +27,7 @@ public class contactController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         List<contact> contacts = new ArrayList<>(contacts());
         for(int i=0;i<contacts.size();i++){
@@ -49,6 +50,7 @@ public class contactController implements Initializable
     }
 
     private List<contact> contacts(){
+
         List<contact> ls = new ArrayList<>();
         contact contact = new contact();
         contact.setName("Menna Mansour");
