@@ -1,6 +1,7 @@
 package com.whisper.server;
 
 import com.whisper.server.persistence.db.MyDatabase;
+import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +16,6 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
         myDatabase.startConnection();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.
-                class.getResource("views/homeServerView.fxml"));
-
-
-
         stage.setOnCloseRequest(event -> {
             try {
                 myDatabase.closeConnection();
@@ -30,12 +26,12 @@ public class HelloApplication extends Application {
             Platform.exit();
             System.exit(0);
         });
-        Scene scene = new Scene(fxmlLoader.load());
+        SceneManager.getInstance().initStage(stage);
+        SceneManager.getInstance().loadView("homeServerView");
         stage.setTitle("Hello!");
-        stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();
 
+        stage.show();
     }
 
     public static void main(String[] args) {
