@@ -32,7 +32,8 @@ public class SceneManager {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
         }
         if(!scenes.containsKey(name)){
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(String.format("/views/%s.fxml", name)));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                    .getResource(String.format("/views/%s.fxml", name)));
             Parent root = null;
             try {
                 root = fxmlLoader.load();
@@ -45,7 +46,8 @@ public class SceneManager {
         primaryStage.setScene(scenes.get(name));
     }
     public Parent loadPane(String name){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(String.format("../views/%s.fxml", name)));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                .getResource(String.format("/views/%s.fxml", name)));
         Parent root = null;
         try {
             root = fxmlLoader.load();
