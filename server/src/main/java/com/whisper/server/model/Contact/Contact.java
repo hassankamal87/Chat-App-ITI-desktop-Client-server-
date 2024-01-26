@@ -2,28 +2,21 @@ package com.whisper.server.model.Contact;
 
 import com.whisper.server.model.enums.FriendshipStatus;
 
+import java.sql.Date;
+
 public class Contact {
     private FriendshipStatus friendshipStatus;
-    private String contactDate;
-    private contactId contactId;
+    private Date contactDate;
+    private int userId;
+    private int contactId;
 
-    public contactId getContactId() {
-        return contactId;
-    }
-
-    public void setContactId(contactId contactId) {
-        this.contactId = contactId;
-    }
-
-    public Contact(FriendshipStatus friendshipStatus, String contactDate, contactId contactId) {
+    public Contact(FriendshipStatus friendshipStatus, Date contactDate,int userId, int contactId) {
         this.friendshipStatus = friendshipStatus;
         this.contactDate = contactDate;
+        this.userId = userId;
        this.contactId=contactId;
 
     }
-
-
-
 
     public FriendshipStatus getFriendshipStatus() {
         return friendshipStatus;
@@ -33,13 +26,27 @@ public class Contact {
         this.friendshipStatus = friendshipStatus;
     }
 
-    public String getContactDate() {
+    public Date getContactDate() {
         return contactDate;
     }
 
-    public void setContactDate(String contactDate) {
+    public void setContactDate(Date contactDate) {
         this.contactDate = contactDate;
     }
 
+    public int getUserId() {
+        return userId;
+    }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+    }
 }
