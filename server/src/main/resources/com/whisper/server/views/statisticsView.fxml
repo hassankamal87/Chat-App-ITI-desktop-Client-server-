@@ -56,7 +56,7 @@
                                                 <Font name="System Bold" size="17.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="onlineUsers" alignment="CENTER" prefHeight="18.0" prefWidth="292.0" text="100 User" textFill="WHITE" />
+                                        <Label fx:id="onlineUsers" alignment="CENTER" prefHeight="18.0" prefWidth="292.0" textFill="WHITE" />
                                     </children>
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -72,7 +72,7 @@
                                                 <Font name="System Bold" size="17.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="offlineUsers" alignment="CENTER" prefHeight="18.0" prefWidth="292.0" text="100 User" textFill="WHITE" />
+                                        <Label fx:id="offlineUsers" alignment="CENTER" prefHeight="18.0" prefWidth="292.0" textFill="WHITE" />
                                     </children>
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

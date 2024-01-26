@@ -10,8 +10,7 @@ import com.whisper.server.persistence.entities.Status;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class UserDao implements UserDaoInterface {
     private MyDatabase myDatabase = null;
@@ -20,6 +19,7 @@ public class UserDao implements UserDaoInterface {
     private UserDao(MyDatabase myDatabase) {
         this.myDatabase = myDatabase;
     }
+
     public synchronized static UserDaoInterface getInstance(MyDatabase myDatabase) {
         if (instance == null) {
             instance = new UserDao(myDatabase);
@@ -131,5 +131,74 @@ public class UserDao implements UserDaoInterface {
             }
         }
         return users;
+    }
+
+    @Override
+    public int getMaleUsersCount() throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE gender = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, Gender.male.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int getFemaleUsersCount() throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE gender = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, Gender.female.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Map<String, Number>> getTopCountries() throws SQLException {
+        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC LIMIT 5";
+        List<Map<String, Number>> countries = new ArrayList<>();
+
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Map<String, Number> country = new HashMap<>();
+                country.put(rs.getString("country"), rs.getInt("user_count"));
+                countries.add(country);
+            }
+        }
+        return countries;
+    }
+
+    @Override
+    public int getOnlineUsersCount() throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE status = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, Status.online.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int getOfflineUsersCount() throws SQLException {
+        String query = "SELECT COUNT(*) FROM user WHERE status = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, Status.offline.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
     }
 }
