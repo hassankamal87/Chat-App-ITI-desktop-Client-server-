@@ -29,7 +29,8 @@ public class SceneManager {
 
     public void loadView(String name){
         if(primaryStage==null){
-            throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
+            throw new RuntimeException("Stage Coordinator should be " +
+                    "initialized with a Stage before it could be used");
         }
         if(!scenes.containsKey(name)){
             FXMLLoader fxmlLoader = new FXMLLoader(getClass()
