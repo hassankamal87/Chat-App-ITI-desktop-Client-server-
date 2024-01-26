@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="691.0" spacing="10.0" styleClass="menu-item" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.contactItemController">
+   <children>
+      <ImageView fx:id="photo" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </ImageView>
+      <Label fx:id="name" prefHeight="23.0" prefWidth="234.0" text="Menna Mansour" textFill="#575757">
+         <font>
+            <Font name="Corbel" size="20.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <Label fx:id="phone" layoutX="70.0" layoutY="33.0" prefHeight="23.0" prefWidth="222.0" text="+369.xxx.xxx.xxx" textFill="#575757">
+         <font>
+            <Font name="Corbel" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="email" layoutX="231.0" layoutY="33.0" prefHeight="23.0" prefWidth="263.0" text="abc.efg@gmail.com" textFill="#575757">
+         <font>
+            <Font name="Corbel" size="20.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="modeImg" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ImageView>
+            <Label fx:id="mode" text="Online">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </HBox>
+   </children>
+</HBox>

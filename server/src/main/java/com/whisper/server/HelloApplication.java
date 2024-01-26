@@ -1,6 +1,6 @@
 package com.whisper.server;
 
-import com.whisper.server.datalayer.db.MyDatabase;
+import com.whisper.server.persistence.db.MyDatabase;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException, SQLException {
         myDatabase.startConnection();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.
-                class.getResource("homeserver/view/homeServerView.fxml"));
+                class.getResource("views/homeServerView.fxml"));
 
 
 
