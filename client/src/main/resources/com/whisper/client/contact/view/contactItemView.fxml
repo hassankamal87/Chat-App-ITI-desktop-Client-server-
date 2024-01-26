@@ -6,17 +6,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="691.0" spacing="10.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.contact.controller.contactItemController">
+<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="691.0" spacing="10.0" styleClass="menu-item" stylesheets="@../../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.contact.controller.contactItemController">
    <children>
       <ImageView fx:id="photo" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
-            <Insets left="10.0" />
+            <Insets left="20.0" />
          </HBox.margin>
       </ImageView>
       <Label fx:id="name" prefHeight="23.0" prefWidth="234.0" text="Menna Mansour" textFill="#575757">
          <font>
             <Font name="Corbel" size="20.0" />
          </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
       </Label>
       <Label fx:id="phone" layoutX="70.0" layoutY="33.0" prefHeight="23.0" prefWidth="222.0" text="+369.xxx.xxx.xxx" textFill="#575757">
          <font>
