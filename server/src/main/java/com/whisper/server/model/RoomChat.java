@@ -3,11 +3,12 @@ package com.whisper.server.model;
 import com.whisper.server.model.enums.Type;
 
 import java.sql.Blob;
+import java.sql.Date;
 import java.util.List;
 
 public class RoomChat {
     private int roomChatId;
-    private String createdDate;
+    private Date createdDate;
     private boolean timeStamp;
     private String groupName;
     private Blob photoBlob;
@@ -17,7 +18,7 @@ public class RoomChat {
     private Type type;
 
 
-    public RoomChat(int roomChatId, String createdDate, boolean timeStamp, String groupName, Blob photo, int adminId, String description, Type type) {
+    public RoomChat(int roomChatId, Date createdDate, boolean timeStamp, String groupName, Blob photo, int adminId, String description, Type type) {
         this.roomChatId = roomChatId;
         this.createdDate = createdDate;
         this.timeStamp = timeStamp;
@@ -44,11 +45,11 @@ public class RoomChat {
         this.roomChatId = roomChatId;
     }
 
-    public String getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -61,14 +62,6 @@ public class RoomChat {
     }
     public boolean isTimeStamp() {
         return timeStamp;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public String getGroupName() {

@@ -3,12 +3,8 @@ package com.whisper.server.datalayer.db.dao.daoclasses;
 import com.whisper.server.datalayer.db.MyDatabase;
 import com.whisper.server.datalayer.db.dao.daointerfaces.ContactDaoInterface;
 import com.whisper.server.model.Contact.Contact;
-import com.whisper.server.model.Contact.contactId;
-import com.whisper.server.model.Notification;
 import com.whisper.server.model.enums.FriendshipStatus;
-import com.whisper.server.model.enums.Mode;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,10 +37,10 @@ public class ContactDao implements ContactDaoInterface  {
 
 
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
-        ps.setInt(1, object.getContactId().getUserId());
+        ps.setInt(1, object.getUserId());
         ps.setString(2, "friend"); // Set friendship_status to "friend"
         ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
-        ps.setInt(4, object.getContactId().getContactId());
+        ps.setInt(4, object.getContactId());
         int rowsInserted = ps.executeUpdate();
 
         ps.close();
@@ -72,9 +68,8 @@ public class ContactDao implements ContactDaoInterface  {
                 case "notFriend" -> FriendshipStatus.notFriend;
                 default -> FriendshipStatus.friend;
             };
-            String date = rs.getString("contact_date");
-            contactId contactId = new contactId(user_id,rs.getInt("contact_id"));
-            Contact contact = new Contact(friendshipStatus, date, contactId);
+            Date date = rs.getDate("contact_date");
+            Contact contact = new Contact(friendshipStatus, date, user_id, rs.getInt("contact_id"));
 
             contacts.add(contact);
 
@@ -87,13 +82,13 @@ public class ContactDao implements ContactDaoInterface  {
 
 
     @Override
-    public int deleteById(contactId id) throws SQLException {
+    public int deleteById(int userId, int contactId) throws SQLException {
         String query ="delete FROM contact " +
                 "WHERE user_id = ? AND contact_id = ?";
 
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
-        ps.setInt(1, id.getContactId());
-        ps.setInt(2,id.getUserId());
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
         int rowsInserted = ps.executeUpdate();
         ps.close();
         return rowsInserted;

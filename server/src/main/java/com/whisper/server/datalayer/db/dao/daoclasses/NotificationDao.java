@@ -1,21 +1,13 @@
 package com.whisper.server.datalayer.db.dao.daoclasses;
 
-import com.whisper.server.datalayer.db.BasicConnectionPool;
 import com.whisper.server.datalayer.db.MyDatabase;
-import com.whisper.server.datalayer.db.dao.daointerfaces.ContactDaoInterface;
 import com.whisper.server.datalayer.db.dao.daointerfaces.NotificationDaoInterface;
-import com.whisper.server.model.Contact.Contact;
-import com.whisper.server.model.Contact.contactId;
 import com.whisper.server.model.Notification;
-import com.whisper.server.model.enums.FriendshipStatus;
 import com.whisper.server.model.enums.NotifactionType;
-import javafx.geometry.NodeOrientation;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +27,15 @@ public class NotificationDao implements NotificationDaoInterface {
     @Override
     public int create(Notification object) throws SQLException {
       String query = "INSERT INTO `db_chat_app`.`notification` " +
-                "(`notification_id`, `to_user_id`, `from_user_name`, `type`, `body`)" +
-                " VALUES (?, ?, ?, ?, ?)";
+                "(`to_user_id`, `from_user_name`, `type`, `body`)" +
+                " VALUES (?, ?, ?, ?)";
 
 
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
-        ps.setInt(1, object.getNotificationId());
-        ps.setInt(2, object.getToUserId());
-        ps.setString(3, object.getFromUserName());
-        ps.setString(4,"msg");
-        ps.setString(5,object.getBody());
+        ps.setInt(1, object.getToUserId());
+        ps.setString(2, object.getFromUserName());
+        ps.setString(3,"msg");
+        ps.setString(4,object.getBody());
         int rowsInserted = ps.executeUpdate();
 
         ps.close();
