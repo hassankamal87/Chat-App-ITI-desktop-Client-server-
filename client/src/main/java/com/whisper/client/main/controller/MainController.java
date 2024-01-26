@@ -27,7 +27,7 @@ public class MainController {
     @FXML
     private Button signOutBtn;
     @FXML
-    private Button contactsBtn1;
+    private Button addContactBtn;
 
     @FXML
     public void initialize() {
@@ -60,6 +60,9 @@ public class MainController {
 
             mainPane.setCenter(root);
             homeBtn.setStyle("-fx-background-color: #fe3554;");
+            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            profileBtn.setStyle("-fx-background-color: #trnasparent;");
         }
 
     }
@@ -82,6 +85,24 @@ public class MainController {
     }
 
     public void onAddContactClicked(MouseEvent mouseEvent) {
+        Parent root = null;
+
+        if (!Objects.equals("userSearchPane", mainPane.getCenter().getId())) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("userSearch/view/userSearchView.fxml"));
+
+
+                root = fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            mainPane.setCenter(root);
+            addContactBtn.setStyle("-fx-background-color: #fe3554;");
+            homeBtn.setStyle("-fx-background-color: #trnasparent;");
+            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            profileBtn.setStyle("-fx-background-color: #trnasparent;");
+        }
     }
 
     @FXML
