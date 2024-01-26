@@ -5,6 +5,7 @@ import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -32,15 +33,7 @@ public class SignUpController {
 
 
     public void onGetStartedClicked(ActionEvent actionEvent) {
-        Parent root = null;
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/continuingSignUpView.fxml"));
-            root = fxmlLoader.load();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
+        Parent root = SceneManager.getInstance().loadPane("continuingSignUpView");
         mainSignUpPane.setCenter(root);
     }
 

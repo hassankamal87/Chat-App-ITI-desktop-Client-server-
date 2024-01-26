@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.services;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -33,22 +34,22 @@ public class SceneManager {
                     "initialized with a Stage before it could be used");
         }
         if(!scenes.containsKey(name)){
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                    .getResource(String.format("/views/%s.fxml", name)));
-            Parent root = null;
             try {
-                root = fxmlLoader.load();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                        .getResource(String.format("/com/whisper/client/views/%s.fxml", name)));
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+                scenes.put(name, scene);
             } catch (IOException e) {
-                e.toString();
+                throw new RuntimeException(e);
             }
-            Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-            scenes.put(name, scene);
+
         }
         primaryStage.setScene(scenes.get(name));
     }
     public Parent loadPane(String name){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                .getResource(String.format("/views/%s.fxml", name)));
+                .getResource(String.format("/com/whisper/client/views/%s.fxml", name)));
         Parent root = null;
         try {
             root = fxmlLoader.load();
