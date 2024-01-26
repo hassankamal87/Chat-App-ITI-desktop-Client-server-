@@ -2,6 +2,7 @@ package com.whisper.server.presentation.controllers;
 
 import com.whisper.server.HelloApplication;
 import com.whisper.server.persistence.db.MyDatabase;
+import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +39,7 @@ public class HomeServerController {
     private Parent announcementPane = null;
     private Parent welcomePane = null;
 
-    private MyDatabase myDatabase = MyDatabase.getInstance();
+    private final MyDatabase myDatabase = MyDatabase.getInstance();
     @FXML
 
     public void initialize() {
@@ -48,16 +49,8 @@ public class HomeServerController {
         setupToggleSwitchHandler();
     }
     private void gettingPanes(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication
-                    .class.getResource("views/announcerHomeView.fxml"));
-            announcementPane = fxmlLoader.load();
-            fxmlLoader = new FXMLLoader(HelloApplication
-                    .class.getResource("views/welcomeView.fxml"));
-            welcomePane = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        announcementPane = SceneManager.getInstance().loadPane("announcerHomeView");
+        welcomePane = SceneManager.getInstance().loadPane("welcomeView");
     }
 
     private void setupToggleSwitch() {
@@ -119,14 +112,15 @@ public class HomeServerController {
 
 
     private void performOperation() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
       /*  User myUser = new User(3,"0111111111","123","email"
                 ,"hassan", Gender.male,new Date(System.currentTimeMillis())
                 ,"Algeria","bio", Mode.avalible, Status.online);*/
+
     }
 
     private void handleToggleSwitchChange(boolean isSwitchOn) {
