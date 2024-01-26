@@ -4,6 +4,9 @@
 .linear-grad2{
     -fx-background-color: linear-gradient(to bottom left,#597E52 ,#89A381 );
 }
+.linear-grad3{
+    -fx-background-color: linear-gradient(to bottom left,#C6A969 ,#FFDAB9 );
+}
 /* General Styling */
 .root {
     -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -38,6 +41,7 @@
     -fx-background-color: #FFFFEC;
     -fx-text-fill: #333333;
     -fx-padding: 5px;
+    -fx-font-size: 14px;
     -fx-border-radius: 15px;
     -fx-background-radius: 15px;
 }
@@ -45,7 +49,13 @@
 
 /* Labels */
 .label {
-    -fx-text-fill: #333333;
+    -fx-text-fill: #FFFFEC;
+        -fx-font-family: 'Courier New'; /* Change the font to 'Courier New' */
+}
+.label2 {
+    -fx-text-fill: #597E52;
+    -fx-font-family: 'Courier New'; /* Change the font to 'Courier New' */
+    -fx-font-weight: bold;
 }
 
 /* Headers */
@@ -112,4 +122,9 @@
 .button:hover,
 .table-row-cell:hover {
     -fx-background-color: #597E52; /* Darker green on hover */
+}
+
+.html-editor {
+    -fx-control-inner-background: #FFDAB9;
+    -fx-accent: #89A381;
 }
