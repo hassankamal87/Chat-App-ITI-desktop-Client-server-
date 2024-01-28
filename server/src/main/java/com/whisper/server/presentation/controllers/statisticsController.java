@@ -12,6 +12,7 @@ import javafx.scene.control.Tooltip;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,25 +26,35 @@ public class statisticsController extends Thread implements Initializable {
     @javafx.fxml.FXML
     private Label offlineUsers;
     @javafx.fxml.FXML
-    private BarChart entryChart;
-    @javafx.fxml.FXML
     private BarChart countryChart;
-    private static int timer=0;
+    private static int timer = 0;
+    ObservableList<XYChart.Data<String, Number>> countryData = FXCollections.observableArrayList();
+    XYChart.Series<String, Number> series = new XYChart.Series<>();
+    @javafx.fxml.FXML
+    private LineChart entryChart;
 
     @Override
     public void run() {
         while (true) {
             try {
                 //update charts every 1 minute
-                Thread.sleep(1000*60);
+                Thread.sleep(1000 * 2);
                 Platform.runLater(() -> {
-                    timer+=1;
+                    timer += 1;
                     // clear charts every 1 day
-                    if(timer>=1*60*24) clearCharts();
+                    if (timer >= 1 * 60) {
+                        entryChart.getData().clear();
+                        timer = 0;
+                    }
+                    try {
+                        countryData = convertToObservableList(UserDao.getInstance(MyDatabase.getInstance()).getTopCountries());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                     setOnlineUsers();
                     setOfflineUsers();
                     drawGenderChart();
-                    drawCountryChart();
+                    updateChartWithData(countryData);
                     drawEntriesChart();
                 });
             } catch (InterruptedException e) {
@@ -52,17 +63,9 @@ public class statisticsController extends Thread implements Initializable {
         }
     }
 
-    private void clearCharts() {
-        entryChart.getData().clear();
-        countryChart.getData().clear();
-        genderChart.getData().clear();
-        timer=0;
-    }
-
     private void drawEntriesChart() {
-
-        // Get the current hour
-        int currentHour = LocalDateTime.now().getHour();
+        // Get the current time in format hh:mm
+        Time time = Time.valueOf(LocalDateTime.now().toLocalTime());
 
         // Get the count of online users
         int onlineUsersCount;
@@ -73,21 +76,20 @@ public class statisticsController extends Thread implements Initializable {
         }
 
         // Create a new XYChart.Data object
-        XYChart.Data<String, Number> data = new XYChart.Data<>(String.valueOf(currentHour), onlineUsersCount);
+        XYChart.Data<String, Number> data = new XYChart.Data<>(String.valueOf(time), onlineUsersCount);
 
         // Create a new XYChart.Series object and add the data to it
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Online Users");
         series.getData().add(data);
 
-        // Clear the existing data in the entryChart and add the new series
-            entryChart.getData().add(series);
+        entryChart.getData().add(series);
 
     }
 
     public void setOnlineUsers() {
         try {
-            onlineUsers.setText(UserDao.getInstance(MyDatabase.getInstance()).getOnlineUsersCount()+" Users");
+            onlineUsers.setText(UserDao.getInstance(MyDatabase.getInstance()).getOnlineUsersCount() + " Users");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -95,7 +97,7 @@ public class statisticsController extends Thread implements Initializable {
 
     public void setOfflineUsers() {
         try {
-            offlineUsers.setText(UserDao.getInstance(MyDatabase.getInstance()).getOfflineUsersCount()+" Users");
+            offlineUsers.setText(UserDao.getInstance(MyDatabase.getInstance()).getOfflineUsersCount() + " Users");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -113,11 +115,10 @@ public class statisticsController extends Thread implements Initializable {
         drawGenderChart();
         drawCountryChart();
         start();
-        //drawEntriesChart();
     }
 
-    private void drawGenderChart(){
-                int maleCount,femaleCount;
+    private void drawGenderChart() {
+        int maleCount, femaleCount;
         try {
             maleCount = UserDao.getInstance(MyDatabase.getInstance()).getMaleUsersCount();
             femaleCount = UserDao.getInstance(MyDatabase.getInstance()).getFemaleUsersCount();
@@ -130,33 +131,44 @@ public class statisticsController extends Thread implements Initializable {
         );
         genderChart.setData(genderData);
         for (PieChart.Data data : genderChart.getData()) {
-            String percentage = String.format("%.1f%%", (data.getPieValue() / (maleCount+femaleCount)) * 100);
+            String percentage = String.format("%.1f%%", (data.getPieValue() / (maleCount + femaleCount)) * 100);
             Tooltip tooltip = new Tooltip(percentage);
             Tooltip.install(data.getNode(), tooltip);
         }
     }
 
-    private void drawCountryChart(){
-        List<Map<String,Number>> topCountries = null;
+    private void drawCountryChart() {
         try {
-            topCountries = UserDao.getInstance(MyDatabase.getInstance()).getTopCountries();
+            List<Map<String, Number>> topCountries = UserDao.getInstance(MyDatabase.getInstance()).getTopCountries();
+
+            countryData = convertToObservableList(topCountries);
+
+            updateChartWithData(countryData);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ObservableList<XYChart.Data<String, Number>> countryData = FXCollections.observableArrayList();
+    }
+
+    private ObservableList<XYChart.Data<String, Number>> convertToObservableList(List<Map<String, Number>> topCountries) {
+        ObservableList<XYChart.Data<String, Number>> data = FXCollections.observableArrayList();
+
         for (Map<String, Number> country : topCountries) {
             for (Map.Entry<String, Number> entry : country.entrySet()) {
-                countryData.add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+                data.add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
             }
         }
+
+        return data;
+    }
+
+    private void updateChartWithData(ObservableList<XYChart.Data<String, Number>> data) {
         countryChart.getData().clear();
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series = new XYChart.Series<>();
         series.setName("Entries");
 
-        for (XYChart.Data<String, Number> data : countryData) {
-            series.getData().add(data);
-        }
+        series.getData().addAll(data);
+
         countryChart.getData().add(series);
     }
 }
