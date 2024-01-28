@@ -28,13 +28,18 @@ public class statisticsController extends Thread implements Initializable {
     private BarChart entryChart;
     @javafx.fxml.FXML
     private BarChart countryChart;
+    private static int timer=0;
 
     @Override
     public void run() {
         while (true) {
             try {
-                Thread.sleep(1000*60*30);
+                //update charts every 1 minute
+                Thread.sleep(1000*60);
                 Platform.runLater(() -> {
+                    timer+=1;
+                    // clear charts every 1 day
+                    if(timer>=1*60*24) clearCharts();
                     setOnlineUsers();
                     setOfflineUsers();
                     drawGenderChart();
@@ -47,7 +52,15 @@ public class statisticsController extends Thread implements Initializable {
         }
     }
 
+    private void clearCharts() {
+        entryChart.getData().clear();
+        countryChart.getData().clear();
+        genderChart.getData().clear();
+        timer=0;
+    }
+
     private void drawEntriesChart() {
+
         // Get the current hour
         int currentHour = LocalDateTime.now().getHour();
 
