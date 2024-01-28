@@ -83,7 +83,7 @@ public class BasicConnectionPool implements ConnectionPool {
     public void closeAllConnections() throws SQLException {
         for (Connection connection : connectionPool) {
             connection.close();
-            System.out.println("close connection");
+           // System.out.println("close connection");
         }
         for (Connection connection : usedConnections) {
             connection.close();

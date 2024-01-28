@@ -37,5 +37,6 @@
    <stylesheets>
       <URL value="@../style/style.css" />
       <URL value="@../style/newCss.css" />
+      <URL value="@../../../../../IO/EmployeesRMI/client/src/main/resources/org/example/client/newCss.css" />
    </stylesheets>
 </AnchorPane>
