@@ -1,7 +1,7 @@
 package com.whisper.server.presentation.controllers;
 
 import com.whisper.server.HelloApplication;
-import com.whisper.server.business.services.serverService;
+import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
