@@ -2,7 +2,7 @@ package com.whisper.server.persistence.daos;
 
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.persistence.daos.interfaces.PendingRequestDaoInterface;
-import com.whisper.server.persistence.entities.PendingRequest;
+import org.example.entities.PendingRequest;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

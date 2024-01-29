@@ -2,8 +2,8 @@ package com.whisper.server.persistence.daos;
 
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.persistence.daos.interfaces.NotificationDaoInterface;
-import com.whisper.server.persistence.entities.Notification;
-import com.whisper.server.persistence.entities.NotifactionType;
+import org.example.entities.Notification;
+import org.example.entities.NotifactionType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

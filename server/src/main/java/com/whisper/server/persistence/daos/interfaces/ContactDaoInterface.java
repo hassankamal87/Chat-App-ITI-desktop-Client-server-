@@ -1,6 +1,6 @@
 package com.whisper.server.persistence.daos.interfaces;
 
-import com.whisper.server.persistence.entities.Contact;
+import org.example.entities.Contact;
 
 import java.sql.SQLException;
 import java.util.List;

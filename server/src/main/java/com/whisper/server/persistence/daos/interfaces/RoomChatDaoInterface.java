@@ -1,8 +1,8 @@
 package com.whisper.server.persistence.daos.interfaces;
 
-import com.whisper.server.persistence.entities.RoomChat;
-import com.whisper.server.persistence.entities.RoomMember;
-import com.whisper.server.persistence.entities.User;
+import org.example.entities.RoomChat;
+import org.example.entities.RoomMember;
+import org.example.entities.User;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -2,10 +2,10 @@ package com.whisper.server.persistence.daos;
 
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
-import com.whisper.server.persistence.entities.User;
-import com.whisper.server.persistence.entities.Gender;
-import com.whisper.server.persistence.entities.Mode;
-import com.whisper.server.persistence.entities.Status;
+import org.example.entities.User;
+import org.example.entities.Gender;
+import org.example.entities.Mode;
+import org.example.entities.Status;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

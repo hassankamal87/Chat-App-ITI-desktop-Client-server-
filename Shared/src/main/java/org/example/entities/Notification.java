@@ -1,4 +1,4 @@
-package com.whisper.server.persistence.entities;
+package org.example.entities;
 
 public class Notification {
     private int notificationId;
