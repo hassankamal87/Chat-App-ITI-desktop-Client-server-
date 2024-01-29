@@ -2,8 +2,8 @@ package com.whisper.server.persistence.daos;
 
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.persistence.daos.interfaces.ContactDaoInterface;
-import com.whisper.server.persistence.entities.Contact;
-import com.whisper.server.persistence.entities.FriendshipStatus;
+import org.example.entities.Contact;
+import org.example.entities.FriendshipStatus;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;

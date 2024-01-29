@@ -1,6 +1,6 @@
 package com.whisper.server.business.services.interfaces;
 
-import com.whisper.server.persistence.entities.User;
+import org.example.entities.User;
 
 import java.util.List;
 

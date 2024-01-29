@@ -2,7 +2,7 @@ package com.whisper.server.persistence.daos;
 
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.persistence.daos.interfaces.MessageDaoInterface;
-import com.whisper.server.persistence.entities.Message;
+import org.example.entities.Message;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;

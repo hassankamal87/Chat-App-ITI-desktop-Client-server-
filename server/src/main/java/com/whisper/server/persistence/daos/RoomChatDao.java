@@ -2,13 +2,13 @@ package com.whisper.server.persistence.daos;
 
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.persistence.daos.interfaces.RoomChatDaoInterface;
-import com.whisper.server.persistence.entities.RoomChat;
-import com.whisper.server.persistence.entities.RoomMember;
-import com.whisper.server.persistence.entities.User;
-import com.whisper.server.persistence.entities.Gender;
-import com.whisper.server.persistence.entities.Mode;
-import com.whisper.server.persistence.entities.Status;
-import com.whisper.server.persistence.entities.Type;
+import org.example.entities.RoomChat;
+import org.example.entities.RoomMember;
+import org.example.entities.User;
+import org.example.entities.Gender;
+import org.example.entities.Mode;
+import org.example.entities.Status;
+import org.example.entities.Type;
 
 import java.sql.*;
 import java.time.LocalDate;
