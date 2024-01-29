@@ -52,7 +52,7 @@ public class ServerService implements serverServiceInt {
 
     @Override
     public void Announcement(String s) {
-
+        System.out.println("hello announcment");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.whisper.server;
 
-import com.whisper.server.business.services.serverService;
+import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Application;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class HelloApplication extends Application {
-    serverService serverService = new serverService();
+    ServerService serverService = new ServerService();
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
