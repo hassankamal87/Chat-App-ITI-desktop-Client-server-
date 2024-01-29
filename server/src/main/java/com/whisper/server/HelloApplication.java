@@ -1,5 +1,6 @@
 package com.whisper.server;
 
+import com.whisper.server.business.services.serverService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Application;
@@ -12,17 +13,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class HelloApplication extends Application {
-    private MyDatabase myDatabase = MyDatabase.getInstance();
+    serverService serverService = new serverService();
+
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-        myDatabase.startConnection();
+
+        serverService.startServer();
         stage.setOnCloseRequest(event -> {
-            try {
-                myDatabase.closeConnection();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("Connection closed on application shutdown.");
+
+                serverService.stopServer();
             Platform.exit();
             System.exit(0);
         });

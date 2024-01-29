@@ -1,6 +1,7 @@
 package com.whisper.server.presentation.controllers;
 
 import com.whisper.server.HelloApplication;
+import com.whisper.server.business.services.serverService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
@@ -132,6 +133,8 @@ public class HomeServerController {
       /*  User myUser = new User(3,"0111111111","123","email"
                 ,"hassan", Gender.male,new Date(System.currentTimeMillis())
                 ,"Algeria","bio", Mode.avalible, Status.online);*/
+//        serverService serverService=new serverService();
+//        System.out.println(serverService.viewClients().size());
 
     }
 
