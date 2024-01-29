@@ -38,6 +38,8 @@ public class HomeServerController {
     private BorderPane mainNavigatorPane;
     private Parent announcementPane = null;
     private Parent welcomePane = null;
+    private Parent statisticsPane = null;
+    private Parent usersPane = null;
 
     private final MyDatabase myDatabase = MyDatabase.getInstance();
     @FXML
@@ -51,6 +53,8 @@ public class HomeServerController {
     private void gettingPanes(){
         announcementPane = SceneManager.getInstance().loadPane("announcerHomeView");
         welcomePane = SceneManager.getInstance().loadPane("welcomeView");
+        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
+        usersPane = SceneManager.getInstance().loadPane("users-view");
     }
 
     private void setupToggleSwitch() {
@@ -94,13 +98,21 @@ public class HomeServerController {
     }
 
     private void setupButtonHandlers() {
-        button1.setOnAction(event -> handleButtonClick(button1, button2, button3));
+        button1.setOnAction(
+                event -> {
+                    handleButtonClick(button1, button2, button3);
+                    mainNavigatorPane.setCenter(usersPane);
+        });
         button2.setOnAction(
                 event -> {
                     handleButtonClick(button2, button1, button3);
                     mainNavigatorPane.setCenter(announcementPane);
         });
-        button3.setOnAction(event -> handleButtonClick(button3, button1, button2));
+        button3.setOnAction(
+                event -> {
+                    handleButtonClick(button3, button1, button2);
+                    mainNavigatorPane.setCenter(statisticsPane);
+        });
     }
 
     private void handleButtonClick(Button clickedButton, Button otherButton1, Button otherButton2) {
