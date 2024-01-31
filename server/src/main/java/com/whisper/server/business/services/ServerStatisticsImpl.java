@@ -42,10 +42,12 @@ public class ServerStatisticsImpl implements Runnable , ServerStatisticsInt {
 
     @Override
     public void run() {
-        while (true) {
+        while (HomeServerController.isSwitchOn) {
             try {
                 //update charts every 2 seconds
                 Thread.sleep(2000 );
+                if(!HomeServerController.isSwitchOn)
+                    break;
                 Platform.runLater(() -> {
                     timer += 1;
                     // clear charts every 2 hours
@@ -56,6 +58,7 @@ public class ServerStatisticsImpl implements Runnable , ServerStatisticsInt {
                     try {
                         countryData = convertToObservableList(UserDao.getInstance(MyDatabase.getInstance()).getTopCountries());
                     } catch (SQLException e) {
+                        System.out.println("SQL Exception : " + e);
                         throw new RuntimeException(e);
                     }
                     setOnlineUsers();
@@ -63,6 +66,7 @@ public class ServerStatisticsImpl implements Runnable , ServerStatisticsInt {
                     drawGenderChart();
                     updateChartWithData(countryData);
                     drawEntriesChart();
+                    System.out.println("update charts");
                 });
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

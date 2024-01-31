@@ -8,23 +8,25 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class statisticsController implements Initializable {
+public class StatisticsController implements Initializable {
     @javafx.fxml.FXML
-    private PieChart genderChart;
+    private PieChart genderChart=null;
     @javafx.fxml.FXML
-    private Label onlineUsers;
+    private Label onlineUsers=null;
     @javafx.fxml.FXML
-    private Label offlineUsers;
+    private Label offlineUsers=null;
     @javafx.fxml.FXML
-    private BarChart countryChart;
+    private BarChart countryChart=null;
     @javafx.fxml.FXML
-    private LineChart entryChart;
-    private ServerStatisticsImpl serverStatistics;
+    private LineChart entryChart=null;
+    private ServerStatisticsImpl serverStatistics=null;
+    Thread statThread=null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("StatisticsController");
         serverStatistics = new ServerStatisticsImpl(genderChart, onlineUsers, offlineUsers, countryChart, entryChart);
-        Thread statThread = new Thread(serverStatistics);
+        statThread = new Thread(serverStatistics);
         statThread.start();
     }
 }
