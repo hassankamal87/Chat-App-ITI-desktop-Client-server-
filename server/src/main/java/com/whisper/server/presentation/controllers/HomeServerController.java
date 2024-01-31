@@ -64,6 +64,12 @@ public class HomeServerController {
         statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
         usersPane = SceneManager.getInstance().loadPane("users-view");
     }
+//    private void getStatisticsPane(){
+//        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
+//    }
+//    private void closeStatisticsPane(){
+//        statisticsPane = null;
+//    }
 
     private void setupToggleSwitch() {
         rectangle = new Rectangle(60, 31);
@@ -158,12 +164,14 @@ public class HomeServerController {
         if (isSwitchOn) {
             enableButtons();
             setupButtonHandlers();
+
         } else {
             disableButtons();
             mainNavigatorPane.setCenter(welcomePane);
             button1.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
             button2.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
             button3.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
+
         }
     }
 
