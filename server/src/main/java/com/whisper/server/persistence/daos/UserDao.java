@@ -161,7 +161,7 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public List<Map<String, Number>> getTopCountries() throws SQLException {
-        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC LIMIT 5";
+        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC";
         List<Map<String, Number>> countries = new ArrayList<>();
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {

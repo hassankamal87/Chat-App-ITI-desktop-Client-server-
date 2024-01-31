@@ -143,7 +143,6 @@ public class ServerStatisticsImpl implements Runnable , ServerStatisticsInt {
             List<Map<String, Number>> topCountries = UserDao.getInstance(MyDatabase.getInstance()).getTopCountries();
 
             countryData = convertToObservableList(topCountries);
-
             updateChartWithData(countryData);
         } catch (SQLException e) {
             throw new RuntimeException(e);

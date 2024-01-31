@@ -46,12 +46,17 @@ public class HomeServerController {
     private BorderPane mainNavigatorPane;
     private Parent announcementPane = null;
     private Parent welcomePane = null;
-    private Parent statisticsPane = null;
     private Parent usersPane = null;
-
+    private final ServerService serverService = ServerService.getInstance();
     private final MyDatabase myDatabase = MyDatabase.getInstance();
+    private Parent statisticsPane = null;
+    private void getStatisticsPane(){
+        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
+    }
+    private void closeStatisticsPane(){
+        statisticsPane = null;
+    }
     @FXML
-
     public void initialize() {
         gettingPanes();
         disableButtons();
@@ -63,12 +68,6 @@ public class HomeServerController {
         welcomePane = SceneManager.getInstance().loadPane("welcomeView");
         //statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
         usersPane = SceneManager.getInstance().loadPane("users-view");
-    }
-    private void getStatisticsPane(){
-        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
-    }
-    private void closeStatisticsPane(){
-        statisticsPane = null;
     }
 
     private void setupToggleSwitch() {
