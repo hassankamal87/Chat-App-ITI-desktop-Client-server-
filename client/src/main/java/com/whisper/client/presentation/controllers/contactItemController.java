@@ -1,13 +1,16 @@
 package com.whisper.client.presentation.controllers;
-import com.whisper.client.model.contact;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import org.example.entities.Mode;
 import org.example.entities.User;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,8 +22,7 @@ public class contactItemController implements Initializable {
     @FXML
     private ImageView photo;
 
-    @FXML
-    private ImageView modeImg;
+
 
     @FXML
     private Label mode;
@@ -31,14 +33,35 @@ public class contactItemController implements Initializable {
     @FXML
     private Label phone;
 
+    @FXML
+    private Circle modeIcon;
     public void setData(User contact ){
         try{
+            Image img = new Image(getClass().getResourceAsStream("/com/whisper/client/images/modePhoto/" +contact.getMode()+".jpg"));
 
-            modeImg.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/modePhoto/" +contact.getMode()+".jpg")));
+            Color color = null;
+            if(contact.getMode()==Mode.offline)
+                color=Color.DARKRED;
+            else if(contact.getMode()==Mode.available)
+                color=Color.LIGHTGREEN;
+            else if(contact.getMode()==Mode.away)
+                color=Color.LIGHTBLUE;
+            else
+                color=Color.ORANGE;
+            modeIcon.setFill(color);
+            modeIcon.setEffect(new DropShadow(+25d,0d,+2d, Color.LIGHTBLUE));
 
-            photo.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/personalPhoto/img.jpg")));
 
+            if(contact.getProfilePhoto()!=null) {
+             Image profile = new Image(new ByteArrayInputStream(contact.getProfilePhoto()));
+                photo.setImage(profile);
+            }
+            else photo.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/personalPhoto/defaultProfile.jpg")));
 
+            photo.setFitHeight(50);
+            photo.setFitWidth(50);
+
+            photo.setPreserveRatio(true);
         }catch (Exception e){
             e.printStackTrace();
             System.out.println(e.getMessage());
