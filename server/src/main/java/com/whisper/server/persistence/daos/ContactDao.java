@@ -60,6 +60,7 @@ public class ContactDao implements ContactDaoInterface {
 
 
         ResultSet rs = ps.executeQuery();
+        System.out.println("here");
         List<Contact> contacts = new ArrayList<>();
         while(rs.next()) {
             String status = rs.getString("friendship_status");
@@ -75,6 +76,7 @@ public class ContactDao implements ContactDaoInterface {
 
         }
         ps.close();
+
 
         return contacts;
     }

@@ -6,6 +6,7 @@ import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
 import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
+import org.example.serverinterfaces.ContactServiceInt;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -15,6 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServerService implements serverServiceInt {
+    private static ServerService instance = null;
+    private ServerService(){}
+    public static synchronized ServerService getInstance(){
+        if(instance == null)
+            instance = new ServerService();
+        return instance;
+    }
     private MyDatabase myDatabase = MyDatabase.getInstance();
     private UserDaoInterface userDao = UserDao.getInstance(myDatabase);
 
@@ -33,8 +41,11 @@ public class ServerService implements serverServiceInt {
         try {
             Registry reg = LocateRegistry.createRegistry(1099);
             AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
+            ContactServiceInt contactService = new ContactServiceImpl();
             reg.rebind("authenticationService", authenticationService);
+            reg.rebind("ContactsService",contactService);
             System.out.println("authenticationService binded successful");
+            System.out.println("ContactService binded successful");
         } catch (RemoteException e) {
             System.out.println(e.getMessage() + "Server Service line 36");
         }

@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ContactService;
 import com.whisper.client.model.contact;
 
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.example.entities.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +31,7 @@ public class contactController implements Initializable
 
 
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        List<contact> contacts = new ArrayList<>(contacts());
+        List<User> contacts = new ArrayList<>(contacts());
         for(int i=0;i<contacts.size();i++){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/contactItemView.fxml"));
 
@@ -49,174 +51,178 @@ public class contactController implements Initializable
 
     }
 
-    private List<contact> contacts(){
+    private List<User> contacts(){
 
-        List<contact> ls = new ArrayList<>();
-        contact contact = new contact();
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        contact.setName("Menna Mansour");
-        contact.setImgSrc("img.jpg");
-        contact.setPhoneNumber("+369.xxx.xxx.xxx");
-        contact.setEmail("abc.aeg@gmail.com");
-        contact.setMode("Online");
-        ls.add(contact);
-
-        return ls;
+        ContactService contactService= new ContactService();
+        List<User>contacts =contactService.getContacts(1);
+        return contacts;
+//
+//        List<contact> ls = new ArrayList<>();
+//        contact contact = new contact();
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        contact.setName("Menna Mansour");
+//        contact.setImgSrc("img.jpg");
+//        contact.setPhoneNumber("+369.xxx.xxx.xxx");
+//        contact.setEmail("abc.aeg@gmail.com");
+//        contact.setMode("Online");
+//        ls.add(contact);
+//
+//        return ls;
 
     }
 

@@ -50,7 +50,7 @@ public class UserDao implements UserDaoInterface {
 
     // Getting a user by id
     public User getUserById(int id) throws SQLException {
-        String query = "SELECT * FROM user WHERE id = ?";
+        String query = "SELECT * FROM user WHERE user_id = ?";
         User user = null;
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
@@ -79,7 +79,7 @@ public class UserDao implements UserDaoInterface {
     public int updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
                 " user_name = ?, gender = ?, date_of_birth = ?, country = ?, bio = ?," +
-                " mode = ?, status = ? WHERE id = ?";
+                " mode = ?, status = ? WHERE user_id = ?";
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setString(1, user.getPhoneNumber());
             ps.setString(2, user.getPassword());
@@ -99,7 +99,7 @@ public class UserDao implements UserDaoInterface {
 
     // Deleting a user by id
     public int deleteById(int id) throws SQLException {
-        String query = "DELETE FROM user WHERE id = ?";
+        String query = "DELETE FROM user WHERE user_id = ?";
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setInt(1, id);

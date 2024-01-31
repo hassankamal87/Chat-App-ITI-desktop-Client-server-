@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class HelloApplication extends Application {
-    ServerService serverService = new ServerService();
+    ServerService serverService = ServerService.getInstance();
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {

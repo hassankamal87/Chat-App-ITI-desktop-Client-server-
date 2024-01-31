@@ -1,6 +1,7 @@
 package com.whisper.server.presentation.controllers;
 
 import com.whisper.server.HelloApplication;
+import com.whisper.server.business.services.ContactServiceImpl;
 import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
@@ -17,8 +18,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import org.example.entities.User;
+import org.example.serverinterfaces.ContactServiceInt;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeServerController {
 
@@ -135,6 +142,15 @@ public class HomeServerController {
                 ,"Algeria","bio", Mode.avalible, Status.online);*/
 //        serverService serverService=new serverService();
 //        System.out.println(serverService.viewClients().size());
+//        List<User> contacts =new ArrayList<>();
+//        try {
+//            ContactServiceInt contactService = new ContactServiceImpl();
+//           contacts= contactService.getALLContacts(1);
+//        }catch (Exception e){
+//            System.out.println("Exception is : "+e.getMessage());
+//        }
+//        System.out.println("done"+contacts.size());
+
 
     }
 
