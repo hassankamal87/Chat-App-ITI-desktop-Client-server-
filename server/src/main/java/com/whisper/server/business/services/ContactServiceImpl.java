@@ -14,10 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactServiceImpl extends UnicastRemoteObject implements ContactServiceInt {
-    public ContactServiceImpl() throws RemoteException {
+
+    private static ContactServiceImpl instance = null;
+
+
+    private ContactServiceImpl() throws RemoteException {
         super();
     }
 
+    public static synchronized ContactServiceImpl getInstance() throws RemoteException {
+        if(instance == null)
+            instance = new ContactServiceImpl();
+        return instance;
+    }
 
 
     @Override

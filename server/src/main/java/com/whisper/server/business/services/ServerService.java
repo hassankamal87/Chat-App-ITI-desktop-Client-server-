@@ -41,7 +41,7 @@ public class ServerService implements serverServiceInt {
         try {
             Registry reg = LocateRegistry.createRegistry(1099);
             AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
-            ContactServiceInt contactService = new ContactServiceImpl();
+            ContactServiceInt contactService =  ContactServiceImpl.getInstance();
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);
             System.out.println("authenticationService binded successful");
