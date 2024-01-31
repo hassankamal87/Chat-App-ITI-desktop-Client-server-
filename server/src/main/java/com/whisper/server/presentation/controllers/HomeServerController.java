@@ -3,6 +3,7 @@ package com.whisper.server.presentation.controllers;
 import com.whisper.server.HelloApplication;
 import com.whisper.server.business.services.ContactServiceImpl;
 import com.whisper.server.business.services.ServerService;
+import com.whisper.server.persistence.daos.ContactDao;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
@@ -18,12 +19,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import org.example.entities.Contact;
+import org.example.entities.FriendshipStatus;
 import org.example.entities.User;
 import org.example.serverinterfaces.ContactServiceInt;
 
 import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +162,11 @@ public class HomeServerController {
 //        }
 //        System.out.println("done"+contacts.size());
 
-
+//        try {
+//            System.out.println(ContactDao.getInstance(MyDatabase.getInstance()).create(new Contact(FriendshipStatus.friend, new Date(2023, 5, 1), 1, 2)));
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
     }
 
     private void handleToggleSwitchChange(boolean isSwitchOn) {
