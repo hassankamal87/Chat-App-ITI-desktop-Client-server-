@@ -31,7 +31,6 @@ public class ContactServiceImpl extends UnicastRemoteObject implements ContactSe
 
     @Override
     public List<User> getALLContacts(int Id) throws RemoteException {
-        System.out.println("hello");
         List<User> resultContact = new ArrayList<>();
         try {
             List<Contact>contacts = ContactDao.getInstance(MyDatabase.getInstance()).getById(Id);

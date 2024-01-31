@@ -67,8 +67,6 @@ public class contactItemController implements Initializable {
             System.out.println(e.getMessage());
         }
 
-
-
         try{
             name.setText(contact.getUserName());
             phone.setText(contact.getPhoneNumber());

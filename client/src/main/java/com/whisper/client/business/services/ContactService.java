@@ -20,7 +20,6 @@ public class ContactService {
         }catch (Exception e){
             System.out.println("Exception is : "+e.getMessage());
         }
-        //System.out.println("done"+contacts.size());
         return contacts;
     }
 }
