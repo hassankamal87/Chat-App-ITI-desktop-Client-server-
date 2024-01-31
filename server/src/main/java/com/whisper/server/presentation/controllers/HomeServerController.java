@@ -1,13 +1,10 @@
 package com.whisper.server.presentation.controllers;
 
-import com.whisper.server.HelloApplication;
-import com.whisper.server.business.services.ContactServiceImpl;
 import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,14 +15,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
-import org.example.entities.User;
-import org.example.serverinterfaces.ContactServiceInt;
-
-import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeServerController {
 

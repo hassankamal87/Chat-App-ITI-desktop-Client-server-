@@ -75,6 +75,7 @@ public class UserDao implements UserDaoInterface {
     }
 
 
+
     // Updating a user using the user object
     public int updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
@@ -131,6 +132,19 @@ public class UserDao implements UserDaoInterface {
             }
         }
         return users;
+    }
+
+    @Override
+    public int getIdByPhoneNumber(String phoneNumber) throws SQLException {
+        String query = "SELECT user_id FROM user WHERE phone_number = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, phoneNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return -1;
     }
 
     @Override

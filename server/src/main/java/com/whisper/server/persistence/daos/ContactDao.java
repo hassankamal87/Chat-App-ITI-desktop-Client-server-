@@ -96,4 +96,44 @@ public class ContactDao implements ContactDaoInterface {
         return rowsInserted;
     }
 
+    @Override
+    public boolean isContact(int userId, int contactId) throws SQLException {
+        String query ="SELECT * from contact WHERE user_id = ? AND contact_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
+        ResultSet rs = ps.executeQuery();
+        boolean result = rs.next();
+        ps.close();
+        return result;
+    }
+
+    @Override
+    public void blockContact(int userId, int contactId) throws SQLException {
+        String query ="UPDATE contact SET friendship_status = 'blocked' " +
+                "WHERE user_id = ? AND contact_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
+        ps.executeUpdate();
+        ps.setInt(1, contactId);
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    @Override
+    public void unblockContact(int userId, int contactId) throws SQLException {
+        String query ="UPDATE contact SET friendship_status = 'friend' " +
+                "WHERE user_id = ? AND contact_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
+        ps.executeUpdate();
+        ps.setInt(1, contactId);
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+        ps.close();
+    }
+
 }
