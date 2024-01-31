@@ -30,7 +30,6 @@ public class ServerStatisticsImpl implements Runnable , ServerStatisticsInt {
     private static int timer = 0;
     ObservableList<XYChart.Data<String, Number>> countryData = FXCollections.observableArrayList();
     XYChart.Series<String, Number> series = new XYChart.Series<>();
-    ServerService serverService = new ServerService();
 
 
     public ServerStatisticsImpl(PieChart genderChart, Label onlineUsers, Label offlineUsers, BarChart countryChart, LineChart entryChart) {
