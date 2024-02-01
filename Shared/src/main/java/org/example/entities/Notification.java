@@ -1,6 +1,8 @@
 package org.example.entities;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
     private int notificationId;
     
     private int toUserId;

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainContactPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.contactController">
+<AnchorPane fx:id="mainContactPane" prefHeight="545.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.contactController">
    <children>
       <Label layoutX="14.0" layoutY="40.0" stylesheets="@../style/style.css" text="Contacts" AnchorPane.leftAnchor="14.0">
          <font>

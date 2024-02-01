@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException, SQLException {
         stage.setOnCloseRequest(event -> {
 
-            ServerService.getInstance().stopServer();
+          //  ServerService.getInstance().stopServer();
             Platform.exit();
             System.exit(0);
         });

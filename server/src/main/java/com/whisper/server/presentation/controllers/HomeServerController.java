@@ -16,7 +16,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
-
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
