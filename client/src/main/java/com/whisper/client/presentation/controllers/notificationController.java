@@ -42,55 +42,35 @@ public class notificationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-
-
         for(int i=0;i<notifications.size();i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationItemView.fxml"));
             try {
                 hBox = fxmlLoader.load();
                 nic = fxmlLoader.getController();
-
                 nic.setData(notifications.get(i));
                 boxes.add(hBox);
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         notificationLayout.setItems(boxes);
-
-
         for (int i=0;i<boxes.size();i++){
             Button b = (Button) boxes.get(i).getChildren().get(2);
             int finalI = i;
             b.setOnAction(event->deleteAction(event, finalI));
         }
-
-
     }
-
     private void deleteAction(Event event,int i) {
         Button deleteButton = (Button) event.getSource();
         HBox notificationBox = (HBox) deleteButton.getParent();
         boxes.remove(notificationBox);
         Notification not=notifications.get(i);
         notifications.remove(not);
-
         notificationService.deleteNotification(not.getNotificationId());
-
         notificationService.sendMessage(not);
-
-
     }
-
-
     private List<Notification> notifications() {
-
-
         List<Notification>notifications =notificationService.getNotifications(1);
-
-
         return notifications;
     }
 }

@@ -15,10 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
 import org.example.entities.User;
 
 import java.io.IOException;
@@ -43,8 +39,6 @@ public class contactController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         addContactBtn.setOnAction(event -> addContactAction());
         List<User> contacts = new ArrayList<>(contacts());
@@ -53,10 +47,10 @@ public class contactController implements Initializable
 
             try{
                 HBox hBox=fxmlLoader.load();
-
                 contactItemController cic = fxmlLoader.getController();
                 cic.setData(contacts.get(i));
-                hBox.setOnMouseClicked(event -> startChat());
+                int finalI = i;
+                hBox.setOnMouseClicked(event -> startChat(contacts.get(finalI)));
                 contactsLayout.getChildren().add(hBox);
 
             }catch (IOException e){
@@ -66,9 +60,6 @@ public class contactController implements Initializable
 
 
         }
-
-
-
     }
 
     private void addContactAction() {
@@ -77,11 +68,12 @@ public class contactController implements Initializable
         scene.setRoot(root);
     }
 
-    private void startChat() {
-
-        Parent root = SceneManager.getInstance().loadPane("notificationView");
-        Scene scene = mainContactPane.getScene();
-        scene.setRoot(root);
+    private void startChat(User contact) {
+        //navigate to room chat
+//
+//        Parent root = SceneManager.getInstance().loadPane("notificationView");
+//        Scene scene = mainContactPane.getScene();
+//        scene.setRoot(root);
 
 
     }
