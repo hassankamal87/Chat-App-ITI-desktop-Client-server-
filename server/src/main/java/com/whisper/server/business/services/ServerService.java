@@ -7,6 +7,7 @@ import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 import org.example.serverinterfaces.ContactServiceInt;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -42,8 +43,11 @@ public class ServerService implements serverServiceInt {
             Registry reg = LocateRegistry.createRegistry(1099);
             AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
+            SendContactsInvitationServiceInt sendContactsInvitationService = SendContactsInvitationServiceImpl.getInstance();
+            reg.rebind("SendContactsInvitationService", sendContactsInvitationService);
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);
+            System.out.println("SendContactsInvitationService binded successful");
             System.out.println("authenticationService binded successful");
             System.out.println("ContactService binded successful");
         } catch (RemoteException e) {
