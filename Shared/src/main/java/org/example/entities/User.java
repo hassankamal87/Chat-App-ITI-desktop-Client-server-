@@ -16,11 +16,12 @@ public class User implements Serializable {
     private String bio;
     private Mode mode;
     private Status status;
+    private byte[] profilePhoto;
     public User() {}
 
     public User(int userId, String phoneNumber, String password, String email,
                 String userName, Gender gender, Date dateOfBirth, String country,
-                String bio, Mode mode, Status status) {
+                String bio, Mode mode, Status status,byte[] profilePhoto) {
         this.userId = userId;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -32,7 +33,9 @@ public class User implements Serializable {
         this.bio = bio;
         this.mode = mode;
         this.status = status;
+        this.profilePhoto=profilePhoto;
     }
+
 
     public int getUserId() {
         return userId;
@@ -116,5 +119,13 @@ public class User implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public byte[] getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(byte[] profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 }

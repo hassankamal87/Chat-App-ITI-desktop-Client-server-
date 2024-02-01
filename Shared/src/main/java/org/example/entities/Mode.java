@@ -1,5 +1,5 @@
 package org.example.entities;
 
 public enum Mode {
-    avalible, away, busy, offline
+    available, away, busy, offline
 }

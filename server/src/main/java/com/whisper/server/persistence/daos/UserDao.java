@@ -7,6 +7,8 @@ import org.example.entities.Gender;
 import org.example.entities.Mode;
 import org.example.entities.Status;
 
+import java.io.ByteArrayInputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +32,8 @@ public class UserDao implements UserDaoInterface {
     // Creating a user
     public int createUser(User object) throws SQLException {
         String query = "INSERT INTO user (phone_number, password, email, user_name" +
-                ", gender, date_of_birth, country, bio, mode, status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ", gender, date_of_birth, country, bio, mode, status,profile_photo) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setString(1, object.getPhoneNumber());
             ps.setString(2, object.getPassword());
@@ -43,6 +45,8 @@ public class UserDao implements UserDaoInterface {
             ps.setString(8, object.getBio());
             ps.setString(9, object.getMode().toString());
             ps.setString(10, object.getStatus().toString());
+            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(object.getProfilePhoto());
+            ps.setBlob(11,profilePhoto);
 
             return ps.executeUpdate();
         }
@@ -69,6 +73,14 @@ public class UserDao implements UserDaoInterface {
                 user.setBio(rs.getString("bio"));
                 user.setMode(Mode.valueOf(rs.getString("mode")));
                 user.setStatus(Status.valueOf(rs.getString("status")));
+                Blob profilePhotoBlob = rs.getBlob("profile_photo");
+                if (profilePhotoBlob != null) {
+                    int blobLength = (int) profilePhotoBlob.length();
+                    byte[] profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+                    user.setProfilePhoto(profilePhotoBytes);
+                } else {
+                    user.setProfilePhoto(null);
+                }
             }
         }
         return user;
@@ -80,7 +92,7 @@ public class UserDao implements UserDaoInterface {
     public int updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
                 " user_name = ?, gender = ?, date_of_birth = ?, country = ?, bio = ?," +
-                " mode = ?, status = ? WHERE user_id = ?";
+                " mode = ?, status = ? ,profile_photo = ? WHERE user_id = ?";
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setString(1, user.getPhoneNumber());
             ps.setString(2, user.getPassword());
@@ -92,7 +104,9 @@ public class UserDao implements UserDaoInterface {
             ps.setString(8, user.getBio());
             ps.setString(9, user.getMode().toString());
             ps.setString(10, user.getStatus().toString());
-            ps.setInt(11, user.getUserId());
+            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(user.getProfilePhoto());
+            ps.setBlob(11,profilePhoto);
+            ps.setInt(12, user.getUserId());
 
             return ps.executeUpdate();
         }
@@ -128,6 +142,14 @@ public class UserDao implements UserDaoInterface {
                 user.setBio(rs.getString("bio"));
                 user.setMode(Mode.valueOf(rs.getString("mode")));
                 user.setStatus(Status.valueOf(rs.getString("status")));
+                Blob profilePhotoBlob = rs.getBlob("profile_photo");
+                if (profilePhotoBlob != null) {
+                    int blobLength = (int) profilePhotoBlob.length();
+                    byte[] profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+                    user.setProfilePhoto(profilePhotoBytes);
+                } else {
+                    user.setProfilePhoto(null);
+                }
                 users.add(user);
             }
         }

@@ -45,6 +45,21 @@ public class ContactDao implements ContactDaoInterface {
 
         ps.close();
 
+         query = "INSERT INTO contact " +
+                "(contact_id, friendship_status," +
+                " contact_date, user_id)" +
+                " VALUES (?, ?, ?, ?)";
+
+
+         ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, object.getContactId());
+        ps.setString(2, "friend"); // Set friendship_status to "friend"
+        ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
+        ps.setInt(4, object.getUserId());
+        rowsInserted += ps.executeUpdate();
+
+        ps.close();
+
         return rowsInserted ;
 
     }

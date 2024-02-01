@@ -1,6 +1,8 @@
 package com.whisper.server.presentation.controllers;
 
 import com.whisper.server.business.services.ServerService;
+import com.whisper.server.persistence.daos.ContactDao;
+import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
@@ -15,6 +17,18 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import org.example.entities.*;
+import org.example.serverinterfaces.ContactServiceInt;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeServerController {
 
@@ -90,7 +104,11 @@ public class HomeServerController {
             toggleSwitch.setDisable(true);
             disableButtons();
             new Thread(() -> {
-                performOperation();
+                try {
+                    performOperation();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 Platform.runLater(() -> {
                     toggleSwitch.setDisable(false);
                     handleToggleSwitchChange(isSwitchOn);
@@ -125,15 +143,17 @@ public class HomeServerController {
     }
 
 
-    private void performOperation() {
+    private void performOperation() throws IOException {
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-      /*  User myUser = new User(3,"0111111111","123","email"
+        Path path = Path.of("E:\\downloads\\test.jpg");
+         Files.readAllBytes(path);
+       User myUser = new User(7,"0111111111","123","email"
                 ,"hassan", Gender.male,new Date(System.currentTimeMillis())
-                ,"Algeria","bio", Mode.avalible, Status.online);*/
+                ,"Algeria","bio", Mode.available, Status.online, Files.readAllBytes(path));
 //        serverService serverService=new serverService();
 //        System.out.println(serverService.viewClients().size());
 //        List<User> contacts =new ArrayList<>();
@@ -145,7 +165,11 @@ public class HomeServerController {
 //        }
 //        System.out.println("done"+contacts.size());
 
-
+        try {
+            System.out.println(UserDao.getInstance(MyDatabase.getInstance()).updateUser(myUser));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     private void handleToggleSwitchChange(boolean isSwitchOn) {

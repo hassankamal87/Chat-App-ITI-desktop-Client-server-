@@ -141,12 +141,18 @@ public class RoomChatDao implements RoomChatDaoInterface {
                 case "away" -> Mode.away;
                 case "busy" -> Mode.busy;
                 case "offline" -> Mode.offline;
-                default -> Mode.avalible;
+                default -> Mode.available;
             };
             String statusStr = rs.getString(11);
             Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
+            Blob profilePhotoBlob = rs.getBlob("profile_photo");
+            byte[] profilePhotoBytes=null;
+            if (profilePhotoBlob != null) {
+                int blobLength = (int) profilePhotoBlob.length();
+                profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+            }
 
-            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status);
+            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status,profilePhotoBytes);
 
             users.add(user);
         }
