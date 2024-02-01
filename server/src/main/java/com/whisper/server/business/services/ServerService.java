@@ -7,15 +7,19 @@ import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 import org.example.serverinterfaces.ContactServiceInt;
+import org.example.serverinterfaces.NotificationServiceInt;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServerService implements serverServiceInt {
+
     private static ServerService instance = null;
     private ServerService(){}
     public static synchronized ServerService getInstance(){
@@ -23,6 +27,7 @@ public class ServerService implements serverServiceInt {
             instance = new ServerService();
         return instance;
     }
+    private Registry reg;
     private MyDatabase myDatabase = MyDatabase.getInstance();
     private UserDaoInterface userDao = UserDao.getInstance(myDatabase);
 
@@ -39,21 +44,36 @@ public class ServerService implements serverServiceInt {
 
     private void openRmiConnection() {
         try {
-            Registry reg = LocateRegistry.createRegistry(1099);
+            reg = LocateRegistry.createRegistry(1099);
             AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
+            NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);
+            reg.rebind("NotificationService",notificationService);
             System.out.println("authenticationService binded successful");
             System.out.println("ContactService binded successful");
+            System.out.println("NotificationService binded successful");
+
         } catch (RemoteException e) {
-            System.out.println(e.getMessage() + "Server Service line 36");
+            System.out.println(e.getMessage() + " Server Service line 36");
         }
     }
 
+    private void closeRmiConnection() {
+            try {
+                // Unexport the RMI registry to close the connection
+                UnicastRemoteObject.unexportObject(reg, true);
+                System.out.println("RMI registry closed successfully.");
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+    }
     @Override
     public void stopServer() {
         try {
+            closeRmiConnection();
             myDatabase.closeConnection();
             System.out.println("Connection closed on application shutdown.");
         } catch (SQLException e) {

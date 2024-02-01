@@ -66,7 +66,7 @@ public class ContactDao implements ContactDaoInterface {
 
     @Override
     public List<Contact> getById(int user_id) throws SQLException {
-        String query ="SELECT * from contact WHERE user_id = ? ";
+        String query ="SELECT * from contact WHERE user_id = ? AND friendship_status = 'friend' ";
 
 
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);

@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
         //ServerService.getInstance().startServer();
         stage.setOnCloseRequest(event -> {
 
-            ServerService.getInstance().stopServer();
+          //  ServerService.getInstance().stopServer();
             Platform.exit();
             System.exit(0);
         });
