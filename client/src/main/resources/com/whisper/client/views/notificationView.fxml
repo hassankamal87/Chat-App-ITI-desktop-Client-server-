@@ -23,7 +23,7 @@
       <Separator layoutX="124.0" layoutY="93.0" prefWidth="800.0" AnchorPane.bottomAnchor="503.33333333333337" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="93.0" />
       <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" layoutY="96.0" prefHeight="504.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <content>
-            <VBox fx:id="notificationLayout" spacing="10.0" />
+            <VBox fx:id="notificationLayout" prefHeight="545.0" prefWidth="800.0" spacing="10.0" />
          </content>
          <stylesheets>
             <URL value="@../style/style.css" />

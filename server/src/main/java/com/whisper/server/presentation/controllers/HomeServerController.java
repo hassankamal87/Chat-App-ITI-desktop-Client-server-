@@ -85,7 +85,7 @@ public class HomeServerController {
                 isSwitchOn = true;
             }
             translateTransition.play();
-            handleToggleSwitchChange(isSwitchOn);
+            //handleToggleSwitchChange(isSwitchOn);
 
             toggleSwitch.setDisable(true);
             disableButtons();
@@ -150,10 +150,10 @@ public class HomeServerController {
 
     private void handleToggleSwitchChange(boolean isSwitchOn) {
         if (isSwitchOn) {
-            enableButtons();
-            setupButtonHandlers();
-            getStatisticsPane();
-            ServerService.getInstance().startServer();
+           enableButtons();
+           setupButtonHandlers();
+           getStatisticsPane();
+           ServerService.getInstance().startServer();
         } else {
             disableButtons();
             mainNavigatorPane.setCenter(welcomePane);
