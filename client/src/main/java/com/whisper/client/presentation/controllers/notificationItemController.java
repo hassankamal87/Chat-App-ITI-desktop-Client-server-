@@ -59,8 +59,9 @@ public class notificationItemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-      //  deleteButton.setOnAction(event -> deleteButtonAction());
+
     }
+
 
 
 }

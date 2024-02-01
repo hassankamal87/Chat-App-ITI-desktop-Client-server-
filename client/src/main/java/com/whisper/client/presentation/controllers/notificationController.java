@@ -43,6 +43,7 @@ public class notificationController implements Initializable {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
 
+
         for(int i=0;i<notifications.size();i++) {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationItemView.fxml"));
             try {
@@ -78,6 +79,7 @@ public class notificationController implements Initializable {
 
         notificationService.deleteNotification(not.getNotificationId());
 
+        notificationService.sendMessage(not);
 
 
     }
@@ -87,6 +89,7 @@ public class notificationController implements Initializable {
 
 
         List<Notification>notifications =notificationService.getNotifications(1);
+
 
         return notifications;
     }
