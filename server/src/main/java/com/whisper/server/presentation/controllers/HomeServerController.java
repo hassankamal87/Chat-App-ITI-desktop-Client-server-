@@ -1,13 +1,10 @@
 package com.whisper.server.presentation.controllers;
 
-import com.whisper.server.HelloApplication;
-import com.whisper.server.business.services.ContactServiceImpl;
 import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,14 +15,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
-import org.example.entities.User;
-import org.example.serverinterfaces.ContactServiceInt;
-
-import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeServerController {
 
@@ -39,19 +28,24 @@ public class HomeServerController {
     private Label cantDoAnyThingLabel;
     @FXML
     private StackPane toggleSwitch;
-    private boolean isSwitchOn = false;
+    public static volatile boolean isSwitchOn = false;
     private Rectangle rectangle;
     private Circle circle;
     @FXML
     private BorderPane mainNavigatorPane;
     private Parent announcementPane = null;
     private Parent welcomePane = null;
-    private Parent statisticsPane = null;
     private Parent usersPane = null;
-
+    private final ServerService serverService = ServerService.getInstance();
     private final MyDatabase myDatabase = MyDatabase.getInstance();
+    private Parent statisticsPane = null;
+    private void getStatisticsPane(){
+        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
+    }
+    private void closeStatisticsPane(){
+        statisticsPane = null;
+    }
     @FXML
-
     public void initialize() {
         gettingPanes();
         disableButtons();
@@ -61,15 +55,9 @@ public class HomeServerController {
     private void gettingPanes(){
         announcementPane = SceneManager.getInstance().loadPane("announcerHomeView");
         welcomePane = SceneManager.getInstance().loadPane("welcomeView");
-        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
+        //statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
         usersPane = SceneManager.getInstance().loadPane("users-view");
     }
-//    private void getStatisticsPane(){
-//        statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
-//    }
-//    private void closeStatisticsPane(){
-//        statisticsPane = null;
-//    }
 
     private void setupToggleSwitch() {
         rectangle = new Rectangle(60, 31);
@@ -164,14 +152,16 @@ public class HomeServerController {
         if (isSwitchOn) {
             enableButtons();
             setupButtonHandlers();
-
+            getStatisticsPane();
+            ServerService.getInstance().startServer();
         } else {
             disableButtons();
             mainNavigatorPane.setCenter(welcomePane);
             button1.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
             button2.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
             button3.setStyle("-fx-background-color: #C6A969; -fx-background-radius: 15;");
-
+            closeStatisticsPane();
+            ServerService.getInstance().stopServer();
         }
     }
 
