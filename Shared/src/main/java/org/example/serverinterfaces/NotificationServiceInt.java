@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface NotificationServiceInt extends Remote {
     public List<Notification> getALLNotifications(int Id) throws RemoteException;
+    public int deleteNotificationById(int Id) throws RemoteException;
 }

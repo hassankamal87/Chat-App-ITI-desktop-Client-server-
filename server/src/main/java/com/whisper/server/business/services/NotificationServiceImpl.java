@@ -45,4 +45,16 @@ public class NotificationServiceImpl extends UnicastRemoteObject implements Noti
         }
         return resultNotification;
     }
+
+    @Override
+    public int deleteNotificationById(int Id) throws RemoteException {
+        int rowupdates = 0;
+        try {
+            rowupdates= NotificationDao.getInstance(MyDatabase.getInstance()).deleteById(Id);
+
+        }catch (SQLException e){
+            System.out.println("SQL Exception : "+e);
+        }
+        return rowupdates;
+    }
 }
