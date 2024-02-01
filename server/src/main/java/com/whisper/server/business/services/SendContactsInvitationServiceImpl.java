@@ -43,8 +43,10 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 }
                 PendingRequest request = new PendingRequest(id, contactID, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
                 PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
+                System.out.println("Invitation sent");
             } catch (Exception e) {
                 System.out.println("SQL Exception : " + e);
+                System.out.println("Invitation not sent, because already sent");
             }
         }
     }

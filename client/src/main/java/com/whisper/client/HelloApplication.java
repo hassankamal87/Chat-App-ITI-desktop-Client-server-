@@ -18,6 +18,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
+        stage.setResizable(false);
 
         stage.show();
     }
