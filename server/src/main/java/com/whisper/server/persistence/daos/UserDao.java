@@ -87,6 +87,7 @@ public class UserDao implements UserDaoInterface {
     }
 
 
+
     // Updating a user using the user object
     public int updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
@@ -156,6 +157,19 @@ public class UserDao implements UserDaoInterface {
     }
 
     @Override
+    public int getIdByPhoneNumber(String phoneNumber) throws SQLException {
+        String query = "SELECT user_id FROM user WHERE phone_number = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, phoneNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return -1;
+    }
+
+    @Override
     public int getMaleUsersCount() throws SQLException {
         String query = "SELECT COUNT(*) FROM user WHERE gender = ?";
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
@@ -183,7 +197,7 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public List<Map<String, Number>> getTopCountries() throws SQLException {
-        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC LIMIT 5";
+        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC";
         List<Map<String, Number>> countries = new ArrayList<>();
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {

@@ -13,15 +13,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class HelloApplication extends Application {
-    ServerService serverService = ServerService.getInstance();
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
 
-        serverService.startServer();
+        //ServerService.getInstance().startServer();
         stage.setOnCloseRequest(event -> {
 
-                serverService.stopServer();
+            ServerService.getInstance().stopServer();
             Platform.exit();
             System.exit(0);
         });
