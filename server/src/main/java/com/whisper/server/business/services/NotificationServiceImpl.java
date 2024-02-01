@@ -57,4 +57,13 @@ public class NotificationServiceImpl extends UnicastRemoteObject implements Noti
         }
         return rowupdates;
     }
+    public int addNotification(Notification notification){
+        int rowupdates =0 ;
+        try{
+            rowupdates= NotificationDao.getInstance(MyDatabase.getInstance()).create(notification);
+        }catch (SQLException e){
+            System.out.println("SQL Exception : "+e);
+        }
+        return rowupdates;
+    }
 }

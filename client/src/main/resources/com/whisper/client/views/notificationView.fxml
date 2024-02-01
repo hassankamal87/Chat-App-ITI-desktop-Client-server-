@@ -31,7 +31,7 @@
             <String fx:value="scroll-pane" />
          </styleClass>
          <content>
-            <ListView fx:id="notificationLayout" stylesheets="@../style/newCss.css">
+            <ListView fx:id="notificationLayout" prefHeight="504.0" prefWidth="800.0" stylesheets="@../style/newCss.css">
                <styleClass>
                   <String fx:value="menu-item" />
                   <String fx:value="menu" />
