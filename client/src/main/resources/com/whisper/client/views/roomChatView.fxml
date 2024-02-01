@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<AnchorPane fx:id="roomChatPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="539.0" style="-fx-background-color: #f9f9f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.RoomChatController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="49.0" prefWidth="539.0">
+         <children>
+            <Line endX="539.0" layoutY="48.0" stroke="#00000076" />
+            <ImageView fx:id="personalImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+               <image>
+                  <Image url="@../images/person.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="nameText" layoutX="55.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="mo">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text fx:id="modeText" fill="#757272" layoutX="55.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Text>
+            <Button fx:id="callBtn" layoutX="484.0" layoutY="7.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="40.0" styleClass="ripple" stylesheets="@../lineargrad.css" AnchorPane.rightAnchor="14.0">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/call.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <BorderPane fx:id="chatBorderPane" layoutX="101.0" layoutY="95.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+         <bottom>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="539.0" BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <HTMLEditor fx:id="messageEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="110.0" prefWidth="490.0" />
+                  <Button fx:id="sendBtn" layoutX="491.0" layoutY="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSendBtnClicked" onMouseEntered="#onMouseEnteredSendBtn" prefHeight="30.0" prefWidth="40.0" styleClass="ripple" stylesheets="@../lineargrad.css">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/send.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="3.0" />
+               </BorderPane.margin>
+            </AnchorPane>
+         </bottom>
+         <center>
+            <ScrollPane fx:id="messagesScrollPane" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="539.0" stylesheets="@../lineargrad.css" BorderPane.alignment="TOP_LEFT">
+               <content>
+                  <VBox fx:id="messageList" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="539.0" styleClass="bktransparent" stylesheets="@../lineargrad.css" />
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
