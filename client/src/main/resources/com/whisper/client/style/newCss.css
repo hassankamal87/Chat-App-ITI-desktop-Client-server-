@@ -106,6 +106,14 @@
 }
 
 /* Darker color on hover for buttons and other interactive elements */
+.button2 {
+    -fx-font-weight: bold;
+    -fx-background-radius: 15px;
+}
+.button2:hover{
+    -fx-background-color: #597E52; /* Darker green on hover */
+}
+
 .button{
     -fx-background-radius: 15px;
 }

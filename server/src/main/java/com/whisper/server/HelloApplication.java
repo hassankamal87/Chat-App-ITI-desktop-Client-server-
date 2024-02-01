@@ -1,12 +1,9 @@
 package com.whisper.server;
 
 import com.whisper.server.business.services.ServerService;
-import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,8 +13,6 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-
-        //ServerService.getInstance().startServer();
         stage.setOnCloseRequest(event -> {
 
             ServerService.getInstance().stopServer();
