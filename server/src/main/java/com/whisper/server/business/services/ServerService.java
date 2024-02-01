@@ -5,8 +5,10 @@ import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
 import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.User;
+import org.example.serverinterfaces.AddContactsServiceInt;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 import org.example.serverinterfaces.ContactServiceInt;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 import org.example.serverinterfaces.NotificationServiceInt;
 
 import java.rmi.NotBoundException;
@@ -47,6 +49,14 @@ public class ServerService implements serverServiceInt {
             reg = LocateRegistry.createRegistry(1099);
             AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
+            SendContactsInvitationServiceInt sendContactsInvitationService = SendContactsInvitationServiceImpl.getInstance();
+            AddContactsServiceInt addContactsService = AddContactsServiceImpl.getInstance();
+            reg.rebind("AddContactsService", addContactsService);
+            reg.rebind("SendContactsInvitationService", sendContactsInvitationService);
+            reg.rebind("authenticationService", authenticationService);
+            reg.rebind("ContactsService",contactService);
+            System.out.println("AddContactsService binded successful");
+            System.out.println("SendContactsInvitationService binded successful");
             NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);

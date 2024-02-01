@@ -16,13 +16,13 @@ public class AddContactsServiceImpl extends UnicastRemoteObject implements AddCo
     private static AddContactsServiceImpl instance=null;
 
 
-    public static synchronized AddContactsServiceImpl getInstance() throws Exception {
+    public static synchronized AddContactsServiceImpl getInstance() throws RemoteException {
         if(instance==null){
             instance=new AddContactsServiceImpl();
         }
         return instance;
     }
-    private AddContactsServiceImpl() throws Exception{
+    private AddContactsServiceImpl() throws RemoteException{
         // super();
     }
 

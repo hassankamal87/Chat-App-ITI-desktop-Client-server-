@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="chatItemContainer" prefHeight="53.0" prefWidth="230.0" styleClass="ripple" stylesheets="@../lineargrad.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="chatItemContainer" onMouseClicked="#onChatItemClicked" prefHeight="53.0" prefWidth="230.0" styleClass="ripple" stylesheets="@../lineargrad.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.ChatItemController">
 
     <children>
         <HBox fx:id="chatItem" alignment="CENTER" spacing="10" style="-fx-background-color: transparent;">
