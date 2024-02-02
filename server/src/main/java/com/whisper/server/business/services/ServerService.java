@@ -32,8 +32,8 @@ public class ServerService implements serverServiceInt {
     private void openRmiConnection() {
         try {
             Registry reg = LocateRegistry.createRegistry(1099);
-            AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
-            reg.rebind("authenticationService", authenticationService);
+            AuthenticationServiceInt authenticationService = AuthenticationServiceImpl.getInstance();
+            reg.rebind("authService", authenticationService);
             System.out.println("authenticationService binded successful");
         } catch (RemoteException e) {
             System.out.println(e.getMessage() + "Server Service line 36");

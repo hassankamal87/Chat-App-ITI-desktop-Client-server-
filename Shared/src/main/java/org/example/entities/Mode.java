@@ -1,5 +1,7 @@
 package org.example.entities;
 
-public enum Mode {
+import java.io.Serializable;
+
+public enum Mode implements Serializable {
     avalible, away, busy, offline
 }

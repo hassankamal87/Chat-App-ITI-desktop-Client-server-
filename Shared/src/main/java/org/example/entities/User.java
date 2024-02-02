@@ -1,9 +1,10 @@
 package org.example.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 
-public class User {
+public class User implements Serializable {
     private int userId;
     private String phoneNumber;
     private String password;
@@ -15,6 +16,7 @@ public class User {
     private String bio;
     private Mode mode;
     private Status status;
+//    private byte[] profilePhoto;
     public User() {}
 
     public User(int userId, String phoneNumber, String password, String email,
@@ -31,7 +33,9 @@ public class User {
         this.bio = bio;
         this.mode = mode;
         this.status = status;
+//        this.profilePhoto=profilePhoto;
     }
+
 
     public int getUserId() {
         return userId;
@@ -116,4 +120,12 @@ public class User {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+//    public byte[] getProfilePhoto() {
+//        return profilePhoto;
+//    }
+//
+//    public void setProfilePhoto(byte[] profilePhoto) {
+//        this.profilePhoto = profilePhoto;
+//    }
 }
