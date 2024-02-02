@@ -15,7 +15,7 @@ public interface UserDaoInterface {
     public int getIdByPhoneNumber(String phoneNumber) throws SQLException;
     public int getMaleUsersCount() throws SQLException;
     public int getFemaleUsersCount() throws SQLException;
-    public List<Map<String,Number>> getTopCountries() throws SQLException;
+    public Map<String, Integer> getTopCountries() throws SQLException;
     public int getOnlineUsersCount() throws SQLException;
     public int getOfflineUsersCount() throws SQLException;
     //public List<Map<String, Number>> getTopEntries() throws SQLException;
