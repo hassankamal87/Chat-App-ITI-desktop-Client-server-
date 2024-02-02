@@ -1,12 +1,11 @@
 package com.whisper.server.business.services;
 
 import com.whisper.server.persistence.daos.ContactDao;
+import com.whisper.server.persistence.daos.NotificationDao;
 import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
-import org.example.entities.Contact;
-import org.example.entities.FriendshipStatus;
-import org.example.entities.PendingRequest;
+import org.example.entities.*;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.rmi.RemoteException;
@@ -46,11 +45,22 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 }
                 PendingRequest request = new PendingRequest(contactID, id, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
                 PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
+                sendNotification(contactID);
                 System.out.println("Invitation sent");
             } catch (Exception e) {
                 System.out.println("SQL Exception : " + e);
                 System.out.println("Invitation not sent, because already sent");
             }
+        }
+    }
+
+    private void sendNotification(int contactID) {
+        Notification notification = new Notification(0, contactID, "hamada", NotifactionType.inv, "I want to add you");
+        try {
+            NotificationServiceImpl.getInstance().addNotification(notification);
+        } catch (RemoteException e) {
+            System.out.println("RemoteException: Notification not sent");
+            e.getMessage();
         }
     }
 
