@@ -30,20 +30,19 @@ public class notificationItemController implements Initializable {
     public void setData(Notification notification){
         try{
 
-            if(notification.getType()== NotifactionType.msg)
-                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/message.jpg")));
-            else
-                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/invitation.jpg")));
-
-
             if(notification.getType()==NotifactionType.msg){
-               header.setText("You hava a new message from "+ notification.getFromUserName());
+                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/message.jpg")));
+                header.setText("You hava a new message from "+ notification.getFromUserName());
                description.setText("you have a new message in  conversations from "+ notification.getFromUserName());
            }
            else if(notification.getType()==NotifactionType.inv){
-               header.setText("You hava a new invitation from "+notification.getFromUserName());
+                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/invitation.jpg")));
+                header.setText("You hava a new invitation from "+notification.getFromUserName());
                description.setText("you have a new friend request from "+ notification.getFromUserName());
            }
+
+
+
         }catch (Exception e){
             e.printStackTrace();
         }

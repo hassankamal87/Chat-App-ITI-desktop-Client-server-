@@ -74,14 +74,47 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
     @Override
     public void ServerRegister(ClientServiceInt clientService) throws RemoteException {
-
-        System.out.println("Client register Successfully to server");
         clientsVector.add(clientService);
+        try{
+
+           User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(clientService.getClientId());
+            user.setStatus(Status.online);
+            User user1=new User(clientService.getClientId(), user.getPhoneNumber(), user.getPassword(), user.getEmail(), user.getUserName(), user.getGender(),user.getDateOfBirth(),user.getCountry(), user.getBio(), user.getMode(),Status.online, user.getProfilePhoto());
+            UserDao.getInstance(MyDatabase.getInstance()).updateUser(user1);
+           ContactDao contactRef = (ContactDao) ContactDao.getInstance(MyDatabase.getInstance());
+            for(ClientServiceInt c: clientsVector){
+                if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
+                    c.ClientStatusAnnounce(user1);
+                }
+            }
+        }catch (SQLException e){
+            System.out.println("SQL Exception is :" + e.getMessage());
+        }
     }
 
     @Override
     public void ServerUnRegister(ClientServiceInt clientService) throws RemoteException {
-        clientsVector.remove(clientService);
+
+        System.out.println(clientService.getClientId());
+        try{
+            User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(clientService.getClientId());
+
+            clientsVector.remove(clientService);
+            User user1=new User(clientService.getClientId(), user.getPhoneNumber(), user.getPassword(), user.getEmail(), user.getUserName(), user.getGender(),user.getDateOfBirth(),user.getCountry(), user.getBio(), user.getMode(),Status.offline, user.getProfilePhoto());
+            UserDao.getInstance(MyDatabase.getInstance()).updateUser(user1);
+            ContactDao contactRef = (ContactDao) ContactDao.getInstance(MyDatabase.getInstance());
+
+            for(ClientServiceInt c: clientsVector){
+                if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
+                    System.out.println("notify "+c.getClientId());
+                    c.ClientStatusAnnounce(user1);
+                }
+            }
+
+        }catch (SQLException e){
+            System.out.println("SQL Exception is :" + e.getMessage());
+        }
+
     }
 
     private boolean alreadyGotInvite(int userId,int contactId) {
