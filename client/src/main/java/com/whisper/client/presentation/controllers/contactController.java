@@ -52,7 +52,8 @@ public class contactController implements Initializable
 
                 contactItemController cic = fxmlLoader.getController();
                 cic.setData(contacts.get(i));
-                hBox.setOnMouseClicked(event -> startChat());
+                int finalI = i;
+                hBox.setOnMouseClicked(event -> startChat(contacts.get(finalI)));
                 contactsLayout.getChildren().add(hBox);
 
             }catch (IOException e){
@@ -72,11 +73,12 @@ public class contactController implements Initializable
         scene.setRoot(root);
     }
 
-    private void startChat() {
-
-        Parent root = SceneManager.getInstance().loadPane("notificationView");
-        Scene scene = mainContactPane.getScene();
-        scene.setRoot(root);
+    private void startChat(User contact) {
+        //navigate to room chat
+//
+//        Parent root = SceneManager.getInstance().loadPane("notificationView");
+//        Scene scene = mainContactPane.getScene();
+//        scene.setRoot(root);
 
 
     }

@@ -66,7 +66,7 @@ public class ServerStatisticsImpl implements Runnable , ServerStatisticsInt {
                     drawGenderChart();
                     updateChartWithData(countryData);
                     drawEntriesChart();
-                    System.out.println("update charts");
+                    //System.out.println("update charts");
                 });
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
