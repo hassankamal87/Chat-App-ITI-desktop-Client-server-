@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationServiceImpl extends UnicastRemoteObject implements NotificationServiceInt {
-    protected NotificationServiceImpl() throws RemoteException {
+    private NotificationServiceImpl() throws RemoteException {
         super();
     }
     private static NotificationServiceImpl instance = null;

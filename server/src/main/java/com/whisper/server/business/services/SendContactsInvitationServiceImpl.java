@@ -4,9 +4,8 @@ import com.whisper.server.persistence.daos.ContactDao;
 import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
-import org.example.entities.Contact;
-import org.example.entities.FriendshipStatus;
-import org.example.entities.PendingRequest;
+import org.example.clientinterfaces.ClientServiceInt;
+import org.example.entities.*;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.rmi.RemoteException;
@@ -15,8 +14,12 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SendContactsInvitationServiceImpl extends UnicastRemoteObject implements SendContactsInvitationServiceInt {
+
+    private CopyOnWriteArrayList<ClientServiceInt> clientsVector = new CopyOnWriteArrayList<>();
+
     private static SendContactsInvitationServiceImpl instance = null;
     private SendContactsInvitationServiceImpl() throws RemoteException {
         // super();
@@ -43,6 +46,14 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 }
                 PendingRequest request = new PendingRequest(id, contactID, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
                 PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
+                User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
+
+                for(ClientServiceInt c:clientsVector){
+                    if(c.getClientId()==contactID){
+                        c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"invitation"));
+                    }
+                }
+
                 System.out.println("Invitation sent");
             } catch (Exception e) {
                 System.out.println("SQL Exception : " + e);
@@ -58,6 +69,19 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    @Override
+    public void ServerRegister(ClientServiceInt clientService) throws RemoteException {
+
+        System.out.println("Client register Successfully to server");
+        clientsVector.add(clientService);
+    }
+
+    @Override
+    public void ServerUnRegister(ClientServiceInt clientService) throws RemoteException {
+        clientsVector.remove(clientService);
     }
 
     private boolean alreadyGotInvite(int userId,int contactId) {

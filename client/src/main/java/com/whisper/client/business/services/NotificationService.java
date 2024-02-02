@@ -1,6 +1,7 @@
 package com.whisper.client.business.services;
 
 import com.whisper.client.HelloApplication;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -59,35 +60,45 @@ public class NotificationService {
     }
 
     public void sendInvitation(Notification notification) {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationBodyView.fxml"));
-        try {
-            HBox hBox = fxmlLoader.load();
+        Platform.runLater(()->{
 
-            Label l =(Label)hBox.getChildren().get(0);
-            l.setText("You have a new invitation from "+notification.getFromUserName());
-            Notifications.create()
-                    .title("Invitation")
-                    .graphic(hBox)
-                    .hideAfter(Duration.seconds(10))
-                    .show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationBodyView.fxml"));
+            try {
+                HBox hBox = fxmlLoader.load();
+
+                Label l =(Label)hBox.getChildren().get(0);
+                l.setText("You have a new invitation from "+notification.getFromUserName());
+                Notifications.create()
+                        .title("Invitation")
+                        .graphic(hBox)
+                        .hideAfter(Duration.seconds(10))
+                        .show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
     }
     public void sendMessage(Notification notification) {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationBodyView.fxml"));
-        try {
-            HBox hBox = fxmlLoader.load();
+        Platform.runLater(()->{
 
-            Label l =(Label)hBox.getChildren().get(0);
-            l.setText("You have a new message from "+notification.getFromUserName());
-            Notifications.create()
-                    .title("Message")
-                    .graphic(hBox)
-                    .hideAfter(Duration.seconds(10))
-                    .show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationBodyView.fxml"));
+            try {
+                HBox hBox = fxmlLoader.load();
+
+                Label l =(Label)hBox.getChildren().get(0);
+                l.setText("You have a new message from "+notification.getFromUserName());
+                Notifications.create()
+                        .title("Message")
+                        .graphic(hBox)
+                        .hideAfter(Duration.seconds(10))
+                        .show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
     }
 }
