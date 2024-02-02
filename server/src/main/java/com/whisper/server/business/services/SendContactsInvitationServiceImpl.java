@@ -43,25 +43,30 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 if (contactID == -1||contactID==id) {
                     continue;
                 }
+
+                // add invitation to pending requests
                 PendingRequest request = new PendingRequest(contactID, id, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
                 PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
-                sendNotification(contactID);
+
+                // send notification
+                String userName = UserDao.getInstance(MyDatabase.getInstance()).getUserById(id).getUserName();
+                sendNotification(contactID,userName);
                 System.out.println("Invitation sent");
             } catch (Exception e) {
                 System.out.println("SQL Exception : " + e);
-                System.out.println("Invitation not sent, because already sent");
             }
         }
     }
 
-    private void sendNotification(int contactID) {
-        Notification notification = new Notification(0, contactID, "hamada", NotifactionType.inv, "I want to add you");
+    private void sendNotification(int contactID,String userName) {
+        Notification notification = new Notification(0, contactID, userName,
+                NotifactionType.inv, "I want to add you");
         try {
-            NotificationServiceImpl.getInstance().addNotification(notification);
+            System.out.println("notification updated: " + NotificationServiceImpl.getInstance().addNotification(notification));
         } catch (RemoteException e) {
-            System.out.println("RemoteException: Notification not sent");
-            e.getMessage();
+            throw new RuntimeException(e);
         }
+
     }
 
     @Override

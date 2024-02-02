@@ -37,16 +37,16 @@ public class UserSearchController {
             if (!textField.getText().isEmpty()) phoneNumbers.add(textField.getText());
         }
 
-        //List<String> validatedNumbers = validate(phoneNumbers);
+        List<String> validatedNumbers = validate(phoneNumbers);
 
         UserSearchService userSearchService = new UserSearchService();
-        userSearchService.sendInvitation(9, phoneNumbers);
+        userSearchService.sendInvitation(2, validatedNumbers);
 
-        //System.out.println(validatedNumbers);
+        System.out.println(validatedNumbers);
         for (TextField textField : textFields) {
             textField.clear();
         }
-        //validatedNumbers.clear();
+        validatedNumbers.clear();
         phoneNumbers.clear();
     }
 

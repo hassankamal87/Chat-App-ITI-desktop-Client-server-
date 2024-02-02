@@ -34,7 +34,7 @@ public class NotificationDao implements NotificationDaoInterface {
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ps.setInt(1, object.getToUserId());
         ps.setString(2, object.getFromUserName());
-        ps.setString(3,"msg");
+        ps.setString(3,object.getType().toString());
         ps.setString(4,object.getBody());
         int rowsInserted = ps.executeUpdate();
 
