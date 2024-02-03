@@ -137,7 +137,8 @@ public class ContinuingSignUpController
                     country.getValue().toString(),
                     userBio.getText(),
                     Mode.away,
-                    Status.offline
+                    Status.offline,
+                    null
             ));
         } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
