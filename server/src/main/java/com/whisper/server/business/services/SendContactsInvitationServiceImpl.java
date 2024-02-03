@@ -8,6 +8,7 @@ import com.whisper.server.persistence.db.MyDatabase;
 import javafx.application.Platform;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.entities.*;
+import org.example.serverinterfaces.NotificationServiceInt;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.rmi.RemoteException;
@@ -20,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SendContactsInvitationServiceImpl extends UnicastRemoteObject implements SendContactsInvitationServiceInt {
 
-    private CopyOnWriteArrayList<ClientServiceInt> clientsVector = new CopyOnWriteArrayList<>();
+    public static CopyOnWriteArrayList<ClientServiceInt> clientsVector = new CopyOnWriteArrayList<>();
 
     private static SendContactsInvitationServiceImpl instance = null;
 
@@ -79,14 +80,11 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
         }
     }
 
-    private void sendNotification(int contactID,String userName) {
-        Notification notification = new Notification(0, contactID, userName,
-                NotifactionType.inv, "I want to add you");
-        try {
-            System.out.println("notification updated: " + NotificationServiceImpl.getInstance().addNotification(notification));
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+    private void sendNotification(int contactID,String userName) throws RemoteException {
+        NotificationServiceImpl notificationService =  NotificationServiceImpl.getInstance();
+        notificationService.addNotification( new Notification(0, contactID, userName,
+                NotifactionType.inv, "I want to add you"));
+
 
     }
 
