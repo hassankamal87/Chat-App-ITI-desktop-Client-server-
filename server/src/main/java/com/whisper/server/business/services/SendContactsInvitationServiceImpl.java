@@ -1,6 +1,7 @@
 package com.whisper.server.business.services;
 
 import com.whisper.server.persistence.daos.ContactDao;
+import com.whisper.server.persistence.daos.NotificationDao;
 import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
@@ -21,11 +22,13 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     private CopyOnWriteArrayList<ClientServiceInt> clientsVector = new CopyOnWriteArrayList<>();
 
     private static SendContactsInvitationServiceImpl instance = null;
+
     private SendContactsInvitationServiceImpl() throws RemoteException {
         // super();
     }
+
     public static synchronized SendContactsInvitationServiceImpl getInstance() throws RemoteException {
-        if(instance == null)
+        if (instance == null)
             instance = new SendContactsInvitationServiceImpl();
         return instance;
     }
@@ -35,19 +38,27 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
         for (String invitedContact : invitedContacts) {
             try {
                 int contactID = UserDao.getInstance(MyDatabase.getInstance()).getIdByPhoneNumber(invitedContact);
-                if(alreadyGotInvite(id,contactID)){
+                if (alreadyGotInvite(id, contactID)) {
                     ContactDao.getInstance(MyDatabase.getInstance())
                             .create(new Contact(FriendshipStatus.friend,
                                     Date.valueOf(LocalDate.now()), id, contactID));
+                    removeInvitation(contactID, id);
                     continue;
                 }
-                if(contactID == -1){
+                if (contactID == -1||contactID==id) {
                     continue;
                 }
-                PendingRequest request = new PendingRequest(id, contactID, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
-                PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
-                User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
 
+                // add invitation to pending requests
+                PendingRequest request = new PendingRequest(contactID, id, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
+                PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
+
+
+                // send notification
+                String userName = UserDao.getInstance(MyDatabase.getInstance()).getUserById(id).getUserName();
+                sendNotification(contactID,userName);
+              
+                User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
                 for(ClientServiceInt c:clientsVector){
                     if(c.getClientId()==contactID){
                         c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"invitation"));
@@ -57,20 +68,29 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 System.out.println("Invitation sent");
             } catch (Exception e) {
                 System.out.println("SQL Exception : " + e);
-                System.out.println("Invitation not sent, because already sent");
             }
         }
     }
 
-    @Override
-    public void removeInvitation(int userId, int contactId) throws RemoteException {
+    private void sendNotification(int contactID,String userName) {
+        Notification notification = new Notification(0, contactID, userName,
+                NotifactionType.inv, "I want to add you");
         try {
-            PendingRequestDao.getInstance(MyDatabase.getInstance()).deletePendingRequest(userId,contactId);
+            System.out.println("notification updated: " + NotificationServiceImpl.getInstance().addNotification(notification));
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void removeInvitation(int contactId, int userId) throws RemoteException {
+        try {
+            PendingRequestDao.getInstance(MyDatabase.getInstance()).deletePendingRequest(userId, contactId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     @Override
     public void ServerRegister(ClientServiceInt clientService) throws RemoteException {
@@ -120,7 +140,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     private boolean alreadyGotInvite(int userId,int contactId) {
         PendingRequest result = null;
         try {
-            result =  PendingRequestDao.getInstance(MyDatabase.getInstance()).getPendingRequest(userId,contactId);
+            result = PendingRequestDao.getInstance(MyDatabase.getInstance()).getPendingRequest(userId, contactId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
