@@ -4,6 +4,8 @@ import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.controllers.StatisticsUpdateInt;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.chart.PieChart;
 
 import java.sql.SQLException;
@@ -22,6 +24,7 @@ public class ServerStatistics {
     }
     public void setStatisticsUpdateInt(StatisticsUpdateInt statisticsUpdateInt) {
         this.statisticsUpdateInt = statisticsUpdateInt;
+
         updateData();
     }
 
@@ -33,8 +36,8 @@ public class ServerStatistics {
 
     private void updateOnlineOfflineUsers() {
         try {
-            int onlineUsers = UserDao.getInstance(MyDatabase.getInstance()).getOnlineUsersCount();
-            int offlineUsers = UserDao.getInstance(MyDatabase.getInstance()).getOfflineUsersCount();
+            SimpleIntegerProperty onlineUsers = new SimpleIntegerProperty(UserDao.getInstance(MyDatabase.getInstance()).getOnlineUsersCount());
+            IntegerProperty offlineUsers = new SimpleIntegerProperty(UserDao.getInstance(MyDatabase.getInstance()).getOfflineUsersCount());
 
 
 

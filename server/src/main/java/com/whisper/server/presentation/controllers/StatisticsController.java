@@ -37,11 +37,10 @@ public class StatisticsController implements StatisticsUpdateInt {
         serverStatistics = ServerStatistics.getInstance();
         serverStatistics.setStatisticsUpdateInt(this);
 
-        setDate();
-
+        setData();
     }
 
-    private void setDate() {
+    private void setData() {
         onlineUsers.textProperty().bind(onlineCount.asString());
         offlineUsers.textProperty().bind(offlineCount.asString());
         genderChart.setData(genderChartData);
@@ -49,17 +48,20 @@ public class StatisticsController implements StatisticsUpdateInt {
     }
 
     @Override
-    public void updateOnlineOfflineUsers(int onlineCount, int offlineCount) {
-        this.onlineCount.set(onlineCount);
-        this.offlineCount.set(offlineCount);
+    public void updateOnlineOfflineUsers(SimpleIntegerProperty onlineCount, IntegerProperty offlineCount) {
+        this.onlineCount.set(onlineCount.get());
+        this.offlineCount.set(offlineCount.get());
+        System.out.println("Online: " + onlineCount + " Offline: " + offlineCount);
     }
 
     @Override
     public void updateGenderChart(int maleCount, int femaleCount) {
-        genderChartData.setAll(
+        genderChartData.clear();
+        genderChartData.addAll(
                 new PieChart.Data("Male", maleCount),
                 new PieChart.Data("Female", femaleCount)
         );
+        System.out.println("male: " + maleCount + "female: "+ femaleCount);
     }
 
     @Override
