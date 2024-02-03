@@ -45,13 +45,28 @@ public class ContactDao implements ContactDaoInterface {
 
         ps.close();
 
+         query = "INSERT INTO contact " +
+                "(contact_id, friendship_status," +
+                " contact_date, user_id)" +
+                " VALUES (?, ?, ?, ?)";
+
+
+         ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, object.getContactId());
+        ps.setString(2, "friend"); // Set friendship_status to "friend"
+        ps.setDate(3, Date.valueOf(LocalDate.now())); // Set contact_date to the current date
+        ps.setInt(4, object.getUserId());
+        rowsInserted += ps.executeUpdate();
+
+        ps.close();
+
         return rowsInserted ;
 
     }
 
     @Override
     public List<Contact> getById(int user_id) throws SQLException {
-        String query ="SELECT * from contact WHERE user_id = ? ";
+        String query ="SELECT * from contact WHERE user_id = ? AND friendship_status = 'friend' ";
 
 
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
@@ -60,6 +75,7 @@ public class ContactDao implements ContactDaoInterface {
 
 
         ResultSet rs = ps.executeQuery();
+        System.out.println("here");
         List<Contact> contacts = new ArrayList<>();
         while(rs.next()) {
             String status = rs.getString("friendship_status");
@@ -75,6 +91,7 @@ public class ContactDao implements ContactDaoInterface {
 
         }
         ps.close();
+
 
         return contacts;
     }
@@ -92,6 +109,46 @@ public class ContactDao implements ContactDaoInterface {
         int rowsInserted = ps.executeUpdate();
         ps.close();
         return rowsInserted;
+    }
+
+    @Override
+    public boolean isContact(int userId, int contactId) throws SQLException {
+        String query ="SELECT * from contact WHERE user_id = ? AND contact_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
+        ResultSet rs = ps.executeQuery();
+        boolean result = rs.next();
+        ps.close();
+        return result;
+    }
+
+    @Override
+    public void blockContact(int userId, int contactId) throws SQLException {
+        String query ="UPDATE contact SET friendship_status = 'blocked' " +
+                "WHERE user_id = ? AND contact_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
+        ps.executeUpdate();
+        ps.setInt(1, contactId);
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    @Override
+    public void unblockContact(int userId, int contactId) throws SQLException {
+        String query ="UPDATE contact SET friendship_status = 'friend' " +
+                "WHERE user_id = ? AND contact_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, userId);
+        ps.setInt(2, contactId);
+        ps.executeUpdate();
+        ps.setInt(1, contactId);
+        ps.setInt(2, userId);
+        ps.executeUpdate();
+        ps.close();
     }
 
 }

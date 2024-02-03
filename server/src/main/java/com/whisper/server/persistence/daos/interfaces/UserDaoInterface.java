@@ -12,6 +12,7 @@ public interface UserDaoInterface {
     public int updateUser(User user) throws SQLException;
     public int deleteById(int id) throws SQLException;
     public List<User> getAll() throws SQLException;
+    public int getIdByPhoneNumber(String phoneNumber) throws SQLException;
     public int getMaleUsersCount() throws SQLException;
     public int getFemaleUsersCount() throws SQLException;
     public List<Map<String,Number>> getTopCountries() throws SQLException;

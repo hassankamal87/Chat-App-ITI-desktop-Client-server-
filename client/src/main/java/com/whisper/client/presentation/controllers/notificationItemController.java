@@ -1,12 +1,13 @@
 package com.whisper.client.presentation.controllers;
 
-import com.whisper.client.model.notification;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.example.entities.NotifactionType;
+import org.example.entities.Notification;
 
 import java.net.URL;
 import java.util.Objects;
@@ -26,19 +27,22 @@ public class notificationItemController implements Initializable {
     private ImageView notificationIcon;
 
 
-    public void setData(notification notification){
+    public void setData(Notification notification){
         try{
 
-            notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/notificationIcon/"+notification.getIcorSrc()+".png")));
-
-            if(Objects.equals(notification.getType(), "message")){
-               header.setText("You hava a new message from Hassan");
-               description.setText("you have a new message in  conversations from Hassan Kamal");
+            if(notification.getType()==NotifactionType.msg){
+                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/message.jpg")));
+                header.setText("You hava a new message from "+ notification.getFromUserName());
+               description.setText("you have a new message in  conversations from "+ notification.getFromUserName());
            }
-           else if(Objects.equals(notification.getType(), "invitation")){
-               header.setText("You hava a new invitation from "+notification.getFromUserName());
+           else if(notification.getType()==NotifactionType.inv){
+                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/invitation.jpg")));
+                header.setText("You hava a new invitation from "+notification.getFromUserName());
                description.setText("you have a new friend request from "+ notification.getFromUserName());
            }
+
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -54,5 +58,9 @@ public class notificationItemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
     }
+
+
+
 }
