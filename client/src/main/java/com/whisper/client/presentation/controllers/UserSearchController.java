@@ -40,7 +40,7 @@ public class UserSearchController {
         List<String> validatedNumbers = validate(phoneNumbers);
 
         UserSearchService userSearchService = new UserSearchService();
-        userSearchService.sendInvitation(2, validatedNumbers);
+        userSearchService.sendInvitation(8, validatedNumbers);
 
         System.out.println(validatedNumbers);
         for (TextField textField : textFields) {

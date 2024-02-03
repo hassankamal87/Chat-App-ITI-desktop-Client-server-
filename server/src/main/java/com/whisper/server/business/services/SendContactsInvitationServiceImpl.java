@@ -5,6 +5,7 @@ import com.whisper.server.persistence.daos.NotificationDao;
 import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
+import javafx.application.Platform;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.entities.*;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
@@ -32,7 +33,6 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
             instance = new SendContactsInvitationServiceImpl();
         return instance;
     }
-
     @Override
     public void inviteContacts(int id, List<String> invitedContacts) throws RemoteException {
         for (String invitedContact : invitedContacts) {
@@ -45,20 +45,27 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                     removeInvitation(contactID, id);
                     continue;
                 }
-                if (contactID == -1||contactID==id) {
+                ///wait
+                if (contactID == -1){
+                    System.out.println("not found");
+                    continue;
+                }
+                else if (contactID==id){
+                    System.out.println("same phone");
                     continue;
                 }
 
-                // add invitation to pending requests
+                    // add invitation to pending requests
                 PendingRequest request = new PendingRequest(contactID, id, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
                 PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
 
 
-                // send notification
-                String userName = UserDao.getInstance(MyDatabase.getInstance()).getUserById(id).getUserName();
-                sendNotification(contactID,userName);
+
               
                 User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
+                String userName = user.getUserName();
+                // send notification
+                sendNotification(contactID,userName);
                 for(ClientServiceInt c:clientsVector){
                     if(c.getClientId()==contactID){
                         c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"invitation"));
@@ -94,6 +101,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
     @Override
     public void ServerRegister(ClientServiceInt clientService) throws RemoteException {
+
         clientsVector.add(clientService);
         try{
 
@@ -107,6 +115,11 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                     c.ClientStatusAnnounce(user1);
                 }
             }
+
+            Platform.runLater(()->{
+                ServerStatistics.getInstance().updateData();
+            });
+
         }catch (SQLException e){
             System.out.println("SQL Exception is :" + e.getMessage());
         }
@@ -131,6 +144,9 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 }
             }
 
+            Platform.runLater(()->{
+                ServerStatistics.getInstance().updateData();
+            });
         }catch (SQLException e){
             System.out.println("SQL Exception is :" + e.getMessage());
         }

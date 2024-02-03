@@ -36,6 +36,8 @@ public class ServerStatistics {
             int onlineUsers = UserDao.getInstance(MyDatabase.getInstance()).getOnlineUsersCount();
             int offlineUsers = UserDao.getInstance(MyDatabase.getInstance()).getOfflineUsersCount();
 
+
+
             statisticsUpdateInt.updateOnlineOfflineUsers(onlineUsers, offlineUsers);
         } catch (SQLException e) {
             throw new RuntimeException(e);
