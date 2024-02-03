@@ -63,6 +63,7 @@ public class UserDao implements UserDaoInterface {
 
             if (rs.next()) {
                 user = new User();
+
                 user.setPhoneNumber(rs.getString("phone_number"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
@@ -236,5 +237,29 @@ public class UserDao implements UserDaoInterface {
             }
         }
         return 0;
+    }
+
+    public boolean isPhoneNumberExists(String phoneNo) throws SQLException {
+        String query = "Select * from user where phone_number = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, phoneNo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEmailExists(String email) throws SQLException{
+        String query = "Select * from user where email = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }
+        return false;
     }
 }
