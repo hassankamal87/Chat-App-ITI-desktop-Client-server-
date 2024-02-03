@@ -6,5 +6,6 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface AuthenticationServiceInt extends Remote {
-    String createNewUser(User user) throws RemoteException;
+    boolean registerUser(User user) throws RemoteException;
+
 }

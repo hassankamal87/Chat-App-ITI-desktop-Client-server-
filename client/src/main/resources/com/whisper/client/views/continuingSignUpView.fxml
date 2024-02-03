@@ -14,14 +14,26 @@
 
 <AnchorPane fx:id="" prefHeight="600.0" prefWidth="500.0" styleClass="linear-grad" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.ContinuingSignUpController">
    <children>
-      <Pane prefHeight="600.0" prefWidth="500.0" styleClass="linear-grad" />
+      <Pane prefHeight="600.0" prefWidth="500.0" styleClass="linear-grad">
+         <children>
+            <Button fx:id="pictureButton" layoutX="40.0" layoutY="180.0" mnemonicParsing="false" onAction="#onProfilePicMouseClicked" text="Choose Profile Picture" />
+            <ImageView fx:id="profilePicture" fitHeight="110.0" fitWidth="141.0" layoutX="303.0" layoutY="125.0" onMouseClicked="#onProfilePicMouseClicked" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
       <Text fill="#597e52" layoutX="173.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="Whisper">
          <font>
             <Font size="38.0" />
          </font>
       </Text>
       <DatePicker fx:id="dateOfBirth" layoutX="159.0" layoutY="295.0" promptText="Date of birth" />
-      <ComboBox fx:id="country" layoutX="159.0" layoutY="243.0" prefWidth="150.0" promptText="Country" visibleRowCount="4" />
+      <ComboBox fx:id="country" layoutX="159.0" layoutY="243.0" prefWidth="150.0" promptText="Country" visibleRowCount="4">
+<!--         <items>-->
+<!--            <String fx:value="Egypt" />-->
+<!--            <String fx:value="Russia" />-->
+<!--            <String fx:value="Morocco" />-->
+<!--            <String fx:value="Tunisia" />-->
+<!--            <String fx:value="Turkey" />-->
+<!--         </items>-->
+      </ComboBox>
       <Text layoutX="62.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="*Country:">
          <font>
             <Font size="14.0" />
@@ -37,7 +49,6 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <ImageView fx:id="profilePicture" fitHeight="110.0" fitWidth="141.0" layoutX="159.0" layoutY="103.0" onMouseClicked="#onProfilePicMouseClicked" pickOnBounds="true" preserveRatio="true" />
       <RadioButton fx:id="maleCheckBox" layoutX="158.0" layoutY="343.0" mnemonicParsing="false" text="Male">
          <toggleGroup>
             <ToggleGroup fx:id="Gender" />
