@@ -43,25 +43,20 @@ public class ServerService implements serverServiceInt {
     private void openRmiConnection() {
         try {
             reg = LocateRegistry.createRegistry(1099);
-            AuthenticationServiceInt authenticationService = new AuthenticationServiceImpl();
+            AuthenticationServiceInt authenticationService = AuthenticationServiceImpl.getInstance();
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
             SendContactsInvitationServiceInt sendContactsInvitationService = SendContactsInvitationServiceImpl.getInstance();
             AddContactsServiceInt addContactsService = AddContactsServiceImpl.getInstance();
             ChatServiceInt chatService = ChatServiceImpl.getInstance();
+            NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             reg.rebind("AddContactsService", addContactsService);
             reg.rebind("SendContactsInvitationService", sendContactsInvitationService);
-            reg.rebind("authenticationService", authenticationService);
+            reg.rebind("authService", authenticationService);
             reg.rebind("ContactsService",contactService);
-            System.out.println("AddContactsService binded successful");
-            System.out.println("SendContactsInvitationService binded successful");
-            NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);
             reg.rebind("NotificationService",notificationService);
             reg.rebind("ChatService",chatService);
-            System.out.println("authenticationService binded successful");
-            System.out.println("ContactService binded successful");
-            System.out.println("NotificationService binded successful");
 
         } catch (RemoteException e) {
             System.out.println(e.getMessage() + " Server Service line 36");

@@ -46,7 +46,7 @@ public class UserDao implements UserDaoInterface {
             ps.setString(9, object.getMode().toString());
             ps.setString(10, object.getStatus().toString());
             ByteArrayInputStream profilePhoto = new ByteArrayInputStream(object.getProfilePhoto());
-            ps.setBlob(11,profilePhoto);
+            ps.setBlob(11, profilePhoto);
 
             return ps.executeUpdate();
         }
@@ -63,6 +63,7 @@ public class UserDao implements UserDaoInterface {
 
             if (rs.next()) {
                 user = new User();
+
                 user.setPhoneNumber(rs.getString("phone_number"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
@@ -87,7 +88,6 @@ public class UserDao implements UserDaoInterface {
     }
 
 
-
     // Updating a user using the user object
     public int updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
@@ -105,7 +105,7 @@ public class UserDao implements UserDaoInterface {
             ps.setString(9, user.getMode().toString());
             ps.setString(10, user.getStatus().toString());
             ByteArrayInputStream profilePhoto = new ByteArrayInputStream(user.getProfilePhoto());
-            ps.setBlob(11,profilePhoto);
+            ps.setBlob(11, profilePhoto);
             ps.setInt(12, user.getUserId());
 
             return ps.executeUpdate();
@@ -196,17 +196,18 @@ public class UserDao implements UserDaoInterface {
     }
 
     @Override
-    public List<Map<String, Number>> getTopCountries() throws SQLException {
-        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC";
-        List<Map<String, Number>> countries = new ArrayList<>();
+    public Map<String, Integer> getTopCountries() throws SQLException {
+        String query = "SELECT country, COUNT(*) " +
+                "AS user_count FROM user GROUP BY country ORDER BY user_count DESC LIMIT 10";
+        Map<String, Integer> countries = new HashMap<>();
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Map<String, Number> country = new HashMap<>();
-                country.put(rs.getString("country"), rs.getInt("user_count"));
-                countries.add(country);
+                String countryName = rs.getString("country");
+                int userCount = rs.getInt("user_count");
+                countries.put(countryName, userCount);
             }
         }
         return countries;
@@ -236,5 +237,29 @@ public class UserDao implements UserDaoInterface {
             }
         }
         return 0;
+    }
+
+    public boolean isPhoneNumberExists(String phoneNo) throws SQLException {
+        String query = "Select * from user where phone_number = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, phoneNo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEmailExists(String email) throws SQLException{
+        String query = "Select * from user where email = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }
+        return false;
     }
 }
