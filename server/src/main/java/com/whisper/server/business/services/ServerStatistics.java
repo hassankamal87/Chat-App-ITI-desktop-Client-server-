@@ -39,6 +39,8 @@ public class ServerStatistics {
             SimpleIntegerProperty onlineUsers = new SimpleIntegerProperty(UserDao.getInstance(MyDatabase.getInstance()).getOnlineUsersCount());
             IntegerProperty offlineUsers = new SimpleIntegerProperty(UserDao.getInstance(MyDatabase.getInstance()).getOfflineUsersCount());
 
+
+
             statisticsUpdateInt.updateOnlineOfflineUsers(onlineUsers, offlineUsers);
         } catch (SQLException e) {
             throw new RuntimeException(e);
