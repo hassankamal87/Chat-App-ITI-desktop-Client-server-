@@ -33,23 +33,22 @@ public class ChatItemController
     private Label chatItemMode;
 
     private BorderPane homePane;
-    private RoomChat roomChat;
-
+    private int roomChatId;
     private List<User> friendsOnChat = new ArrayList<>();
 
     private static HashMap<Integer,Parent> chatPanes = new HashMap<>();
 
-    public void setData(BorderPane homePane, RoomChat roomChat){
+    public void setData(BorderPane homePane, int roomChatID){
         System.out.println("parent pane done");
         this.homePane = homePane;
-        this.roomChat = roomChat;
+        this.roomChatId = roomChatID;
 
-        setRoomChatItemData(roomChat);
+        setRoomChatItemData(roomChatID);
     }
 
-    private void setRoomChatItemData(RoomChat roomChat) {
+    private void setRoomChatItemData(int roomChatId) {
         ChattingService chattingService = ChattingService.getInstance();
-        User friendUser = chattingService.getUserInCommonRoomChat(roomChat.getRoomChatId());
+        User friendUser = chattingService.getUserInCommonRoomChat(roomChatId);
         friendsOnChat.add(friendUser);
         chatItemIName.setText(friendUser.getUserName());
         chatItemMode.setText(friendUser.getMode().name());
@@ -64,22 +63,7 @@ public class ChatItemController
 
     @FXML
     public void onChatItemClicked(Event event) {
-        Parent node = chatPanes.get(roomChat.getRoomChatId());
-        System.out.println(node);
-        if(node == null){
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/roomChatView.fxml"));
-                System.out.println("start Load");
-                node = fxmlLoader.load();
-                System.out.println("loaded");
-                RoomChatController controller = fxmlLoader.getController();
-                controller.setData(roomChat,friendsOnChat);
-                chatPanes.put(roomChat.getRoomChatId(),node);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        homePane.setCenter(node);
+        openChat();
     }
 
     //work around to pre load and make loading faster.
@@ -94,5 +78,24 @@ public class ChatItemController
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void openChat(){
+        Parent node = chatPanes.get(roomChatId);
+        System.out.println(node);
+        if(node == null){
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/roomChatView.fxml"));
+                System.out.println("start Load");
+                node = fxmlLoader.load();
+                System.out.println("loaded");
+                RoomChatController controller = fxmlLoader.getController();
+                controller.setData(roomChatId,friendsOnChat);
+                chatPanes.put(roomChatId,node);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        homePane.setCenter(node);
     }
 }

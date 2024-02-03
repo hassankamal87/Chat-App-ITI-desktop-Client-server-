@@ -50,12 +50,12 @@ public class RoomChatController
     private VBox messageList;
 
     private ChattingService chattingService;
-    private RoomChat roomChat;
+    private int roomChatID;
     private List<User> friendsOnChat = new ArrayList<>();
 
 
-    public void setData(RoomChat roomChat, List<User> friendsOnChat){
-        this.roomChat = roomChat;
+    public void setData(int roomChatID, List<User> friendsOnChat){
+        this.roomChatID = roomChatID;
         this.friendsOnChat = friendsOnChat;
         nameText.setText(friendsOnChat.get(0).getUserName());
         modeText.setText(friendsOnChat.get(0).getMode().name());

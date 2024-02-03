@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.presentation.controllers.HandlingChatInterface;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
@@ -23,6 +24,8 @@ public class ChattingService {
     private static ChattingService instance = null;
     ChatServiceInt chatService;
 
+    private HandlingChatInterface handlingChat;
+
     private ChattingService() {
         try {
             Registry reg = LocateRegistry.getRegistry(1099);
@@ -33,6 +36,10 @@ public class ChattingService {
             System.out.println("error here  "+e.getMessage());
            // e.printStackTrace();
         }
+    }
+
+    public void registerHandlingInterface(HandlingChatInterface handlingChat){
+        this.handlingChat = handlingChat;
     }
 
     public static synchronized ChattingService getInstance() {
@@ -66,11 +73,14 @@ public class ChattingService {
 
     public int getOrCreateRoomChat(int user1Id, int user2Id){
         int roomChatId = getRoomChatForUsers(user1Id,user2Id);
-        if(roomChatId != 0)
+        if(roomChatId != 0){
+            handlingChat.openExistChat(roomChatId);
             return roomChatId;
-        else{
+        }else{
             try {
-                return chatService.createRoomChat(user1Id,user2Id);
+                int newId = chatService.createRoomChat(user1Id,user2Id);
+                handlingChat.addRoomChat(newId);
+                return newId;
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

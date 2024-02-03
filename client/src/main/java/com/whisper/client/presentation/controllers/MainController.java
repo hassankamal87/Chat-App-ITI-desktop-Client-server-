@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import org.example.entities.User;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,10 +35,7 @@ public class MainController {
 
     @FXML
     public void initialize() {
-
-
         Parent root = null;
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/homeView.fxml"));
             root = fxmlLoader.load();
@@ -76,6 +74,8 @@ public class MainController {
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/contactView.fxml"));
                     root = fxmlLoader.load();
 
+                    contactController controller = fxmlLoader.getController();
+                    controller.setData(this);
                     panes.put("mainContactPane", root);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -95,16 +95,14 @@ public class MainController {
 
     }
 
-    @Deprecated
-    public void onMouseEnteredProfileBtn(Event event) {
-    }
-
     @FXML
     public void onSignOutClicked(Event event) {
     }
 
+    @FXML
     public void onAddContactClicked(MouseEvent mouseEvent) {
 
+        System.out.println("clicked first");
         if (!Objects.equals("userSearchPane", mainPane.getCenter().getId())) {
             Parent root = panes.get("userSearchPane");
             if (root == null) {
@@ -125,8 +123,13 @@ public class MainController {
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
+    void navigateToHomeScreen(){
+        Parent root = panes.get("homePane");
 
-    @FXML
-    public void onAddContactClicked(Event event) {
+        mainPane.setCenter(root);
+        homeBtn.setStyle("-fx-background-color: #fe3554;");
+        addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+        contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+        profileBtn.setStyle("-fx-background-color: #trnasparent;");
     }
 }
