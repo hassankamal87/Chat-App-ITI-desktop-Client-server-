@@ -1,10 +1,13 @@
 package com.whisper.client.presentation.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-public class SignInController
-{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SignInController implements Initializable {
     @javafx.fxml.FXML
     private TextField phoneNumber;
     @javafx.fxml.FXML
@@ -20,5 +23,10 @@ public class SignInController
     }
 
     public void onSignupButtonClick(ActionEvent actionEvent) {
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

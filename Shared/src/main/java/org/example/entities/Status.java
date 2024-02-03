@@ -1,5 +1,7 @@
 package org.example.entities;
 
-public enum Status {
+import java.io.Serializable;
+
+public enum Status implements Serializable {
     online, offline
 }

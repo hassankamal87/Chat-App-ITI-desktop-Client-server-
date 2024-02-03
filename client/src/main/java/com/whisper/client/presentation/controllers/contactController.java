@@ -39,8 +39,6 @@ public class contactController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         addContactBtn.setOnAction(event -> addContactAction());
         List<User> contacts = new ArrayList<>(contacts());
@@ -49,7 +47,6 @@ public class contactController implements Initializable
 
             try{
                 HBox hBox=fxmlLoader.load();
-
                 contactItemController cic = fxmlLoader.getController();
                 cic.setData(contacts.get(i));
                 int finalI = i;
@@ -63,8 +60,6 @@ public class contactController implements Initializable
 
 
         }
-
-
     }
 
     private void addContactAction() {
