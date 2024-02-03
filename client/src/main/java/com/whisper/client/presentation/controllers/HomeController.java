@@ -40,7 +40,7 @@ public class HomeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("initialize user");
         //you need to switch user id to current user id
-        //ChattingService.getInstance().getOrCreateRoomChat(1,5);
+        ChattingService.getInstance().getOrCreateRoomChat(1,2);
         List<RoomChat> roomChats = ChattingService.getInstance().getAllRoomChatsForUser(1);
 
         Node[] nodes = new Node[roomChats.size()];

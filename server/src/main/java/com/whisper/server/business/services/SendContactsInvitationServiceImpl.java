@@ -16,6 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -35,25 +36,28 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
         return instance;
     }
     @Override
-    public void inviteContacts(int id, List<String> invitedContacts) throws RemoteException {
-        for (String invitedContact : invitedContacts) {
+    public String inviteContacts(int id, String invitedContact) throws RemoteException {
+
+
             try {
+
                 int contactID = UserDao.getInstance(MyDatabase.getInstance()).getIdByPhoneNumber(invitedContact);
-                if (alreadyGotInvite(id, contactID)) {
+                if(alreadyGotInvite(id,contactID)){
+                    return "already got invited";
+
+                }
+                if (InviteAutomatic(id, contactID)) {
                     ContactDao.getInstance(MyDatabase.getInstance())
                             .create(new Contact(FriendshipStatus.friend,
                                     Date.valueOf(LocalDate.now()), id, contactID));
                     removeInvitation(contactID, id);
-                    continue;
+                    return "automatic Invitation";
                 }
-                ///wait
                 if (contactID == -1){
-                    System.out.println("not found");
-                    continue;
+                    return "Not Found";
                 }
                 else if (contactID==id){
-                    System.out.println("same phone");
-                    continue;
+                    return "self invitation";
                 }
 
                     // add invitation to pending requests
@@ -73,11 +77,13 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                     }
                 }
 
-                System.out.println("Invitation sent");
+
+
             } catch (Exception e) {
                 System.out.println("SQL Exception : " + e);
             }
-        }
+
+        return "Invitation Send Successfully";
     }
 
     private void sendNotification(int contactID,String userName) throws RemoteException {
@@ -126,7 +132,6 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     @Override
     public void ServerUnRegister(ClientServiceInt clientService) throws RemoteException {
 
-        System.out.println(clientService.getClientId());
         try{
             User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(clientService.getClientId());
 
@@ -151,13 +156,24 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
     }
 
-    private boolean alreadyGotInvite(int userId,int contactId) {
+    private boolean InviteAutomatic(int userId,int contactId) {
         PendingRequest result = null;
         try {
             result = PendingRequestDao.getInstance(MyDatabase.getInstance()).getPendingRequest(userId, contactId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return result != null;
+    }
+    private boolean alreadyGotInvite(int userId,int contactId) {
+        PendingRequest result = null;
+        try {
+            result = PendingRequestDao.getInstance(MyDatabase.getInstance()).getPendingRequest(contactId, userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("friend");
 
         return result != null;
     }

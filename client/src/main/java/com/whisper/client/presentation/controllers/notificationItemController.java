@@ -40,6 +40,10 @@ public class notificationItemController implements Initializable {
                 header.setText("You hava a new invitation from "+notification.getFromUserName());
                description.setText("you have a new friend request from "+ notification.getFromUserName());
            }
+            else if(notification.getType()==NotifactionType.board){
+                notificationIcon.setImage( new Image(getClass().getResourceAsStream("/com/whisper/client/images/broadcast.png")));
+                header.setText("You hava a new Admin Announcement");
+            }
 
 
 

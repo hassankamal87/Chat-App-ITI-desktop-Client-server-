@@ -70,7 +70,7 @@ public class notificationController implements Initializable {
         notificationService.sendMessage(not);
     }
     private List<Notification> notifications() {
-        List<Notification>notifications =notificationService.getNotifications(1);
+        List<Notification>notifications =notificationService.getNotifications(7);
         return notifications;
     }
 }
