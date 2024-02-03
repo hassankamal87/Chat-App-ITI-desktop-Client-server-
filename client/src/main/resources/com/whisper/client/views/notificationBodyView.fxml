@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="400.0" styleClass="menu-item" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.notificationItemController">
+   <children>
+      <Label fx:id="header" prefHeight="23.0" prefWidth="400.0" text="You hava a new message from Hassan " textFill="#575757">
+         <font>
+            <Font name="Corbel Bold" size="20.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../style/style.css" />
+            <URL value="@../style/MyCss.css" />
+         </stylesheets>
+      </Label>
+   </children>
+   <stylesheets>
+      <URL value="@../style/style.css" />
+      <URL value="@../style/newCss.css" />
+   </stylesheets>
+</HBox>

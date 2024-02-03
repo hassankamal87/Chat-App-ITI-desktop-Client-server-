@@ -54,7 +54,7 @@ public class SceneManager {
             throw new RuntimeException("Stage Coordinator should be " +
                     "initialized with a Stage before it could be used");
         }
-        if(!panes.containsKey(name)){
+        if(!panes.containsKey(name) || name == "statisticsView"){
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                         .getResource(String.format("/com/whisper/server/views/%s.fxml", name)));

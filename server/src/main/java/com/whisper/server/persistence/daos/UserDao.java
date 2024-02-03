@@ -7,6 +7,8 @@ import org.example.entities.Gender;
 import org.example.entities.Mode;
 import org.example.entities.Status;
 
+import java.io.ByteArrayInputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +32,8 @@ public class UserDao implements UserDaoInterface {
     // Creating a user
     public int createUser(User object) throws SQLException {
         String query = "INSERT INTO user (phone_number, password, email, user_name" +
-                ", gender, date_of_birth, country, bio, mode, status) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ", gender, date_of_birth, country, bio, mode, status,profile_photo) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setString(1, object.getPhoneNumber());
             ps.setString(2, object.getPassword());
@@ -43,6 +45,8 @@ public class UserDao implements UserDaoInterface {
             ps.setString(8, object.getBio());
             ps.setString(9, object.getMode().toString());
             ps.setString(10, object.getStatus().toString());
+            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(object.getProfilePhoto());
+            ps.setBlob(11,profilePhoto);
 
             return ps.executeUpdate();
         }
@@ -50,7 +54,7 @@ public class UserDao implements UserDaoInterface {
 
     // Getting a user by id
     public User getUserById(int id) throws SQLException {
-        String query = "SELECT * FROM user WHERE id = ?";
+        String query = "SELECT * FROM user WHERE user_id = ?";
         User user = null;
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
@@ -59,6 +63,7 @@ public class UserDao implements UserDaoInterface {
 
             if (rs.next()) {
                 user = new User();
+
                 user.setPhoneNumber(rs.getString("phone_number"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
@@ -69,17 +74,26 @@ public class UserDao implements UserDaoInterface {
                 user.setBio(rs.getString("bio"));
                 user.setMode(Mode.valueOf(rs.getString("mode")));
                 user.setStatus(Status.valueOf(rs.getString("status")));
+                Blob profilePhotoBlob = rs.getBlob("profile_photo");
+                if (profilePhotoBlob != null) {
+                    int blobLength = (int) profilePhotoBlob.length();
+                    byte[] profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+                    user.setProfilePhoto(profilePhotoBytes);
+                } else {
+                    user.setProfilePhoto(null);
+                }
             }
         }
         return user;
     }
 
 
+
     // Updating a user using the user object
     public int updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
                 " user_name = ?, gender = ?, date_of_birth = ?, country = ?, bio = ?," +
-                " mode = ?, status = ? WHERE id = ?";
+                " mode = ?, status = ? ,profile_photo = ? WHERE user_id = ?";
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setString(1, user.getPhoneNumber());
             ps.setString(2, user.getPassword());
@@ -91,7 +105,9 @@ public class UserDao implements UserDaoInterface {
             ps.setString(8, user.getBio());
             ps.setString(9, user.getMode().toString());
             ps.setString(10, user.getStatus().toString());
-            ps.setInt(11, user.getUserId());
+            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(user.getProfilePhoto());
+            ps.setBlob(11,profilePhoto);
+            ps.setInt(12, user.getUserId());
 
             return ps.executeUpdate();
         }
@@ -99,7 +115,7 @@ public class UserDao implements UserDaoInterface {
 
     // Deleting a user by id
     public int deleteById(int id) throws SQLException {
-        String query = "DELETE FROM user WHERE id = ?";
+        String query = "DELETE FROM user WHERE user_id = ?";
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setInt(1, id);
@@ -127,10 +143,31 @@ public class UserDao implements UserDaoInterface {
                 user.setBio(rs.getString("bio"));
                 user.setMode(Mode.valueOf(rs.getString("mode")));
                 user.setStatus(Status.valueOf(rs.getString("status")));
+                Blob profilePhotoBlob = rs.getBlob("profile_photo");
+                if (profilePhotoBlob != null) {
+                    int blobLength = (int) profilePhotoBlob.length();
+                    byte[] profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+                    user.setProfilePhoto(profilePhotoBytes);
+                } else {
+                    user.setProfilePhoto(null);
+                }
                 users.add(user);
             }
         }
         return users;
+    }
+
+    @Override
+    public int getIdByPhoneNumber(String phoneNumber) throws SQLException {
+        String query = "SELECT user_id FROM user WHERE phone_number = ?";
+        try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
+            ps.setString(1, phoneNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -161,7 +198,7 @@ public class UserDao implements UserDaoInterface {
 
     @Override
     public List<Map<String, Number>> getTopCountries() throws SQLException {
-        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC LIMIT 5";
+        String query = "SELECT country, COUNT(*) AS user_count FROM user GROUP BY country ORDER BY user_count DESC";
         List<Map<String, Number>> countries = new ArrayList<>();
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {

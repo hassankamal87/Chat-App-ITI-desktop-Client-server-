@@ -7,23 +7,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.scene.web.HTMLEditor;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import org.example.entities.RoomChat;
+import org.example.entities.Type;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
-    @FXML
-    private AnchorPane homePane;
     @FXML
     private AnchorPane chatsPane;
     @FXML
@@ -35,26 +27,7 @@ public class HomeController implements Initializable {
     @FXML
     private VBox chatList;
     @FXML
-    private AnchorPane roomChatPane;
-    @FXML
-    private ImageView personalImage;
-    @FXML
-    private Text nameText;
-    @FXML
-    private Text modeText;
-    @FXML
-    private Button callBtn;
-    @FXML
-    private Button sendBtn;
-    @FXML
-    private BorderPane chatBorderPane;
-
-    @FXML
-    private VBox messageList;
-    @FXML
-    private HTMLEditor messageEditor;
-    @FXML
-    private ScrollPane messagesScrollPane;
+    private BorderPane homePane;
 
     @FXML
     public void initialize() {
@@ -65,22 +38,26 @@ public class HomeController implements Initializable {
         Node[] nodes = new Node[5];
 
         for (int i = 0; i < nodes.length; i++) {
+
             try {
-                nodes[i] = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/chatItemView.fxml")));
-
-                nodes[i].setOnMouseEntered(event -> {
-
-                });
-
-                nodes[i].setOnMouseExited(event -> {
-
-                });
-
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/chatItemView.fxml"));
+                nodes[i] = loader.load();
+                ChatItemController controller = loader.getController();
+                controller.setData(homePane, new RoomChat(i,null,true,"mohamed"+i,null,1,"desc", Type.individual));
                 chatList.getChildren().add(nodes[i]);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+//            try {
+//             //   nodes[i] = loader.load();
+//             //   chatList.getChildren().add(nodes[i]);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+
+//                nodes[i] = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/chatItemView.fxml")));
+
         }
     }
 
@@ -88,34 +65,6 @@ public class HomeController implements Initializable {
     public void onMouseEnteredSearchBtn(Event event) {
     }
 
-    @FXML
-    public void onMouseEnteredSendBtn(Event event) {
-    }
 
-    @FXML
-    public void onSendBtnClicked(Event event) {
-        String htmlContent = messageEditor.getHtmlText();
-        messageEditor.setHtmlText("");
 
-        Document doc = Jsoup.parse(htmlContent);
-        String textContent = doc.text();
-        if (!textContent.isEmpty()){
-            appendMessageInList(htmlContent);
-        }
-    }
-
-    private void appendMessageInList(String htmlContent) {
-        try {
-            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemView.fxml")));
-
-            WebView messageWebView = (WebView) node.lookup("#messageWebView");
-            WebEngine messageEngine = messageWebView.getEngine();
-            messageEngine.loadContent(htmlContent);
-            messagesScrollPane.setVvalue(1D);
-
-            messageList.getChildren().add(node);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
