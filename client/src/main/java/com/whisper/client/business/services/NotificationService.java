@@ -4,9 +4,11 @@ import com.whisper.client.HelloApplication;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.example.entities.Notification;
@@ -93,6 +95,30 @@ public class NotificationService {
                         .title("Message")
                         .graphic(hBox)
                         .hideAfter(Duration.seconds(10))
+                        .show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
+    }
+    public void sendBroadCast(Notification notification) {
+        Platform.runLater(()->{
+
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/broadCastView.fxml"));
+            try {
+                AnchorPane anchorPane = fxmlLoader.load();
+
+                WebView webView = new WebView();
+                webView.getEngine().loadContent(notification.getBody());
+                webView.setPrefSize(400, 70);
+                anchorPane.getChildren().add(webView);
+
+               Notifications.create()
+                        .title("You hava a new Admin Announcement here !!")
+                        .graphic(anchorPane)
+                       .hideAfter(Duration.seconds(60))
                         .show();
             } catch (IOException e) {
                 throw new RuntimeException(e);
