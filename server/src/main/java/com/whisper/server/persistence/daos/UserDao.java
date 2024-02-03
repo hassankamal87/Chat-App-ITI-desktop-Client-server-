@@ -202,6 +202,7 @@ public class UserDao implements UserDaoInterface {
         return 0;
     }
 
+    @Override
     public boolean isPhoneNumberExists(String phoneNo) throws SQLException {
         String query = "Select * from user where phone_number = ?";
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
@@ -214,10 +215,25 @@ public class UserDao implements UserDaoInterface {
         return false;
     }
 
+    @Override
     public boolean isEmailExists(String email) throws SQLException{
         String query = "Select * from user where email = ?";
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
             ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean getByPhoneAndPassword(String phoneNo, String password) throws SQLException {
+        String query = "Select * from user where phone_number = ? and password = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, phoneNo);
+            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 return true;

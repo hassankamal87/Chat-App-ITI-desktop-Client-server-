@@ -25,17 +25,47 @@ public class AuthenticationServiceImpl extends UnicastRemoteObject implements Au
 
     @Override
     public boolean registerUser(User user) throws RemoteException {
-//        UserValidation userValidation = new UserValidation(MyDatabase.getInstance());
         try{
-//            if (userValidation.isEmailExists(user.getEmail()) ||
-//                userValidation.isPhoneNumberExists(user.getPhoneNumber())){
-//                System.out.println("Email or phoneNumber duplicated");
-//                return false;
-//            }
             UserDao.getInstance(MyDatabase.getInstance()).createUser(user);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    @Override
+    public boolean loginUser(String phoneNumber, String password) throws RemoteException {
+        try {
+            if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, password)) {
+                System.out.println("User signed in successfully");
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Sign in failed");
+        return false;
+    }
+
+    @Override
+    public boolean validatePhoneNumber(String phoneNo) throws RemoteException {
+        try {
+            if (UserDao.getInstance(MyDatabase.getInstance()).isPhoneNumberExists(phoneNo))
+                return false;
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean validateEmail(String email) throws RemoteException {
+        try {
+            if (UserDao.getInstance(MyDatabase.getInstance()).isEmailExists(email))
+                return false;
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
