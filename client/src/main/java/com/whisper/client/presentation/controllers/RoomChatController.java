@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ChattingService;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,15 +17,13 @@ import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.example.entities.RoomChat;
+import org.example.entities.User;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RoomChatController
@@ -50,20 +49,27 @@ public class RoomChatController
     @FXML
     private VBox messageList;
 
+    private ChattingService chattingService;
     private RoomChat roomChat;
+    private List<User> friendsOnChat = new ArrayList<>();
 
-    public void setData(RoomChat roomChat){
+
+    public void setData(RoomChat roomChat, List<User> friendsOnChat){
         this.roomChat = roomChat;
-        nameText.setText(roomChat.getGroupName());
+        this.friendsOnChat = friendsOnChat;
+        nameText.setText(friendsOnChat.get(0).getUserName());
+        modeText.setText(friendsOnChat.get(0).getMode().name());
     }
 
     @FXML
     public void initialize() {
+        chattingService = ChattingService.getInstance();
     }
 
     @FXML
     public void onSendBtnClicked(Event event) {
         String htmlContent = messageEditor.getHtmlText();
+        chattingService.sendMessage(1,3,htmlContent);
         messageEditor.setHtmlText("");
 
         Document doc = Jsoup.parse(htmlContent);
@@ -92,5 +98,19 @@ public class RoomChatController
         }
     }
 
+    private void receiveMessageFromList(String htmlContent) {
+        try {
+            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemViewReciever.fxml")));
+
+            WebView messageWebView = (WebView) node.lookup("#messageWebView");
+            WebEngine messageEngine = messageWebView.getEngine();
+            messageEngine.loadContent(htmlContent);
+            messagesScrollPane.setVvalue(1D);
+
+            messageList.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -5,11 +5,7 @@ import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
 import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.User;
-import org.example.serverinterfaces.AddContactsServiceInt;
-import org.example.serverinterfaces.AuthenticationServiceInt;
-import org.example.serverinterfaces.ContactServiceInt;
-import org.example.serverinterfaces.SendContactsInvitationServiceInt;
-import org.example.serverinterfaces.NotificationServiceInt;
+import org.example.serverinterfaces.*;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -51,6 +47,7 @@ public class ServerService implements serverServiceInt {
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
             SendContactsInvitationServiceInt sendContactsInvitationService = SendContactsInvitationServiceImpl.getInstance();
             AddContactsServiceInt addContactsService = AddContactsServiceImpl.getInstance();
+            ChatServiceInt chatService = ChatServiceImpl.getInstance();
             NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             reg.rebind("AddContactsService", addContactsService);
             reg.rebind("SendContactsInvitationService", sendContactsInvitationService);
@@ -59,6 +56,7 @@ public class ServerService implements serverServiceInt {
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);
             reg.rebind("NotificationService",notificationService);
+            reg.rebind("ChatService",chatService);
 
         } catch (RemoteException e) {
             System.out.println(e.getMessage() + " Server Service line 36");

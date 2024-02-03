@@ -36,7 +36,7 @@ public class RoomChatDao implements RoomChatDaoInterface {
         String query = "Insert into room_chat (created_date, time_stamp, group_name, " +
                 "photo, admin_id, description, type) " +
                 "values (?, ?, ?, ?, ?, ?, ?)";
-        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query,Statement.RETURN_GENERATED_KEYS);){
             ps.setString(1, String.valueOf(date));
             ps.setString(2, roomChat.getTimeStamp() ? "true" : "false");
             ps.setString(3, roomChat.getGroupName());
@@ -44,8 +44,17 @@ public class RoomChatDao implements RoomChatDaoInterface {
             ps.setObject(5, roomChat.getAdminId());
             ps.setString(6, roomChat.getDescription());
             ps.setString(7, roomChat.getType().name());
-            return ps.executeUpdate();
+
+            int rowsAffected =  ps.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
         }
+        return -1;
     }
 
     @Override
@@ -88,7 +97,7 @@ public class RoomChatDao implements RoomChatDaoInterface {
         List<RoomChat> roomChats = new ArrayList<>();
         String query = "select * from \n" +
                 "room_chat \n" +
-                "where room_chat_id  = (select room_chat_id \n" +
+                "where room_chat_id  in (select room_chat_id \n" +
                 "from room_chat_user \n" +
                 "where user_id = ?);";
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
@@ -118,7 +127,7 @@ public class RoomChatDao implements RoomChatDaoInterface {
         List<User> users = new ArrayList<>();
         String query = "select * from \n" +
                 "user \n" +
-                "where user_id  = (select user_id \n" +
+                "where user_id in (select user_id \n" +
                 "from room_chat_user \n" +
                 "where room_chat_id = ?);";
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
@@ -172,5 +181,29 @@ public class RoomChatDao implements RoomChatDaoInterface {
         int rowsInserted = ps.executeUpdate();
         ps.close();
         return rowsInserted;
+    }
+
+    //get individual room chat
+    @Override
+    public int getRoomChatForUsers(int user1Id, int user2Id) throws SQLException {
+        String query = "SELECT room_chat_id\n" +
+                "        FROM room_chat_user\n" +
+                "        WHERE user_id IN (?,?)\n" +
+                "        GROUP BY room_chat_id\n" +
+                "        HAVING COUNT(DISTINCT user_id) = 2;";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1,user1Id);
+        ps.setInt(2,user2Id);
+
+        ResultSet rs = ps.executeQuery();
+
+        int roomChatId = 0;
+        if(rs.next()){
+            roomChatId = rs.getInt(1);
+        }
+
+        rs.close();
+        ps.close();
+        return roomChatId;
     }
 }

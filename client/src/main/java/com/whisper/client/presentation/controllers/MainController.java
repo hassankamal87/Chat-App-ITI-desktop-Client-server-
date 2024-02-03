@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class MainController {
@@ -29,19 +30,25 @@ public class MainController {
     @FXML
     private Button addContactBtn;
 
+    private HashMap<String, Parent> panes = new HashMap<>();
+
     @FXML
     public void initialize() {
+
+
         Parent root = null;
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/homeView.fxml"));
             root = fxmlLoader.load();
+            panes.put("homePane", root);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         mainPane.setCenter(root);
         homeBtn.setStyle("-fx-background-color: #fe3554;");
+
     }
 
     @FXML
@@ -49,14 +56,7 @@ public class MainController {
         Parent root = null;
 
         if (!Objects.equals("homePane", mainPane.getCenter().getId())) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/homeView.fxml"));
-
-
-                root = fxmlLoader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            root = panes.get("homePane");
 
             mainPane.setCenter(root);
             homeBtn.setStyle("-fx-background-color: #fe3554;");
@@ -69,6 +69,25 @@ public class MainController {
 
     @FXML
     public void onContactsClicked(Event event) {
+        if (!Objects.equals("mainContactPane", mainPane.getCenter().getId())) {
+            Parent root = panes.get("mainContactPane");
+            if (root == null) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/contactView.fxml"));
+                    root = fxmlLoader.load();
+
+                    panes.put("mainContactPane", root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            mainPane.setCenter(root);
+            contactsBtn.setStyle("-fx-background-color: #fe3554;");
+            homeBtn.setStyle("-fx-background-color: #trnasparent;");
+            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+            profileBtn.setStyle("-fx-background-color: #trnasparent;");
+        }
     }
 
     @FXML
@@ -85,16 +104,18 @@ public class MainController {
     }
 
     public void onAddContactClicked(MouseEvent mouseEvent) {
-        Parent root = null;
 
         if (!Objects.equals("userSearchPane", mainPane.getCenter().getId())) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/userSearchView.fxml"));
+            Parent root = panes.get("userSearchPane");
+            if (root == null) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/userSearchView.fxml"));
+                    root = fxmlLoader.load();
 
-
-                root = fxmlLoader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    panes.put("userSearchPane", root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             mainPane.setCenter(root);

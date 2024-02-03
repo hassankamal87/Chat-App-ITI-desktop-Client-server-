@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ChattingService;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.example.entities.RoomChat;
+import org.example.entities.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ChatItemController
 {
@@ -31,6 +35,8 @@ public class ChatItemController
     private BorderPane homePane;
     private RoomChat roomChat;
 
+    private List<User> friendsOnChat = new ArrayList<>();
+
     private static HashMap<Integer,Parent> chatPanes = new HashMap<>();
 
     public void setData(BorderPane homePane, RoomChat roomChat){
@@ -38,8 +44,19 @@ public class ChatItemController
         this.homePane = homePane;
         this.roomChat = roomChat;
 
-        chatItemIName.setText(roomChat.getGroupName());
+        setRoomChatItemData(roomChat);
     }
+
+    private void setRoomChatItemData(RoomChat roomChat) {
+        ChattingService chattingService = ChattingService.getInstance();
+        User friendUser = chattingService.getUserInCommonRoomChat(roomChat.getRoomChatId());
+        friendsOnChat.add(friendUser);
+        chatItemIName.setText(friendUser.getUserName());
+        chatItemMode.setText(friendUser.getMode().name());
+        //you need to convert byte array to image
+       // chatItemImage.setImage(friendUser.getProfilePhoto());
+    }
+
     @FXML
     public void initialize() {
         preLoad();
@@ -56,7 +73,7 @@ public class ChatItemController
                 node = fxmlLoader.load();
                 System.out.println("loaded");
                 RoomChatController controller = fxmlLoader.getController();
-                controller.setData(roomChat);
+                controller.setData(roomChat,friendsOnChat);
                 chatPanes.put(roomChat.getRoomChatId(),node);
             } catch (IOException e) {
                 throw new RuntimeException(e);
