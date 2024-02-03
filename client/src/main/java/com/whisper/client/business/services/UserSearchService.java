@@ -18,12 +18,10 @@ public class UserSearchService {
                 String  response =sendContactsInvitationInt.inviteContacts(id,contact);
                 if(response.equals("already got invited")){
                     inform="You already now friend with this Number : "+contact;
-
                     Alert alert = new Alert(Alert.AlertType.WARNING, inform, ButtonType.OK);
                     alert.showAndWait();
                 }else if(response.equals("automatic Invitation")){
-                    inform="This Phone Number "+contact+" is already send to you before an invitation , Now You are friends.";
-
+                    inform="Done ,Now you can send a message to "+contact;
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, inform, ButtonType.OK);
                     alert.showAndWait();
                 }
