@@ -28,7 +28,7 @@ public class MessageDao implements MessageDaoInterface {
     // Creating a message
     @Override
     public int createMessage(Message message) throws SQLException {
-        String query = "INSERT INTO messages (to_chat_id, sent_date, from_user, body, attachment) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO message (to_chat_id, sent_date, from_user, body, attachment) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
             ps.setInt(1, message.getToChatId());

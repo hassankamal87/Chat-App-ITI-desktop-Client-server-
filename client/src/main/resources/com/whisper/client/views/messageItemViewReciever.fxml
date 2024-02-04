@@ -9,7 +9,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane fx:id="messageContainer" prefHeight="53.0" prefWidth="376.0" style="-fx-background-color: transparent;">
@@ -18,7 +17,7 @@
          </children>
       </AnchorPane>
    </center>
-   <right>
+   <left>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="ImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -33,5 +32,5 @@
             </Label>
          </children>
       </VBox>
-   </right>
+   </left>
 </BorderPane>

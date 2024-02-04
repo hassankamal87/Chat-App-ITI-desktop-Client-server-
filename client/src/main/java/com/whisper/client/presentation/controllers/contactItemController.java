@@ -42,7 +42,7 @@ public class contactItemController implements Initializable {
             Color color = null;
             if(contact.getMode()==Mode.offline)
                 color=Color.DARKRED;
-            else if(contact.getMode()==Mode.available)
+            else if(contact.getMode()==Mode.avalible)
                 color=Color.LIGHTGREEN;
             else if(contact.getMode()==Mode.away)
                 color=Color.LIGHTBLUE;

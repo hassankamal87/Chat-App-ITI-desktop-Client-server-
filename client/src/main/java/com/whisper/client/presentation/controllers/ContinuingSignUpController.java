@@ -1,15 +1,17 @@
 package com.whisper.client.presentation.controllers;
 
+import com.whisper.client.presentation.services.ErrorDialogue;
+import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.entities.Gender;
@@ -18,6 +20,12 @@ import org.example.entities.Status;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -25,6 +33,7 @@ import java.rmi.registry.Registry;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ContinuingSignUpController
@@ -51,7 +60,8 @@ public class ContinuingSignUpController
     private String phoneNumber;
     private String password;
     private String confirmPassword;
-    private ObservableList<String> allCountries;
+    ErrorDialogue dialogue;
+
 
     public ContinuingSignUpController(){
 
@@ -82,12 +92,12 @@ public class ContinuingSignUpController
     }
     public void setData(String firstName, String lastName, String email, String phoneNumber,
                         String password, String confirmPassword){
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-            this.phoneNumber = phoneNumber;
-            this.password = password;
-            this.confirmPassword = confirmPassword;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
     @FXML
@@ -107,27 +117,42 @@ public class ContinuingSignUpController
     }
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
+        byte[] profilePhoto = null;
+        if (profilePicture.getImage()!=null){
+            profilePhoto = profilePicture.getImage().toString().getBytes();
+        }else {
+            InputStream defaultImageStream = getClass().getResourceAsStream("/com/whisper/client/images/profile.png");
+            try {
+                if (defaultImageStream != null) {
+                    profilePhoto = defaultImageStream.readAllBytes();
+                    defaultImageStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (country.getValue() == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Country");
-            alert.setContentText("Please Choose Your Country");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Country", "Please Choose Your Country");
+            return;
+        }
+        if (dateOfBirth.getValue() == null){
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid date of birth", "Please Choose Your Date of Birth");
             return;
         }
         if (gender.getSelectedToggle() == null){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Gender");
-            alert.setContentText("Please Choose Your Gender");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Gender", "Please Choose Your Gender");
             return;
         }
         try{
+            Random rand = new Random();
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             authService.registerUser(new User(
-                    5,
+                    rand.nextInt(10000),
                     phoneNumber,
                     password,
                     email,
@@ -138,8 +163,11 @@ public class ContinuingSignUpController
                     userBio.getText(),
                     Mode.away,
                     Status.offline,
-                    null
+                    profilePhoto
             ));
+            Parent root = SceneManager.getInstance().loadPane("homeView");
+            Scene scene = profilePicture.getScene();
+            scene.setRoot(root);
         } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
         }

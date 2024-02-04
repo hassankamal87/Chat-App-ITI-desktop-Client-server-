@@ -27,7 +27,7 @@
                   <URL value="@../style/MyCss.css" />
                </stylesheets>
             </Label>
-            <Label fx:id="description" prefHeight="23.0" prefWidth="568.0" text="you have a new message in  conversations from Hassan Kamal " textFill="#575757">
+            <Label fx:id="description" prefHeight="23.0" prefWidth="568.0" textFill="#575757">
                <font>
                   <Font name="Corbel" size="20.0" />
                </font>

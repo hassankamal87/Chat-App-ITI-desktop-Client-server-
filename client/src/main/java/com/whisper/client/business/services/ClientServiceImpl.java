@@ -35,7 +35,7 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
         super();
     }
 
-    private int ClientId = 11;
+    private int ClientId = 1;
 
     @Override
     public void receiveNotification(Notification notification) throws RemoteException {
@@ -47,6 +47,9 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
         }
         else if(notifactionType==NotifactionType.msg){
             notificationService.sendMessage(notification);
+        }
+        else if(notifactionType==NotifactionType.board){
+            notificationService.sendBroadCast(notification);
         }
     }
 

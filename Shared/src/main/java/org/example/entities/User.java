@@ -16,7 +16,7 @@ public class User implements Serializable {
     private String bio;
     private Mode mode;
     private Status status;
-    private byte[] profilePhoto;
+        private byte[] profilePhoto;
     public User() {}
 
     public User(int userId, String phoneNumber, String password, String email,

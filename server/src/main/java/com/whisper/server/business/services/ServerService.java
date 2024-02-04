@@ -47,6 +47,7 @@ public class ServerService implements serverServiceInt {
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
             SendContactsInvitationServiceInt sendContactsInvitationService = SendContactsInvitationServiceImpl.getInstance();
             AddContactsServiceInt addContactsService = AddContactsServiceImpl.getInstance();
+            ChatServiceInt chatService = ChatServiceImpl.getInstance();
             NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             EditProfileServiceInt editProfileService = EditProfileServiceImpl.getInstance();
             reg.rebind("EditProfileService", editProfileService);
@@ -57,6 +58,7 @@ public class ServerService implements serverServiceInt {
             reg.rebind("authenticationService", authenticationService);
             reg.rebind("ContactsService",contactService);
             reg.rebind("NotificationService",notificationService);
+            reg.rebind("ChatService",chatService);
 
         } catch (RemoteException e) {
             System.out.println(e.getMessage() + " Server Service line 36");

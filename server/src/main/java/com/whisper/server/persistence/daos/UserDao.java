@@ -239,6 +239,7 @@ public class UserDao implements UserDaoInterface {
         return 0;
     }
 
+    @Override
     public boolean isPhoneNumberExists(String phoneNo) throws SQLException {
         String query = "Select * from user where phone_number = ?";
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
@@ -251,6 +252,7 @@ public class UserDao implements UserDaoInterface {
         return false;
     }
 
+    @Override
     public boolean isEmailExists(String email) throws SQLException{
         String query = "Select * from user where email = ?";
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
@@ -261,5 +263,52 @@ public class UserDao implements UserDaoInterface {
             }
         }
         return false;
+    }
+
+//    @Override
+//    public boolean getByPhoneAndPassword(String phoneNo, String password) throws SQLException {
+//        String query = "Select * from user where phone_number = ? and password = ?";
+//        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+//            ps.setString(1, phoneNo);
+//            ps.setString(2, password);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next()){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    public User getByPhoneAndPassword(String phoneNo, String password) throws SQLException {
+        User user = null;
+        String query = "Select * from user where phone_number = ? and password = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, phoneNo);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setUserName(rs.getString("user_name"));
+                user.setGender(Gender.valueOf(rs.getString("gender")));
+                user.setDateOfBirth(rs.getDate("date_of_birth"));
+                user.setCountry(rs.getString("country"));
+                user.setBio(rs.getString("bio"));
+                user.setMode(Mode.valueOf(rs.getString("mode")));
+                user.setStatus(Status.valueOf(rs.getString("status")));
+                Blob profilePhotoBlob = rs.getBlob("profile_photo");
+                if (profilePhotoBlob != null) {
+                    int blobLength = (int) profilePhotoBlob.length();
+                    byte[] profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+                    user.setProfilePhoto(profilePhotoBytes);
+                } else {
+                    user.setProfilePhoto(null);
+                }
+                return user;
+            }
+        }
+        return null;
     }
 }
