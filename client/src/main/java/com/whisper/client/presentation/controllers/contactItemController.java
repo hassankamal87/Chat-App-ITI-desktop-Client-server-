@@ -56,8 +56,9 @@ public class contactItemController implements Initializable {
              Image profile = new Image(new ByteArrayInputStream(contact.getProfilePhoto()));
                 photo.setImage(profile);
             }
-            else photo.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/personalPhoto/defaultProfile.jpg")));
-
+            else {
+                photo.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/personalPhoto/defaultProfile.jpg")));
+            }
             photo.setFitHeight(50);
             photo.setFitWidth(50);
 

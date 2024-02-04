@@ -1,5 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.UserSearchService;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -43,7 +44,7 @@ public class UserSearchController {
 
         UserSearchService userSearchService = new UserSearchService();
 
-        userSearchService.sendInvitation(9, validatedNumbers);
+        userSearchService.sendInvitation(MyApp.getInstance().getCurrentUser().getUserId(), validatedNumbers);
 
         System.out.println(validatedNumbers);
         for (TextField textField : textFields) {
