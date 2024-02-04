@@ -63,6 +63,7 @@ public class profileController {
 
     @FXML
     private void onSaveChangesClicked(ActionEvent actionEvent) {
+
         int userId = 24;
         String phoneNumber = "01100793613";
         String name = userName.getText();
@@ -75,7 +76,7 @@ public class profileController {
         Status status = Status.online;
         byte[] profilePicture = imageViewToByteArray(userPicture);
 
-        User newUser = new User(userId, phoneNumber, password, email, name, Gender.male,
+        User newUser = new User(userId, phoneNumber, password, email, name, Gender.female,
                 dob, country, bio, mode, status, profilePicture);
 
         profileService.saveProfileChanges(newUser);
