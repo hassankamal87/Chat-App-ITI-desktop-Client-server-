@@ -3,7 +3,9 @@ package com.whisper.client.presentation.controllers;
 import com.whisper.client.business.services.UserSearchService;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -40,7 +42,7 @@ public class UserSearchController {
         List<String> validatedNumbers = validate(phoneNumbers);
 
         UserSearchService userSearchService = new UserSearchService();
-        userSearchService.sendInvitation(8, validatedNumbers);
+        userSearchService.sendInvitation(9, validatedNumbers);
 
         System.out.println(validatedNumbers);
         for (TextField textField : textFields) {
@@ -58,6 +60,10 @@ public class UserSearchController {
         for (String phoneNumber : phoneNumbers) {
             if (pattern.matcher(phoneNumber).matches()) {
                 validatedNumbers.add(phoneNumber);
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "This Number  : "+phoneNumber+" is Not Valid", ButtonType.OK);
+                alert.showAndWait();
             }
         }
         // remove duplicates from the List
