@@ -64,6 +64,7 @@ public class UserDao implements UserDaoInterface {
             if (rs.next()) {
                 user = new User();
 
+                user.setUserId(rs.getInt("user_id"));
                 user.setPhoneNumber(rs.getString("phone_number"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
