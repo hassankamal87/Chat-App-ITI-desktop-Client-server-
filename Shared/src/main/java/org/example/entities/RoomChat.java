@@ -1,10 +1,11 @@
 package org.example.entities;
 
+import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.List;
 
-public class RoomChat {
+public class RoomChat implements Serializable {
     private int roomChatId;
     private Date createdDate;
     private boolean timeStamp;

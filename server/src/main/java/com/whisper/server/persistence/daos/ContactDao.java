@@ -113,7 +113,7 @@ public class ContactDao implements ContactDaoInterface {
 
     @Override
     public boolean isContact(int userId, int contactId) throws SQLException {
-        String query ="SELECT * from contact WHERE user_id = ? AND contact_id = ?";
+        String query ="SELECT * from contact WHERE user_id = ? AND contact_id = ? AND friendship_status = 'friend' ";
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ps.setInt(1, userId);
         ps.setInt(2, contactId);

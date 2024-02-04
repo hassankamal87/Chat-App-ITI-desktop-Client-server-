@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ChattingService;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,9 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.example.entities.RoomChat;
+import org.example.entities.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ChatItemController
 {
@@ -29,17 +33,29 @@ public class ChatItemController
     private Label chatItemMode;
 
     private BorderPane homePane;
-    private RoomChat roomChat;
+    private int roomChatId;
+    private List<User> friendsOnChat = new ArrayList<>();
 
     private static HashMap<Integer,Parent> chatPanes = new HashMap<>();
 
-    public void setData(BorderPane homePane, RoomChat roomChat){
+    public void setData(BorderPane homePane, int roomChatID){
         System.out.println("parent pane done");
         this.homePane = homePane;
-        this.roomChat = roomChat;
+        this.roomChatId = roomChatID;
 
-        chatItemIName.setText(roomChat.getGroupName());
+        setRoomChatItemData(roomChatID);
     }
+
+    private void setRoomChatItemData(int roomChatId) {
+        ChattingService chattingService = ChattingService.getInstance();
+        User friendUser = chattingService.getUserInCommonRoomChat(roomChatId);
+        friendsOnChat.add(friendUser);
+        chatItemIName.setText(friendUser.getUserName());
+        chatItemMode.setText(friendUser.getMode().name());
+        //you need to convert byte array to image
+       // chatItemImage.setImage(friendUser.getProfilePhoto());
+    }
+
     @FXML
     public void initialize() {
         preLoad();
@@ -47,22 +63,7 @@ public class ChatItemController
 
     @FXML
     public void onChatItemClicked(Event event) {
-        Parent node = chatPanes.get(roomChat.getRoomChatId());
-        System.out.println(node);
-        if(node == null){
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/roomChatView.fxml"));
-                System.out.println("start Load");
-                node = fxmlLoader.load();
-                System.out.println("loaded");
-                RoomChatController controller = fxmlLoader.getController();
-                controller.setData(roomChat);
-                chatPanes.put(roomChat.getRoomChatId(),node);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        homePane.setCenter(node);
+        openChat();
     }
 
     //work around to pre load and make loading faster.
@@ -77,5 +78,24 @@ public class ChatItemController
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public void openChat(){
+        Parent node = chatPanes.get(roomChatId);
+        System.out.println(node);
+        if(node == null){
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/roomChatView.fxml"));
+                System.out.println("start Load");
+                node = fxmlLoader.load();
+                System.out.println("loaded");
+                RoomChatController controller = fxmlLoader.getController();
+                controller.setData(roomChatId,friendsOnChat);
+                chatPanes.put(roomChatId,node);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        homePane.setCenter(node);
     }
 }
