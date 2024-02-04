@@ -34,52 +34,48 @@ public class profileController {
     @FXML
     private ChoiceBox userMode;
     @FXML
-    private ChoiceBox userCountry;
-    @FXML
     private DatePicker userDob;
     @FXML
     private Button saveChanges;
     @FXML
     private Label userNameLabel;
     private EditProfileService profileService = new EditProfileService();
+    User myUser = null;
 
     @FXML
     public void initialize() {
+        myUser = MyApp.getInstance().getCurrentUser();
+
         showUserData();
     }
 
     private void showUserData() {
 
-        User myUser = profileService.getUser(MyApp.getInstance().getCurrentUser().getUserId());
-
         userName.setText(myUser.getUserName());
         userBio.setText(myUser.getBio());
         userMode.setValue(myUser.getMode());
-        userCountry.setValue(myUser.getCountry());
         userDob.setValue(myUser.getDateOfBirth().toLocalDate());
-        userNameLabel.setText(myUser.getUserName());
-        if(myUser.getProfilePhoto()!=null) {
-            userPicture.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
-        }
+        userPicture.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
     }
 
 
     @FXML
     private void onSaveChangesClicked(ActionEvent actionEvent) {
 
-        int userId = 24;
-        String phoneNumber = "01100793613";
+        int userId = myUser.getUserId();
+        String phoneNumber = myUser.getPhoneNumber();
+        String password = myUser.getPassword();
+        String email = myUser.getEmail();
         String name = userName.getText();
-        String password = "Ahmed@12345";
-        String email = "Ahmed@12345";
-        String bio = userBio.getText();
-        Mode mode = (Mode) userMode.getValue();
-        String country = userCountry.getValue().toString();
+        Gender gender = myUser.getGender();
         Date dob = Date.valueOf(userDob.getValue());
-        Status status = Status.online;
+        String country = myUser.getCountry();
+        String bio = userBio.getText();
+        Mode mode = Mode.valueOf(userMode.getValue().toString());
+        Status status = myUser.getStatus();
         byte[] profilePicture = imageViewToByteArray(userPicture);
 
-        User newUser = new User(userId, phoneNumber, password, email, name, Gender.female,
+        User newUser = new User(userId, phoneNumber, password, email, name, gender,
                 dob, country, bio, mode, status, profilePicture);
 
         profileService.saveProfileChanges(newUser);
