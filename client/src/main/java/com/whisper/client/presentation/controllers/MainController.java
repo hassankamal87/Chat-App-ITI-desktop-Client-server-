@@ -40,6 +40,8 @@ public class MainController {
     private Button addContactBtn;
 
     private HashMap<String, Parent> panes = new HashMap<>();
+    @FXML
+    private Button notificationBtn;
 
     @FXML
     public void initialize() {
@@ -53,7 +55,7 @@ public class MainController {
         }
 
         mainPane.setCenter(root);
-        homeBtn.setStyle("-fx-background-color: #fe3554;");
+        homeBtn.setStyle("-fx-background-color: #597E52;");
 
     }
 
@@ -65,10 +67,11 @@ public class MainController {
             root = panes.get("homePane");
 
             mainPane.setCenter(root);
-            homeBtn.setStyle("-fx-background-color: #fe3554;");
+            homeBtn.setStyle("-fx-background-color: #597E52;");
             addContactBtn.setStyle("-fx-background-color: #trnasparent;");
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
 
     }
@@ -91,10 +94,11 @@ public class MainController {
             }
 
             mainPane.setCenter(root);
-            contactsBtn.setStyle("-fx-background-color: #fe3554;");
+            contactsBtn.setStyle("-fx-background-color: #597E52;");
             homeBtn.setStyle("-fx-background-color: #trnasparent;");
             addContactBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
 
@@ -114,10 +118,11 @@ public class MainController {
             }
 
             mainPane.setCenter(root);
-            profileBtn.setStyle("-fx-background-color: #fe3554;");
+            profileBtn.setStyle("-fx-background-color: #597E52;");
             homeBtn.setStyle("-fx-background-color: #trnasparent;");
             addContactBtn.setStyle("-fx-background-color: #trnasparent;");
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
 
@@ -147,17 +152,29 @@ public class MainController {
             }
 
             mainPane.setCenter(root);
-            addContactBtn.setStyle("-fx-background-color: #fe3554;");
+            addContactBtn.setStyle("-fx-background-color: #597E52;");
             homeBtn.setStyle("-fx-background-color: #trnasparent;");
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
     void navigateToHomeScreen(){
         Parent root = panes.get("homePane");
 
         mainPane.setCenter(root);
-        homeBtn.setStyle("-fx-background-color: #fe3554;");
+        homeBtn.setStyle("-fx-background-color: #597E52;");
+        addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+        contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+        profileBtn.setStyle("-fx-background-color: #trnasparent;");
+        notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+    }
+
+    @FXML
+    public void onNotificationsClicked(Event event) {
+        mainPane.setCenter(SceneManager.getInstance().loadPane("notificationView"));
+        notificationBtn.setStyle("-fx-background-color: #597E52;");
+        homeBtn.setStyle("-fx-background-color: #trnasparent;");
         addContactBtn.setStyle("-fx-background-color: #trnasparent;");
         contactsBtn.setStyle("-fx-background-color: #trnasparent;");
         profileBtn.setStyle("-fx-background-color: #trnasparent;");

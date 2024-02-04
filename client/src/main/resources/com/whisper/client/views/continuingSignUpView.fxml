@@ -39,7 +39,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Text layoutX="52.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="Date of birth:">
+      <Text layoutX="52.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="normal-text" text="*Date of birth:">
          <font>
             <Font size="14.0" />
          </font>

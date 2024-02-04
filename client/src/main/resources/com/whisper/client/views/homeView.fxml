@@ -12,7 +12,7 @@
 
 <BorderPane fx:id="homePane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.HomeController">
    <left>
-      <AnchorPane fx:id="chatsPane" prefHeight="545.0" prefWidth="260.0" styleClass="linear-grad-radius" stylesheets="@../lineargrad.css" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="chatsPane" prefHeight="545.0" prefWidth="260.0" styleClass="linear-grad" stylesheets="@../style/newCss.css" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="searchTF" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="210.0" promptText="Search" styleClass="text-field" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                <font>

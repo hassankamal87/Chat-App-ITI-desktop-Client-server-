@@ -1,6 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
-import com.whisper.client.presentation.services.ErrorDialogue;
+import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,12 +20,8 @@ import org.example.entities.Status;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -34,7 +30,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class ContinuingSignUpController
 {
@@ -60,7 +55,7 @@ public class ContinuingSignUpController
     private String phoneNumber;
     private String password;
     private String confirmPassword;
-    ErrorDialogue dialogue;
+    DialogueManager dialogue;
 
 
     public ContinuingSignUpController(){
@@ -133,17 +128,17 @@ public class ContinuingSignUpController
         }
 
         if (country.getValue() == null){
-            dialogue = new ErrorDialogue();
+            dialogue = new DialogueManager();
             dialogue.setData("Error", "Invalid Country", "Please Choose Your Country");
             return;
         }
         if (dateOfBirth.getValue() == null){
-            dialogue = new ErrorDialogue();
+            dialogue = new DialogueManager();
             dialogue.setData("Error", "Invalid date of birth", "Please Choose Your Date of Birth");
             return;
         }
         if (gender.getSelectedToggle() == null){
-            dialogue = new ErrorDialogue();
+            dialogue = new DialogueManager();
             dialogue.setData("Error", "Invalid Gender", "Please Choose Your Gender");
             return;
         }

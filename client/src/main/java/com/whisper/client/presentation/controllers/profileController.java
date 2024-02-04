@@ -2,7 +2,6 @@ package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.EditProfileService;
-import com.whisper.client.presentation.services.ErrorDialogue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -17,14 +16,9 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 import org.example.entities.User;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.rmi.RemoteException;
 import java.sql.Date;
 
 public class profileController {
