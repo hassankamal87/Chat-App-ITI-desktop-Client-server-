@@ -27,8 +27,7 @@ import java.util.ResourceBundle;
 
 public class contactController implements Initializable
 {
-    @FXML
-    private Button addContactBtn;
+
     private BorderPane rootPane;
     @FXML
     private VBox contactsLayout;
@@ -44,7 +43,7 @@ public class contactController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        addContactBtn.setOnAction(event -> addContactAction());
+
         List<User> contacts = new ArrayList<>(contacts());
         for(int i=0;i<contacts.size();i++){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/contactItemView.fxml"));
@@ -63,11 +62,7 @@ public class contactController implements Initializable
         }
     }
 
-    private void addContactAction() {
-        Parent root = SceneManager.getInstance().loadPane("userSearchView");
-        Scene scene = mainContactPane.getScene();
-        scene.setRoot(root);
-    }
+
 
     public void setData(MainController mainController){
         this.mainController = mainController;
