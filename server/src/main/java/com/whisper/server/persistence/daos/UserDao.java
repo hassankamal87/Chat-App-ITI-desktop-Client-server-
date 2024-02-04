@@ -313,4 +313,17 @@ public class UserDao implements UserDaoInterface {
         }
         return null;
     }
+
+    @Override
+    public String getPasswordByPhoneNumber(String phoneNo) throws SQLException {
+        String query = "Select password from user where phone_number = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, phoneNo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("password");
+            }
+        }
+        return null;
+    }
 }

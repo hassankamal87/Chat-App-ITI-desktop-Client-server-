@@ -25,4 +25,6 @@ public interface UserDaoInterface {
 
     User getByPhoneAndPassword(String phoneNo, String password) throws SQLException;
     //public List<Map<String, Number>> getTopEntries() throws SQLException;
+
+    public String getPasswordByPhoneNumber(String phoneNo) throws SQLException;
 }
