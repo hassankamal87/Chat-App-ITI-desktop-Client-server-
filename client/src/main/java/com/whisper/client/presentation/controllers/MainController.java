@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -10,9 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import org.example.clientinterfaces.ClientServiceInt;
 import org.example.entities.User;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -97,7 +104,11 @@ public class MainController {
     }
 
     @FXML
-    public void onSignOutClicked(Event event) {
+    public void onSignOutClicked(Event event) throws RemoteException, NotBoundException {
+        Registry reg = LocateRegistry.getRegistry(1099);
+        SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
+        ClientServiceInt clientService = ClientServiceImpl.getInstance();
+        serverRef.ServerUnRegister(clientService);
     }
 
     @FXML

@@ -1,6 +1,7 @@
 package com.whisper.client.business.services;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -35,7 +36,7 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
         super();
     }
 
-    private int ClientId = 1;
+    private int ClientId = MyApp.getInstance().getCurrentUser().getUserId();
 
     @Override
     public void receiveNotification(Notification notification) throws RemoteException {

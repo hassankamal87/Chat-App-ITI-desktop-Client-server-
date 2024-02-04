@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
 
@@ -79,7 +80,7 @@ public class contactController implements Initializable
 
     private List<User> contacts(){
         ContactService contactService= new ContactService();
-        List<User>contacts =contactService.getContacts(11);
+        List<User>contacts =contactService.getContacts(MyApp.getInstance().getCurrentUser().getUserId());
         return contacts;
     }
 }
