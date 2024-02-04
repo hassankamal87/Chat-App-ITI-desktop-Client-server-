@@ -17,16 +17,17 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 import org.example.entities.User;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.rmi.RemoteException;
 import java.sql.Date;
 
 public class profileController {
-    @FXML
-    private ImageView userPicture;
     @FXML
     private TextField userName;
     @FXML
@@ -36,11 +37,13 @@ public class profileController {
     @FXML
     private DatePicker userDob;
     @FXML
-    private Button saveChanges;
-    @FXML
     private Label userNameLabel;
     private EditProfileService profileService = new EditProfileService();
     User myUser = null;
+    @FXML
+    private Button saveChanges;
+    @FXML
+    private ImageView userProfile;
 
     @FXML
     public void initialize() {
@@ -50,13 +53,29 @@ public class profileController {
     }
 
     private void showUserData() {
-
         userName.setText(myUser.getUserName());
         userBio.setText(myUser.getBio());
         userMode.setValue(myUser.getMode());
         userDob.setValue(myUser.getDateOfBirth().toLocalDate());
-        userPicture.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
+        userNameLabel.setText(myUser.getUserName());
+        if (myUser.getProfilePhoto() == null){
+            System.out.println("Profile photo is null");
+        }
+        userProfile.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
+
     }
+
+//    private Image byteArrayToImageView(byte[] profilePhoto) {
+//        ByteArrayInputStream bis = new ByteArrayInputStream(profilePhoto);
+//        BufferedImage bImage2 = null;
+//        try {
+//            bImage2 = ImageIO.read(bis);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Image image = new Image(new ByteArrayInputStream(profilePhoto));
+//        return image;
+//    }
 
 
     @FXML
@@ -73,7 +92,7 @@ public class profileController {
         String bio = userBio.getText();
         Mode mode = Mode.valueOf(userMode.getValue().toString());
         Status status = myUser.getStatus();
-        byte[] profilePicture = imageViewToByteArray(userPicture);
+        byte[] profilePicture = imageViewToByteArray(userProfile);
 
         User newUser = new User(userId, phoneNumber, password, email, name, gender,
                 dob, country, bio, mode, status, profilePicture);
@@ -102,15 +121,13 @@ public class profileController {
     @FXML
     public void onProfileClicked(Event event) {
         FileChooser fileChooser = new FileChooser();
-
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image files (*.png, *.jpg, *.jpeg, *.gif)", "*.png", "*.jpg", "*.jpeg", "*.gif");
-        fileChooser.getExtensionFilters().add(extFilter);
-
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
         File file = fileChooser.showOpenDialog(new Stage());
-
         if (file != null) {
             Image image = new Image(file.toURI().toString());
-            userPicture.setImage(new Image(image.getUrl()));
+            userProfile.setImage(image);
         }
     }
 }

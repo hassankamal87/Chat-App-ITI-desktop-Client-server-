@@ -111,8 +111,12 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
         try{
 
            User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(clientService.getClientId());
+            System.out.println("user id is "+clientService.getClientId());
             user.setStatus(Status.online);
-            User user1=new User(clientService.getClientId(), user.getPhoneNumber(), user.getPassword(), user.getEmail(), user.getUserName(), user.getGender(),user.getDateOfBirth(),user.getCountry(), user.getBio(), user.getMode(),Status.online, user.getProfilePhoto());
+            User user1=new User(clientService.getClientId(), user.getPhoneNumber(),
+                    user.getPassword(), user.getEmail(), user.getUserName(),
+                    user.getGender(),user.getDateOfBirth(),user.getCountry(),
+                    user.getBio(), user.getMode(),Status.online, user.getProfilePhoto());
             UserDao.getInstance(MyDatabase.getInstance()).updateUser(user1);
            ContactDao contactRef = (ContactDao) ContactDao.getInstance(MyDatabase.getInstance());
             for(ClientServiceInt c: clientsVector){
