@@ -43,7 +43,7 @@ public class MessageDao implements MessageDaoInterface {
 
     @Override
     public List<Message> getAllByChatId(int chatId) throws SQLException {
-        String query = "SELECT * FROM messages WHERE to_chat_id = ?";
+        String query = "SELECT * FROM message WHERE to_chat_id = ?";
         List<Message> messages = new ArrayList<>();
 
         try (PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)) {
