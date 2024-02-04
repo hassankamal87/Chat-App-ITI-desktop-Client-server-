@@ -165,7 +165,7 @@ public class ContinuingSignUpController
                     Status.offline,
                     profilePhoto
             ));
-            Parent root = SceneManager.getInstance().loadPane("homeView");
+            Parent root = SceneManager.getInstance().loadPane("signInView");
             Scene scene = profilePicture.getScene();
             scene.setRoot(root);
         } catch (RemoteException | NotBoundException e) {
