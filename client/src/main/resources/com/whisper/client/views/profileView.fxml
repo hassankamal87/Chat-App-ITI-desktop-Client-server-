@@ -29,7 +29,7 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                      <image>
-                        <Image url="@../images/person.png" />
+                        <Image url="@../images/invitation.jpg" />
                      </image>
                   </ImageView>
                   <Label fx:id="userNameLabel" textFill="WHITE">

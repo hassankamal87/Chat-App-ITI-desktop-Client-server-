@@ -8,6 +8,8 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -151,12 +153,29 @@ public class UserDao implements UserDaoInterface {
                 } else {
                     user.setProfilePhoto(null);
                 }
+                //user.setProfilePhoto(blobToBytes(profilePhotoBlob));
                 users.add(user);
             }
         }
         return users;
     }
 
+    private static byte[] blobToBytes(Blob blob) {
+        try (InputStream inputStream = blob.getBinaryStream();
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            return outputStream.toByteArray();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     @Override
     public int getIdByPhoneNumber(String phoneNumber) throws SQLException {
         String query = "SELECT user_id FROM user WHERE phone_number = ?";
@@ -308,6 +327,7 @@ public class UserDao implements UserDaoInterface {
                 } else {
                     user.setProfilePhoto(null);
                 }
+               // user.setProfilePhoto(blobToBytes(profilePhotoBlob));
                 return user;
             }
         }
