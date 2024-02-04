@@ -10,7 +10,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -18,20 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="profilePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="800.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.profileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="800.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.profileController">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" styleClass="linear-grad" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER" prefHeight="312.0" prefWidth="300.0" spacing="15.0">
                <children>
-                  <ImageView fx:id="userPicture" fitHeight="132.0" fitWidth="131.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                     <image>
-                        <Image url="@../images/invitation.jpg" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="userProfile" fitHeight="224.0" fitWidth="200.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="userNameLabel" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />

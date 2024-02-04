@@ -90,8 +90,6 @@ public class HelloApplication extends Application {
                     clientService =ClientServiceImpl.getInstance();
                     serverRef.ServerUnRegister(clientService);
                 }
-                
-
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
