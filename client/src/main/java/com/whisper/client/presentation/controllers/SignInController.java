@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.MyApp;
+import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.ErrorDialogue;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
@@ -8,8 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import org.example.clientinterfaces.ClientServiceInt;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -49,6 +52,13 @@ public class SignInController implements Initializable {
                 Parent root = SceneManager.getInstance().loadPane("mainView");
                 Scene scene = password.getScene();
                 scene.setRoot(root);
+
+
+                SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
+                ClientServiceInt clientService = ClientServiceImpl.getInstance();
+                serverRef.ServerRegister(clientService);
+
+
             }
             System.out.println("Client side: signing in succeed");
         } catch (RemoteException | NotBoundException e) {

@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.presentation.services.ErrorDialogue;
 import org.example.entities.User;
 import org.example.serverinterfaces.EditProfileServiceInt;
 
@@ -24,8 +25,10 @@ public class EditProfileService {
     public void saveProfileChanges(User user) {
         try {
             editService.saveProfileChanges(user);
+            displaySuccess();
         } catch (Exception e) {
             System.out.println("Exception is : " + e.getMessage());
+            displayError();
         }
     }
 
@@ -37,5 +40,17 @@ public class EditProfileService {
             System.out.println("Exception is : " + e.getMessage());
         }
         return user;
+    }
+
+    private void displayError() {
+        String Header = "Error happened while changing your profile data.";
+        String content = "Please try again later.";
+        ErrorDialogue.setData("Error",Header,content);
+    }
+
+    private void displaySuccess() {
+        String Header = "";
+        String content = "Successfully changed your profile data.";
+        ErrorDialogue.showInformationDialog("Success",content);
     }
 }

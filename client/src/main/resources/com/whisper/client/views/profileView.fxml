@@ -24,7 +24,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="312.0" prefWidth="300.0" spacing="15.0">
                <children>
-                  <ImageView fx:id="userPicture" fitHeight="132.0" fitWidth="131.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="userPicture" fitHeight="132.0" fitWidth="131.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
                         <Insets top="40.0" />
                      </VBox.margin>
