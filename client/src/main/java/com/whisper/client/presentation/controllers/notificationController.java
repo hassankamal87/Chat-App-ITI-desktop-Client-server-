@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ContactService;
 import com.whisper.client.business.services.NotificationService;
 import javafx.collections.FXCollections;
@@ -70,7 +71,7 @@ public class notificationController implements Initializable {
         notificationService.sendMessage(not);
     }
     private List<Notification> notifications() {
-        List<Notification>notifications =notificationService.getNotifications(7);
+        List<Notification>notifications =notificationService.getNotifications(MyApp.getInstance().getCurrentUser().getUserId());
         return notifications;
     }
 }
