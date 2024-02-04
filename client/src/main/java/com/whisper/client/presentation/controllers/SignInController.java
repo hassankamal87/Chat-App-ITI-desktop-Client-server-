@@ -1,5 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
+import com.whisper.client.MyApp;
 import com.whisper.client.presentation.services.ErrorDialogue;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import java.net.URL;
@@ -35,19 +37,24 @@ public class SignInController implements Initializable {
         try {
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
-            if (authService.loginUser(phoneNumber.getText(), password.getText()) == null){
+            User currentUser  = authService.loginUser(phoneNumber.getText(), password.getText());
+            if ( currentUser == null){
                 dialogue = new ErrorDialogue();
                 dialogue.setData("Error", "Invalid Credentials",
                         "Phone number or Password is incorrect");
                 return;
+            }else{
+                MyApp.getInstance().setCurrentUser(currentUser);
+                System.out.println("current user "+currentUser.getUserId());
+                Parent root = SceneManager.getInstance().loadPane("mainView");
+                Scene scene = password.getScene();
+                scene.setRoot(root);
             }
             System.out.println("Client side: signing in succeed");
         } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
         }
-        Parent root = SceneManager.getInstance().loadPane("homeView");
-        Scene scene = password.getScene();
-        scene.setRoot(root);
+
     }
 
     public void onSignupButtonClick(ActionEvent actionEvent) {

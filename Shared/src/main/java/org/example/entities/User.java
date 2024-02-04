@@ -36,6 +36,9 @@ public class User implements Serializable {
         this.profilePhoto=profilePhoto;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public int getUserId() {
         return userId;
