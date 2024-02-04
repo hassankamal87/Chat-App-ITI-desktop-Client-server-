@@ -1,5 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.EditProfileService;
 import com.whisper.client.presentation.services.ErrorDialogue;
 import javafx.event.ActionEvent;
@@ -48,7 +49,9 @@ public class profileController {
     }
 
     private void showUserData() {
-        User myUser = profileService.getUser(24);
+
+        User myUser = profileService.getUser(MyApp.getInstance().getCurrentUser().getUserId());
+
         userName.setText(myUser.getUserName());
         userBio.setText(myUser.getBio());
         userMode.setValue(myUser.getMode());

@@ -100,7 +100,25 @@ public class MainController {
 
     @FXML
     public void onProfileClicked(Event event) {
-        mainPane.setCenter(SceneManager.getInstance().loadPane("profileView"));
+        if (!Objects.equals("profilePane", mainPane.getCenter().getId())) {
+            Parent root = panes.get("profilePane");
+            if (root == null) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/profileView.fxml"));
+                    root = fxmlLoader.load();
+
+                    panes.put("profilePane", root);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            mainPane.setCenter(root);
+            profileBtn.setStyle("-fx-background-color: #fe3554;");
+            homeBtn.setStyle("-fx-background-color: #trnasparent;");
+            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+        }
     }
 
     @FXML
