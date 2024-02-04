@@ -49,6 +49,8 @@ public class ServerService implements serverServiceInt {
             AddContactsServiceInt addContactsService = AddContactsServiceImpl.getInstance();
             ChatServiceInt chatService = ChatServiceImpl.getInstance();
             NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
+            EditProfileServiceInt editProfileService = EditProfileServiceImpl.getInstance();
+            reg.rebind("EditProfileService", editProfileService);
             reg.rebind("AddContactsService", addContactsService);
             reg.rebind("SendContactsInvitationService", sendContactsInvitationService);
             reg.rebind("authService", authenticationService);

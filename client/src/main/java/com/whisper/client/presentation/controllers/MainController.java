@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,7 +93,7 @@ public class MainController {
 
     @FXML
     public void onProfileClicked(Event event) {
-
+        mainPane.setCenter(SceneManager.getInstance().loadPane("profileView"));
     }
 
     @FXML

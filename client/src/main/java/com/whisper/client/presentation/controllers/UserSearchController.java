@@ -42,6 +42,7 @@ public class UserSearchController {
         List<String> validatedNumbers = validate(phoneNumbers);
 
         UserSearchService userSearchService = new UserSearchService();
+
         userSearchService.sendInvitation(9, validatedNumbers);
 
         System.out.println(validatedNumbers);

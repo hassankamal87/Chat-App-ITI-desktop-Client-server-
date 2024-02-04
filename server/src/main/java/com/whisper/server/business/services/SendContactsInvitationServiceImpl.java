@@ -35,6 +35,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
             instance = new SendContactsInvitationServiceImpl();
         return instance;
     }
+
     @Override
     public String inviteContacts(int id, String invitedContact) throws RemoteException {
 
@@ -60,13 +61,13 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                     return "self invitation";
                 }
 
-                    // add invitation to pending requests
+                // add invitation to pending requests
                 PendingRequest request = new PendingRequest(contactID, id, Date.valueOf(LocalDate.now()).toString(), "I want to add you");
                 PendingRequestDao.getInstance(MyDatabase.getInstance()).createPendingRequest(request);
 
 
 
-              
+
                 User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
                 String userName = user.getUserName();
                 // send notification

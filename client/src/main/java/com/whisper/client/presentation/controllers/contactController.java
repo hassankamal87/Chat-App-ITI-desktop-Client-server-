@@ -79,7 +79,7 @@ public class contactController implements Initializable
 
     private List<User> contacts(){
         ContactService contactService= new ContactService();
-        List<User>contacts =contactService.getContacts(1);
+        List<User>contacts =contactService.getContacts(11);
         return contacts;
     }
 }
