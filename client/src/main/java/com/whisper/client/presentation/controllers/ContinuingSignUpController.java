@@ -4,6 +4,7 @@ import com.whisper.client.presentation.services.ErrorDialogue;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -20,10 +21,8 @@ import org.example.entities.Status;
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.rmi.NotBoundException;
@@ -91,13 +90,12 @@ public class ContinuingSignUpController
         return countryList;
     }
     public void setData(String firstName, String lastName, String email, String phoneNumber,
-                        String password, String confirmPassword){
+                        String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
     @FXML
@@ -115,11 +113,22 @@ public class ContinuingSignUpController
             profilePicture.setImage(selectedImage);
         }
     }
+    private byte[] imageViewToByteArray(ImageView imageView) {
+        Image image = imageView.getImage();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", byteArrayOutputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return byteArrayOutputStream.toByteArray();
+    }
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
         byte[] profilePhoto = null;
         if (profilePicture.getImage()!=null){
-            profilePhoto = profilePicture.getImage().toString().getBytes();
+            profilePhoto = imageViewToByteArray(profilePicture);
         }else {
             InputStream defaultImageStream = getClass().getResourceAsStream("/com/whisper/client/images/profile.png");
             try {

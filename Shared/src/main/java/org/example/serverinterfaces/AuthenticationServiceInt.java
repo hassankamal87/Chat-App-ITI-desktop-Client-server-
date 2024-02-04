@@ -10,4 +10,5 @@ public interface AuthenticationServiceInt extends Remote {
     User loginUser(String phoneNumber, String password) throws RemoteException;
     boolean validatePhoneNumber(String phoneNo) throws RemoteException;
     boolean validateEmail(String email) throws RemoteException;
+    String hashPassword(String password) throws RemoteException;
 }
