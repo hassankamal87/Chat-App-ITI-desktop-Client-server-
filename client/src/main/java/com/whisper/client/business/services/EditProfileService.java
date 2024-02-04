@@ -20,6 +20,7 @@ public class EditProfileService {
         }
     }
 
+
     public void saveProfileChanges(User user) {
         try {
             editService.saveProfileChanges(user);

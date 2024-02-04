@@ -41,7 +41,7 @@ public class SignUpController implements Initializable {
     private PasswordField confirmPassword;
     DialogueManager dialogue;
     SignupValidateService validateService = new SignupValidateService();
-
+    private String hashedPassword;
 
     public void onGetStartedClicked(ActionEvent actionEvent) {
         if (!validateService.validName(firstName.getText()) || !validateService.validName(lastName.getText())){
@@ -103,6 +103,9 @@ public class SignUpController implements Initializable {
                         "This email address already exists, try another one");
                 return;
             }
+
+            hashedPassword = authService.hashPassword(password.getText());
+            System.out.println(hashedPassword);
         } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
         }
@@ -113,43 +116,11 @@ public class SignUpController implements Initializable {
 
             ContinuingSignUpController controller = loader.getController();
             controller.setData(firstName.getText(), lastName.getText(), email.getText(), phoneNumber.getText(),
-                password.getText(), confirmPassword.getText());
+                    hashedPassword);
             mainSignUpPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/continuingSignUpView"));
-//        loader.setControllerFactory(clazz -> {
-//            if (clazz == ContinuingSignUpController.class) {
-//                try {
-//                    return new ContinuingSignUpController(name);
-//                } catch (RemoteException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            } else {
-//                try {
-//                    return clazz.newInstance();
-//                } catch (Exception ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-//        });
-//        try {
-//            Parent root = loader.load();
-//            mainSignUpPane.setCenter(root);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
-//        Parent root = SceneManager.getInstance().loadPane("continuingSignUpView");
-//        mainSignUpPane.setCenter(root);
-//        FXMLLoader signupScreen = new FXMLLoader(ContinuingSignUpController.class.getResource("continuingSignUpView.fxml"));
-//        ContinuingSignUpController signUpController = signupScreen.getController();
-//        ContinuingSignUpController.setChatUserName(username);
-//        ContinuingSignUpController.setChatProfilePic(profilePic);
     }
 
     public void onAlreadyHaveAccountClicked(ActionEvent actionEvent) {

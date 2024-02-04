@@ -78,15 +78,18 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         Registry reg = LocateRegistry.getRegistry(1099);
         SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
 
-        stage.setOnCloseRequest(event -> {
 
+        stage.setOnCloseRequest(event -> {
+            ClientServiceInt clientService = null;
             try {
-                ClientServiceInt clientService = ClientServiceImpl.getInstance();
-                serverRef.ServerUnRegister(clientService);
+                if(MyApp.getInstance().getCurrentUser()!=null){
+                    clientService =ClientServiceImpl.getInstance();
+                    serverRef.ServerUnRegister(clientService);
+                }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }

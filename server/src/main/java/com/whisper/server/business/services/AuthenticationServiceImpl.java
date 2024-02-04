@@ -5,6 +5,7 @@ import com.whisper.server.persistence.db.MyDatabase;
 
 import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -37,9 +38,14 @@ public class AuthenticationServiceImpl extends UnicastRemoteObject implements Au
     public User loginUser(String phoneNumber, String password) throws RemoteException {
         User user= null;
         try {
-            if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, password) != null) {
-                System.out.println("User signed in successfully");
-                return UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, password);
+            String hashedPassword = UserDao.getInstance(MyDatabase.getInstance()).getPasswordByPhoneNumber(phoneNumber);
+            boolean validPassword = BCrypt.checkpw(password, hashedPassword);
+            System.out.println(validPassword);
+            if (validPassword) {
+                if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, hashedPassword) != null) {
+                    System.out.println("User signed in successfully");
+                    return UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, hashedPassword);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,5 +74,11 @@ public class AuthenticationServiceImpl extends UnicastRemoteObject implements Au
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String hashPassword(String password) throws RemoteException {
+        String salt = BCrypt.gensalt();
+        return BCrypt.hashpw(password, salt);
     }
 }

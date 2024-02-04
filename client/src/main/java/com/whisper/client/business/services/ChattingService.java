@@ -107,4 +107,12 @@ public class ChattingService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Message> getAllMessagesForRoomChat(int roomChatId){
+        try {
+            return chatService.getAllMessagesForRoomChat(roomChatId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -21,4 +21,6 @@ public interface ChatServiceInt extends Remote {
     int createRoomChat(int user1Id, int user2Id) throws RemoteException;
 
     List<User> getUsersForRoomChat(int roomChatId) throws RemoteException;
+
+    List<Message> getAllMessagesForRoomChat(int roomChatId) throws RemoteException;
 }
