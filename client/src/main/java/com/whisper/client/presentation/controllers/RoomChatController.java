@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -69,7 +70,7 @@ public class RoomChatController
     @FXML
     public void onSendBtnClicked(Event event) {
         String htmlContent = messageEditor.getHtmlText();
-        chattingService.sendMessage(1,3,htmlContent);
+        chattingService.sendMessage(MyApp.getInstance().getCurrentUser().getUserId(),roomChatID,htmlContent);
         messageEditor.setHtmlText("");
 
         Document doc = Jsoup.parse(htmlContent);

@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,15 +46,12 @@ public class HomeController implements Initializable, HandlingChatInterface {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("initialize user");
-        //you need to switch user id to current user id
-        //ChattingService.getInstance().getOrCreateRoomChat(1,5);
-
         initializeRoomChats();
         ChattingService.getInstance().registerHandlingInterface(this);
     }
 
     private void initializeRoomChats() {
-        List<RoomChat> roomChats = ChattingService.getInstance().getAllRoomChatsForUser(1);
+        List<RoomChat> roomChats = ChattingService.getInstance().getAllRoomChatsForUser(MyApp.getInstance().getCurrentUser().getUserId());
         Node[] nodes = new Node[roomChats.size()];
 
         for (int i = 0; i < nodes.length; i++) {

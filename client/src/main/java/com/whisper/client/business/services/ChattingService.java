@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.MyApp;
 import com.whisper.client.presentation.controllers.HandlingChatInterface;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
@@ -31,7 +32,7 @@ public class ChattingService {
             Registry reg = LocateRegistry.getRegistry(1099);
             chatService = (ChatServiceInt) reg.lookup("ChatService");
             ClientInterface client = ClientService.getInstance();
-            chatService.registerUser(1, client);
+            chatService.registerUser(MyApp.getInstance().getCurrentUser().getUserId(), client);
         } catch (NotBoundException | RemoteException e) {
             System.out.println("error here  "+e.getMessage());
            // e.printStackTrace();
@@ -89,7 +90,7 @@ public class ChattingService {
     private int getRoomChatForUsers(int user1, int user2){
         try {
             int roomId = chatService.getRoomChatForUsers(user1,user2);
-            System.out.println("user 1 and user 2 in room number "+ roomId );
+            System.out.println("user "+user1+" and user "+user2+" in room number "+ roomId );
             return roomId;
         } catch (RemoteException e) {
             throw new RuntimeException(e);
@@ -100,7 +101,7 @@ public class ChattingService {
         try {
             List<User> users = chatService.getUsersForRoomChat(roomChatId);
             //this 1 should replaced by current user id
-            Optional<User> optUser = users.stream().filter(user -> user.getUserId() != 1).findFirst();
+            Optional<User> optUser = users.stream().filter(user -> user.getUserId() != MyApp.getInstance().getCurrentUser().getUserId()).findFirst();
             return optUser.get();
         } catch (RemoteException e) {
             throw new RuntimeException(e);

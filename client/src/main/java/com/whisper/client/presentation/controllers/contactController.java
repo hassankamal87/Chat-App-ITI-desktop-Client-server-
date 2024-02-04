@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
 
@@ -72,14 +73,13 @@ public class contactController implements Initializable
         this.mainController = mainController;
     }
     private void startChat(User contact) {
-        //we need to replace 1  with current user Id
-        ChattingService.getInstance().getOrCreateRoomChat(1,2);
+        ChattingService.getInstance().getOrCreateRoomChat(MyApp.getInstance().getCurrentUser().getUserId(),contact.getUserId());
         mainController.navigateToHomeScreen();
     }
 
     private List<User> contacts(){
         ContactService contactService= new ContactService();
-        List<User>contacts =contactService.getContacts(11);
+        List<User>contacts =contactService.getContacts(MyApp.getInstance().getCurrentUser().getUserId());
         return contacts;
     }
 }
