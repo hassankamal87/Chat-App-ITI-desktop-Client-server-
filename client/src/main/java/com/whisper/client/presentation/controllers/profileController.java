@@ -2,8 +2,6 @@ package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.EditProfileService;
-import com.whisper.client.presentation.services.ErrorDialogue;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
