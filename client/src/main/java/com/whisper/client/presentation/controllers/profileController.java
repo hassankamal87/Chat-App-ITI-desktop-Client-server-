@@ -43,7 +43,7 @@ public class profileController {
     }
 
     private void showUserData() {
-        User myUser = profileService.getUser(11);
+        User myUser = profileService.getUser(1);
         userName.setText(myUser.getUserName());
         userBio.setText(myUser.getBio());
         userMode.setValue(myUser.getMode());
@@ -56,11 +56,11 @@ public class profileController {
 
     @FXML
     private void onSaveChangesClicked(ActionEvent actionEvent) {
-        int userId = 11;
-        String phoneNumber = "01012345678";
+        int userId = 1;
+        String phoneNumber = "01229122314";
         String name = userName.getText();
-        String password = "password1";
-        String email = "user1@example.com";
+        String password = "123";
+        String email = "reem@gmail.com";
         String bio = userBio.getText();
         Mode mode = (Mode) userMode.getValue();
         String country = userCountry.getValue().toString();
@@ -68,7 +68,7 @@ public class profileController {
         Status status = Status.online;
         byte[] profilePicture = imageViewToByteArray(userPicture);
 
-        User newUser = new User(userId, phoneNumber, password, email, name, Gender.male,
+        User newUser = new User(userId, phoneNumber, password, email, name, Gender.female,
                 dob, country, bio, mode, status, profilePicture);
 
         profileService.saveProfileChanges(newUser);
