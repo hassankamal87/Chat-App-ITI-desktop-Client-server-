@@ -35,7 +35,7 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
         super();
     }
 
-    private int ClientId = 8;
+    private int ClientId = 11;
 
     @Override
     public void receiveNotification(Notification notification) throws RemoteException {
