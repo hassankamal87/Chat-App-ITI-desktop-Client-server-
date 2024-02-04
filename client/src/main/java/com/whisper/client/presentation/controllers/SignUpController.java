@@ -1,17 +1,26 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.business.services.SignupValidateService;
+import com.whisper.client.presentation.services.ErrorDialogue;
+import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
@@ -31,64 +40,72 @@ public class SignUpController implements Initializable {
     private PasswordField password;
     @FXML
     private PasswordField confirmPassword;
-
+    ErrorDialogue dialogue;
     SignupValidateService validateService = new SignupValidateService();
 
 
     public void onGetStartedClicked(ActionEvent actionEvent) {
         if (!validateService.validName(firstName.getText()) || !validateService.validName(lastName.getText())){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Name");
-            alert.setContentText("First and Last name should only contains letters and spaces");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Name",
+                    "First and Last name should only contains letters and spaces");
             return;
         }
 
         if (!validateService.validatePhoneNumber(phoneNumber.getText())){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Phone Number");
-            alert.setContentText("Phone number should be exactly 11 numbers \n" +
-                    "01014234089");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Phone Number",
+                    "Phone number should be exactly 11 numbers");
             return;
         }
 
         if (!validateService.validateEmail(email.getText())){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Email");
-            alert.setContentText("You email should contains numerics, lower and uppercase letters, those are examples " +
-                    "of a valid email: \n" +
-                    "username@domain.com\n" +
-                    "user.name@domain.com\n");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Email",
+                    "You email should contains numerics, lower and uppercase letters, those are examples " +
+                            "of a valid email: \n" +
+                            "username@domain.com\n" +
+                            "user.name@domain.com\n");
             return;
         }
 
         if (!validateService.validatePassword(password.getText())){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Password");
-            alert.setContentText("Your password should contains\n" +
-                    "at least one small letter\n" +
-                    "at least one capital letter\n" +
-                    "at least one digit\n" +
-                    "at least one special symbol\n" +
-                    "minimum length of 8 characters and the maximum length\n" +
-                    "of 20 characters");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Password",
+                    "Your password should contains\n" +
+                            "at least one small letter\n" +
+                            "at least one capital letter\n" +
+                            "at least one digit\n" +
+                            "at least one special symbol\n" +
+                            "minimum length of 8 characters and the maximum length\n" +
+                            "of 20 characters");
             return;
         }
 
         if (!validateService.validateConfirmPassword(password.getText(), confirmPassword.getText())){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Invalid Confirm Password");
-            alert.setContentText("Password and Confirm Password have to match!");
-            alert.showAndWait();
+            dialogue = new ErrorDialogue();
+            dialogue.setData("Error", "Invalid Confirm Password",
+                    "Password and Confirm Password have to match!");
             return;
+        }
+
+        try {
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
+            if (!authService.validatePhoneNumber(phoneNumber.getText())){
+                dialogue = new ErrorDialogue();
+                dialogue.setData("Error", "Invalid Phone number",
+                        "This phone number already exists, try another one");
+                return;
+            }
+            if (!authService.validateEmail(email.getText())){
+                dialogue = new ErrorDialogue();
+                dialogue.setData("Error", "Invalid Email Address",
+                        "This email address already exists, try another one");
+                return;
+            }
+        } catch (RemoteException | NotBoundException e) {
+            throw new RuntimeException(e);
         }
 
         FXMLLoader loader =new FXMLLoader(getClass().getResource("/com/whisper/client/views/continuingSignUpView.fxml"));
@@ -137,6 +154,9 @@ public class SignUpController implements Initializable {
     }
 
     public void onAlreadyHaveAccountClicked(ActionEvent actionEvent) {
+        Parent root = SceneManager.getInstance().loadPane("signInView");
+        Scene scene = firstName.getScene();
+        scene.setRoot(root);
     }
 
     @Override

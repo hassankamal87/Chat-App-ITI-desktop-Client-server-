@@ -23,6 +23,6 @@ public interface UserDaoInterface {
 
     boolean isEmailExists(String email) throws SQLException;
 
-    boolean getByPhoneAndPassword(String phoneNo, String password) throws SQLException;
+    User getByPhoneAndPassword(String phoneNo, String password) throws SQLException;
     //public List<Map<String, Number>> getTopEntries() throws SQLException;
 }

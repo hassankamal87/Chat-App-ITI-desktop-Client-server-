@@ -21,6 +21,11 @@ import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -55,7 +60,6 @@ public class ContinuingSignUpController
     private String phoneNumber;
     private String password;
     private String confirmPassword;
-    private ObservableList<String> allCountries;
     ErrorDialogue dialogue;
 
 
@@ -114,8 +118,18 @@ public class ContinuingSignUpController
     @FXML
     public void onSignUpClicked(ActionEvent actionEvent) {
         byte[] profilePhoto = null;
-        if (profilePicture!=null){
+        if (profilePicture.getImage()!=null){
             profilePhoto = profilePicture.getImage().toString().getBytes();
+        }else {
+            InputStream defaultImageStream = getClass().getResourceAsStream("/com/whisper/client/images/profile.png");
+            try {
+                if (defaultImageStream != null) {
+                    profilePhoto = defaultImageStream.readAllBytes();
+                    defaultImageStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         if (country.getValue() == null){

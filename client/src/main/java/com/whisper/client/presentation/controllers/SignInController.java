@@ -35,7 +35,7 @@ public class SignInController implements Initializable {
         try {
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
-            if (!authService.loginUser(phoneNumber.getText(), password.getText())){
+            if (authService.loginUser(phoneNumber.getText(), password.getText()) == null){
                 dialogue = new ErrorDialogue();
                 dialogue.setData("Error", "Invalid Credentials",
                         "Phone number or Password is incorrect");

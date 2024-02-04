@@ -34,17 +34,18 @@ public class AuthenticationServiceImpl extends UnicastRemoteObject implements Au
     }
 
     @Override
-    public boolean loginUser(String phoneNumber, String password) throws RemoteException {
+    public User loginUser(String phoneNumber, String password) throws RemoteException {
+        User user= null;
         try {
-            if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, password)) {
+            if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, password) != null) {
                 System.out.println("User signed in successfully");
-                return true;
+                return UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, password);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         System.out.println("Sign in failed");
-        return false;
+        return null;
     }
 
     @Override

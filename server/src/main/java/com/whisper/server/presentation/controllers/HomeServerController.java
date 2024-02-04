@@ -1,6 +1,6 @@
 package com.whisper.server.presentation.controllers;
 
-import com.whisper.server.business.services.SendContactsInvitationServiceImpl;
+//import com.whisper.server.business.services.SendContactsInvitationServiceImpl;
 import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
