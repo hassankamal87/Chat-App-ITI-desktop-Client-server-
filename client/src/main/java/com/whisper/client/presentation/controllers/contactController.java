@@ -68,6 +68,7 @@ public class contactController implements Initializable
         this.mainController = mainController;
     }
     private void startChat(User contact) {
+        System.out.println(contact.getUserId());
         ChattingService.getInstance().getOrCreateRoomChat(MyApp.getInstance().getCurrentUser().getUserId(),contact.getUserId());
         mainController.navigateToHomeScreen();
     }

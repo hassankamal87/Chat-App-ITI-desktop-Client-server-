@@ -36,7 +36,7 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
         super();
     }
 
-    private int ClientId = MyApp.getInstance().getCurrentUser().getUserId();
+    private int ClientId = 1;
 
     @Override
     public void receiveNotification(Notification notification) throws RemoteException {
