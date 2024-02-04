@@ -150,7 +150,7 @@ public class RoomChatDao implements RoomChatDaoInterface {
                 case "away" -> Mode.away;
                 case "busy" -> Mode.busy;
                 case "offline" -> Mode.offline;
-                default -> Mode.available;
+                default -> Mode.avalible;
             };
             String statusStr = rs.getString(11);
             Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;

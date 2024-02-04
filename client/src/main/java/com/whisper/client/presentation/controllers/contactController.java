@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
 
 import com.whisper.client.presentation.services.SceneManager;
@@ -37,6 +38,8 @@ public class contactController implements Initializable
     @FXML
     private AnchorPane mainContactPane;
 
+    private MainController mainController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -56,9 +59,6 @@ public class contactController implements Initializable
             }catch (IOException e){
                 e.printStackTrace();
             }
-
-
-
         }
     }
 
@@ -68,24 +68,18 @@ public class contactController implements Initializable
         scene.setRoot(root);
     }
 
+    public void setData(MainController mainController){
+        this.mainController = mainController;
+    }
     private void startChat(User contact) {
-        //navigate to room chat
-//
-//        Parent root = SceneManager.getInstance().loadPane("notificationView");
-//        Scene scene = mainContactPane.getScene();
-//        scene.setRoot(root);
-
-
+        //we need to replace 1  with current user Id
+        ChattingService.getInstance().getOrCreateRoomChat(1,2);
+        mainController.navigateToHomeScreen();
     }
 
     private List<User> contacts(){
-
         ContactService contactService= new ContactService();
         List<User>contacts =contactService.getContacts(1);
         return contacts;
-
-
     }
-
-
 }
