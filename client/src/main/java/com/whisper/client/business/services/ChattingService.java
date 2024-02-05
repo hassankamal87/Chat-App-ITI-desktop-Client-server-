@@ -33,9 +33,18 @@ public class ChattingService {
             chatService = (ChatServiceInt) reg.lookup("ChatService");
             ClientInterface client = ClientService.getInstance();
             chatService.registerUser(MyApp.getInstance().getCurrentUser().getUserId(), client);
-        } catch (NotBoundException | RemoteException e) {
-            System.out.println("error here  "+e.getMessage());
+        } catch (NotBoundException | RemoteException | NullPointerException e) {
+            System.out.println("cannot register user class chatting service line 37");
            // e.printStackTrace();
+        }
+    }
+
+    public void unRegisterUser(){
+        try {
+            chatService.unRegisterUser(MyApp.getInstance().getCurrentUser().getUserId(),ClientService.getInstance());
+        } catch (RemoteException e) {
+
+            System.out.println("cannot register user  class -> Chatting Service line 47");
         }
     }
 

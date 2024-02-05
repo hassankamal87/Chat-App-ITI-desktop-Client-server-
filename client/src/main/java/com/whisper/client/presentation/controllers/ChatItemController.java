@@ -7,14 +7,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 import org.example.entities.RoomChat;
 import org.example.entities.User;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +41,8 @@ public class ChatItemController
     private List<User> friendsOnChat = new ArrayList<>();
 
     private static HashMap<Integer,Parent> chatPanes = new HashMap<>();
+    @FXML
+    private Label email;
 
     public void setData(BorderPane homePane, int roomChatID){
         System.out.println("parent pane done");
@@ -53,8 +58,15 @@ public class ChatItemController
         friendsOnChat.add(friendUser);
         chatItemIName.setText(friendUser.getUserName());
         chatItemMode.setText(friendUser.getMode().name());
-        //you need to convert byte array to image
-       // chatItemImage.setImage(friendUser.getProfilePhoto());
+        email.setText(friendUser.getEmail());
+        chatItemImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
+        makeImageRounded(chatItemImage);
+    }
+
+    private void makeImageRounded(ImageView chatItemImage) {
+        Circle clip = new Circle(chatItemImage.getFitWidth() / 2.6, chatItemImage.getFitHeight() / 1.8, chatItemImage.getFitWidth() /3);
+        chatItemImage.setClip(clip);
+        chatItemImage.setPreserveRatio(true);
     }
 
     @FXML
@@ -103,13 +115,14 @@ public class ChatItemController
     }
 
 
+    @FXML
     public void onChatItemEntered(MouseEvent mouseEvent) {
         chatItemContainer.setStyle("-fx-background-color: #698B62");
 
     }
 
+    @FXML
     public void onChatItemExit(MouseEvent mouseEvent) {
         chatItemContainer.setStyle("-fx-background-color: #FFE0BF");
-
     }
 }

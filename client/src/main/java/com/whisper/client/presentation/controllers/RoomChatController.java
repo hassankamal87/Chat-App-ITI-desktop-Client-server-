@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebEngine;
@@ -66,7 +67,7 @@ public class RoomChatController implements ReceiveMessageInterface{
         nameText.setText(friendsOnChat.get(0).getUserName());
         modeText.setText(friendsOnChat.get(0).getMode().name());
         personalImage.setImage(new Image(new ByteArrayInputStream(friendsOnChat.get(0).getProfilePhoto())));
-
+        makeImageRounded(personalImage);
         try {
             ClientService.getInstance().registerChat(roomChatID,this);
         } catch (RemoteException e) {
@@ -86,13 +87,14 @@ public class RoomChatController implements ReceiveMessageInterface{
     @FXML
     public void onSendBtnClicked(Event event) {
         String htmlContent = messageEditor.getHtmlText();
-        chattingService.sendMessage(MyApp.getInstance().getCurrentUser().getUserId(),roomChatID,htmlContent);
-        messageEditor.setHtmlText("");
 
         Document doc = Jsoup.parse(htmlContent);
         String textContent = doc.text();
+
         if (!textContent.isEmpty()){
             appendMessageInList(htmlContent);
+            chattingService.sendMessage(MyApp.getInstance().getCurrentUser().getUserId(),roomChatID,htmlContent);
+            messageEditor.setHtmlText("");
         }
     }
 
@@ -107,11 +109,12 @@ public class RoomChatController implements ReceiveMessageInterface{
             WebView messageWebView = (WebView) node.lookup("#messageWebView");
             ImageView myImage = (ImageView) node.lookup("#ImageView");
             WebEngine messageEngine = messageWebView.getEngine();
-          //  myImage.setImage(MyApp.getInstance().getCurrentUser().getProfilePhoto());
+            myImage.setImage(new Image(new ByteArrayInputStream(MyApp.getInstance().getCurrentUser().getProfilePhoto())));
+            makeImageRounded(myImage);
             messageEngine.loadContent(htmlContent);
-            messagesScrollPane.setVvalue(1D);
-
             messageList.getChildren().add(node);
+
+            messagesScrollPane.setVvalue(1D);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,32 +126,18 @@ public class RoomChatController implements ReceiveMessageInterface{
             Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemViewReciever.fxml")));
 
             WebView messageWebView = (WebView) node.lookup("#messageWebView");
+            ImageView myImage = (ImageView) node.lookup("#ImageView");
             Label nameLabel = (Label) node.lookup("#nameLabel");
 
+            User friendUser = friendsOnChat.stream().filter(friend->friend.getUserId() == message.getFromUserId()).findFirst().get();
             WebEngine messageEngine = messageWebView.getEngine();
             messageEngine.loadContent(message.getBody());
-            String friendName = friendsOnChat.stream().filter(friend->friend.getUserId() == message.getFromUserId()).findFirst().get().getUserName();
-            nameLabel.setText(friendName);
-            messagesScrollPane.setVvalue(1D);
-
+            myImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
+            makeImageRounded(myImage);
+            nameLabel.setText(friendUser.getUserName());
             messageList.getChildren().add(node);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private void appendMessageInList(Message message) {
-        try {
-            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemView.fxml")));
-
-            WebView messageWebView = (WebView) node.lookup("#messageWebView");
-            ImageView myImage = (ImageView) node.lookup("#ImageView");
-            WebEngine messageEngine = messageWebView.getEngine();
-            //  myImage.setImage(MyApp.getInstance().getCurrentUser().getProfilePhoto());
-            messageEngine.loadContent(message.getBody());
             messagesScrollPane.setVvalue(1D);
-
-            messageList.getChildren().add(node);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -157,11 +146,17 @@ public class RoomChatController implements ReceiveMessageInterface{
     private void showOldMessages(List<Message> messages) {
         for (Message message : messages){
             if(message.getFromUserId() == MyApp.getInstance().getCurrentUser().getUserId()){
-                appendMessageInList(message);
+                appendMessageInList(message.getBody());
             }else{
                 receiveMessageFromList(message);
             }
         }
+    }
+
+    private void makeImageRounded(ImageView chatItemImage) {
+        Circle clip = new Circle(chatItemImage.getFitWidth() / 2.6, chatItemImage.getFitHeight() / 2, chatItemImage.getFitWidth() /3);
+        chatItemImage.setClip(clip);
+        chatItemImage.setPreserveRatio(true);
     }
 
 }

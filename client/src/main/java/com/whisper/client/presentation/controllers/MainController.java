@@ -1,6 +1,8 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.business.services.ChattingService;
+import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.Event;
@@ -79,50 +81,41 @@ public class MainController {
     @FXML
     public void onContactsClicked(Event event) {
         if (!Objects.equals("mainContactPane", mainPane.getCenter().getId())) {
-            Parent root = panes.get("mainContactPane");
-            if (root == null) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/contactView.fxml"));
-                    root = fxmlLoader.load();
 
-                    contactController controller = fxmlLoader.getController();
-                    controller.setData(this);
-                    panes.put("mainContactPane", root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/contactView.fxml"));
+                Parent root = fxmlLoader.load();
+
+                contactController controller = fxmlLoader.getController();
+                controller.setData(this);
+                mainPane.setCenter(root);
+                contactsBtn.setStyle("-fx-background-color: #597E52;");
+                homeBtn.setStyle("-fx-background-color: #trnasparent;");
+                addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+                profileBtn.setStyle("-fx-background-color: #trnasparent;");
+                notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+            } catch (IOException e) {
+                System.out.println("exception in main Controller class line 93");
             }
-
-            mainPane.setCenter(root);
-            contactsBtn.setStyle("-fx-background-color: #597E52;");
-            homeBtn.setStyle("-fx-background-color: #trnasparent;");
-            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
-            profileBtn.setStyle("-fx-background-color: #trnasparent;");
-            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
 
     @FXML
     public void onProfileClicked(Event event) {
         if (!Objects.equals("profilePane", mainPane.getCenter().getId())) {
-            Parent root = panes.get("profilePane");
-            if (root == null) {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/profileView.fxml"));
-                    root = fxmlLoader.load();
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/profileView.fxml"));
+                Parent root = fxmlLoader.load();
 
-                    panes.put("profilePane", root);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                mainPane.setCenter(root);
+                profileBtn.setStyle("-fx-background-color: #597E52;");
+                homeBtn.setStyle("-fx-background-color: #trnasparent;");
+                addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+                contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+                notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            mainPane.setCenter(root);
-            profileBtn.setStyle("-fx-background-color: #597E52;");
-            homeBtn.setStyle("-fx-background-color: #trnasparent;");
-            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
-            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
-            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
 
@@ -132,12 +125,16 @@ public class MainController {
         SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
         ClientServiceInt clientService = ClientServiceImpl.getInstance();
         serverRef.ServerUnRegister(clientService);
+
+        //un register chats
+        ClientService.getInstance().unRegisterChats();
+
+        //unregister user
+        ChattingService.getInstance().unRegisterUser();
     }
 
     @FXML
     public void onAddContactClicked(MouseEvent mouseEvent) {
-
-        System.out.println("clicked first");
         if (!Objects.equals("userSearchPane", mainPane.getCenter().getId())) {
             Parent root = panes.get("userSearchPane");
             if (root == null) {
@@ -159,9 +156,9 @@ public class MainController {
             notificationBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
-    void navigateToHomeScreen(){
-        Parent root = panes.get("homePane");
 
+    void navigateToHomeScreen() {
+        Parent root = panes.get("homePane");
         mainPane.setCenter(root);
         homeBtn.setStyle("-fx-background-color: #597E52;");
         addContactBtn.setStyle("-fx-background-color: #trnasparent;");
@@ -172,11 +169,20 @@ public class MainController {
 
     @FXML
     public void onNotificationsClicked(Event event) {
-        mainPane.setCenter(SceneManager.getInstance().loadPane("notificationView"));
-        notificationBtn.setStyle("-fx-background-color: #597E52;");
-        homeBtn.setStyle("-fx-background-color: #trnasparent;");
-        addContactBtn.setStyle("-fx-background-color: #trnasparent;");
-        contactsBtn.setStyle("-fx-background-color: #trnasparent;");
-        profileBtn.setStyle("-fx-background-color: #trnasparent;");
+        if (!Objects.equals("notificationPane", mainPane.getCenter().getId())) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationView.fxml"));
+                Parent root = fxmlLoader.load();
+
+                mainPane.setCenter(root);
+                notificationBtn.setStyle("-fx-background-color: #597E52;");
+                homeBtn.setStyle("-fx-background-color: #trnasparent;");
+                addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+                profileBtn.setStyle("-fx-background-color: #trnasparent;");
+                contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            } catch (IOException e) {
+                System.out.println("exception in main Controller class line 93");
+            }
+        }
     }
 }

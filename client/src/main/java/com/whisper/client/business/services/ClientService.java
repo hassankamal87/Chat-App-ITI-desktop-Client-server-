@@ -33,6 +33,10 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
         });
     }
 
+    public void unRegisterChats(){
+        chats.clear();
+    }
+
     @Override
     public void notifyUserWithMessage(Message message) throws RemoteException {
         System.out.println(message.getBody());
