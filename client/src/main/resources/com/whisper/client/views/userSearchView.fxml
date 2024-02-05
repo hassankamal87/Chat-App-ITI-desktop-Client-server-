@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="userSearchPane" prefHeight="545.0" prefWidth="800.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.UserSearchController">
    <children>
-      <VBox fx:id="vBox" prefHeight="545.0" prefWidth="590.0" style="-fx-background-color: white;">
+      <VBox fx:id="vBox" prefHeight="545.0" prefWidth="590.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="phone1" prefHeight="26.0" prefWidth="478.0" promptText="Enter phone number" styleClass="text-field2">
                <opaqueInsets>
@@ -20,7 +20,7 @@
             </TextField>
          </children>
       </VBox>
-      <Button layoutX="622.0" layoutY="333.0" mnemonicParsing="false" onAction="#sendInvitationClicked" prefHeight="63.0" prefWidth="142.0" styleClass="button2" text="Send invitation" />
-      <Button fx:id="addMoreContact" layoutX="622.0" layoutY="239.0" mnemonicParsing="false" onAction="#addMoreContactButton" text="Add more contact" />
+      <Button layoutX="622.0" layoutY="333.0" mnemonicParsing="false" onAction="#sendInvitationClicked" prefHeight="63.0" prefWidth="142.0" styleClass="button2" text="Send invitation" AnchorPane.rightAnchor="36.0" />
+      <Button fx:id="addMoreContact" layoutX="622.0" layoutY="239.0" mnemonicParsing="false" onAction="#addMoreContactButton" text="Add more contact" AnchorPane.rightAnchor="36.0" />
    </children>
 </AnchorPane>

@@ -56,7 +56,7 @@ public class profileController {
             userBio.setText(myUser.getBio());
             userMode.setValue(myUser.getMode());
             userDob.setValue(myUser.getDateOfBirth().toLocalDate());
-            userPicture.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
+            userProfile.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
  }
 
 //    private Image byteArrayToImageView(byte[] profilePhoto) {
