@@ -15,6 +15,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -35,20 +36,20 @@ public class ChattingService {
             chatService.registerUser(MyApp.getInstance().getCurrentUser().getUserId(), client);
         } catch (NotBoundException | RemoteException | NullPointerException e) {
             System.out.println("cannot register user class chatting service line 37");
-           // e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
-    public void unRegisterUser(){
+    public void unRegisterUser() {
         try {
-            chatService.unRegisterUser(MyApp.getInstance().getCurrentUser().getUserId(),ClientService.getInstance());
+            chatService.unRegisterUser(MyApp.getInstance().getCurrentUser().getUserId(), ClientService.getInstance());
         } catch (RemoteException e) {
 
             System.out.println("cannot register user  class -> Chatting Service line 47");
         }
     }
 
-    public void registerHandlingInterface(HandlingChatInterface handlingChat){
+    public void registerHandlingInterface(HandlingChatInterface handlingChat) {
         this.handlingChat = handlingChat;
     }
 
@@ -68,7 +69,7 @@ public class ChattingService {
         }
     }
 
-    public List<RoomChat> getAllRoomChatsForUser(int userId){
+    public List<RoomChat> getAllRoomChatsForUser(int userId) {
         try {
             List<RoomChat> roomChats = chatService.getRoomChatsForUser(userId);
             return roomChats;
@@ -81,14 +82,14 @@ public class ChattingService {
     }
 
 
-    public int getOrCreateRoomChat(int user1Id, int user2Id){
-        int roomChatId = getRoomChatForUsers(user1Id,user2Id);
-        if(roomChatId != 0){
+    public int getOrCreateRoomChat(int user1Id, int user2Id) {
+        int roomChatId = getRoomChatForUsers(user1Id, user2Id);
+        if (roomChatId != 0) {
             handlingChat.openExistChat(roomChatId);
             return roomChatId;
-        }else{
+        } else {
             try {
-                int newId = chatService.createRoomChat(user1Id,user2Id);
+                int newId = chatService.createRoomChat(user1Id, user2Id);
                 handlingChat.addRoomChat(newId);
                 return newId;
             } catch (RemoteException e) {
@@ -96,17 +97,29 @@ public class ChattingService {
             }
         }
     }
-    private int getRoomChatForUsers(int user1, int user2){
+
+    public int createGroupChat(int user1Id, List<User> contacts) {
         try {
-            int roomId = chatService.getRoomChatForUsers(user1,user2);
-            System.out.println("user "+user1+" and user "+user2+" in room number "+ roomId );
+            int newId = chatService.createGroupChat(user1Id, contacts);
+            handlingChat.addRoomChat(newId);
+            return newId;
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private int getRoomChatForUsers(int user1, int user2) {
+        try {
+            int roomId = chatService.getRoomChatForUsers(user1, user2);
+            System.out.println("user " + user1 + " and user " + user2 + " in room number " + roomId);
             return roomId;
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public User getUserInCommonRoomChat(int roomChatId){
+    public User getUserInCommonRoomChat(int roomChatId) {
         try {
             List<User> users = chatService.getUsersForRoomChat(roomChatId);
             //this 1 should replaced by current user id
@@ -117,9 +130,26 @@ public class ChattingService {
         }
     }
 
-    public List<Message> getAllMessagesForRoomChat(int roomChatId){
+    public List<User> getUsersInCommonRoomChat(int roomChatId) {
+        try {
+            return chatService.getUsersForRoomChat(roomChatId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public List<Message> getAllMessagesForRoomChat(int roomChatId) {
         try {
             return chatService.getAllMessagesForRoomChat(roomChatId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public RoomChat getRoomChatByID(int roomChatId) {
+        try {
+            return chatService.getRoomChatByID(roomChatId);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

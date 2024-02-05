@@ -2,8 +2,10 @@ package com.whisper.server.business.services;
 
 import com.whisper.server.persistence.daos.MessageDao;
 import com.whisper.server.persistence.daos.RoomChatDao;
+import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.daos.interfaces.MessageDaoInterface;
 import com.whisper.server.persistence.daos.interfaces.RoomChatDaoInterface;
+import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
 import com.whisper.server.persistence.db.MyDatabase;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.*;
@@ -16,6 +18,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceInt {
 
@@ -113,6 +116,29 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     }
 
     @Override
+    public int createGroupChat(int user1Id, List<User> users) throws RemoteException{
+        RoomChatDaoInterface roomChatDao = RoomChatDao.getInstance(MyDatabase.getInstance());
+        UserDaoInterface userDao = UserDao.getInstance(MyDatabase.getInstance());
+        try {
+            User adminUser = userDao.getUserById(user1Id);
+            StringBuilder groupChatName = new StringBuilder();
+            groupChatName.append(adminUser.getUserName(), 0, 5).append(", ");
+            for(User user : users){
+                groupChatName.append(user.getUserName(), 0, 5).append(", ");
+            }
+            int newRoomChatID =  roomChatDao.createRoomChat(new RoomChat(-1,Date.valueOf(LocalDate.now()),true,groupChatName.toString(),null,user1Id,"",Type.group));
+            roomChatDao.addRoomMember(new RoomMember(newRoomChatID,user1Id));
+            for(User user: users){
+                roomChatDao.addRoomMember(new RoomMember(newRoomChatID,user.getUserId()));
+            }
+            return newRoomChatID;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    @Override
     public List<User> getUsersForRoomChat(int roomChatId) throws RemoteException {
         RoomChatDaoInterface roomChatDao = RoomChatDao.getInstance(MyDatabase.getInstance());
         try {
@@ -127,6 +153,16 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
         MessageDaoInterface messageDao = MessageDao.getInstance(MyDatabase.getInstance());
         try {
             return messageDao.getAllByChatId(roomChatId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public RoomChat getRoomChatByID(int roomChatId) throws RemoteException {
+        RoomChatDaoInterface roomChatDao = RoomChatDao.getInstance(MyDatabase.getInstance());
+        try {
+            return roomChatDao.getRoomChat(roomChatId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import org.example.entities.RoomChat;
+import org.example.entities.Type;
 import org.example.entities.User;
 
 import java.io.ByteArrayInputStream;
@@ -38,6 +39,8 @@ public class ChatItemController
 
     private BorderPane homePane;
     private int roomChatId;
+
+    private RoomChat roomChat;
     private List<User> friendsOnChat = new ArrayList<>();
 
     private static HashMap<Integer,Parent> chatPanes = new HashMap<>();
@@ -49,10 +52,26 @@ public class ChatItemController
         this.homePane = homePane;
         this.roomChatId = roomChatID;
 
-        setRoomChatItemData(roomChatID);
+        roomChat = ChattingService.getInstance().getRoomChatByID(roomChatID);
+
+        if (roomChat.getType() == Type.individual){
+            setRoomChatItemData();
+        }else{
+            setGroupChatData();
+        }
     }
 
-    private void setRoomChatItemData(int roomChatId) {
+    private void setGroupChatData() {
+        ChattingService chattingService = ChattingService.getInstance();
+        friendsOnChat =  chattingService.getUsersInCommonRoomChat(roomChatId);
+
+        chatItemIName.setText(roomChat.getGroupName());
+        chatItemMode.setText("Group");
+        email.setText("");
+        makeImageRounded(chatItemImage);
+    }
+
+    private void setRoomChatItemData() {
         ChattingService chattingService = ChattingService.getInstance();
         User friendUser = chattingService.getUserInCommonRoomChat(roomChatId);
         friendsOnChat.add(friendUser);
@@ -105,7 +124,7 @@ public class ChatItemController
                 node = fxmlLoader.load();
                 System.out.println("loaded");
                 RoomChatController controller = fxmlLoader.getController();
-                controller.setData(roomChatId,friendsOnChat);
+                controller.setData(roomChat,friendsOnChat);
                 chatPanes.put(roomChatId,node);
             } catch (IOException e) {
                 throw new RuntimeException(e);

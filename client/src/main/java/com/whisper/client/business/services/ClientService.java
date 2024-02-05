@@ -1,10 +1,13 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.MyApp;
 import com.whisper.client.presentation.controllers.ReceiveMessageInterface;
 import com.whisper.client.presentation.controllers.RoomChatController;
 import javafx.application.Platform;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
+import org.example.entities.NotifactionType;
+import org.example.entities.Notification;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -44,6 +47,11 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
             ReceiveMessageInterface toChat = chats.get(message.getToChatId());
             if(toChat!= null)
                 toChat.receiveMessageFromList(message);
+            else{
+                Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(),"message.getFromUserId()", NotifactionType.msg,message.getBody());
+                NotificationService notifyService = new NotificationService();
+                notifyService.sendMessage(messageNotification);
+            }
         });
     }
 }
