@@ -51,17 +51,13 @@ public class profileController {
     }
 
     private void showUserData() {
-        userName.setText(myUser.getUserName());
-        userBio.setText(myUser.getBio());
-        userMode.setValue(myUser.getMode());
-        userDob.setValue(myUser.getDateOfBirth().toLocalDate());
-        userNameLabel.setText(myUser.getUserName());
-        if (myUser.getProfilePhoto() == null){
-            System.out.println("Profile photo is null");
-        }
-        userProfile.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
-
+            userName.setText(myUser.getUserName());
+            userBio.setText(myUser.getBio());
+            userMode.setValue(myUser.getMode());
+            userDob.setValue(myUser.getDateOfBirth().toLocalDate());
+            userProfile.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
     }
+
 
 //    private Image byteArrayToImageView(byte[] profilePhoto) {
 //        ByteArrayInputStream bis = new ByteArrayInputStream(profilePhoto);

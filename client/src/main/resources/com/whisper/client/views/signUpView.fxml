@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.SignUpController">
     <children>
-        <BorderPane fx:id="mainSignUpPane" prefHeight="600.0" prefWidth="800.0">
+        <BorderPane fx:id="mainSignUpPane" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
                 <Pane prefHeight="600.0" prefWidth="300.0" styleClass="linear-grad2" BorderPane.alignment="CENTER">
                     <children>
