@@ -4,25 +4,33 @@ import com.whisper.client.HelloApplication;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ContactService;
 import com.whisper.client.business.services.NotificationService;
+import com.whisper.client.business.services.UserSearchService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.entities.NotifactionType;
 import org.example.entities.Notification;
+import org.example.entities.Type;
 import org.example.entities.User;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class notificationController implements Initializable {
@@ -60,6 +68,9 @@ public class notificationController implements Initializable {
             int finalI = i;
             b.setOnAction(event->deleteAction(event, finalI));
         }
+
+
+
     }
     private void deleteAction(Event event,int i) {
         Button deleteButton = (Button) event.getSource();

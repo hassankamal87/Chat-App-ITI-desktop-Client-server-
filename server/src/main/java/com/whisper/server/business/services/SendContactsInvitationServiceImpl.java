@@ -185,3 +185,4 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     }
 }
 
+

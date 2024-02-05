@@ -15,6 +15,7 @@ public interface PendingRequestDaoInterface {
 
     PendingRequest getPendingRequest(int toUserId, int fromUserId) throws SQLException;
 
+    List<PendingRequest> getPendingRequest(int toUserId) throws SQLException;
     int deletePendingRequest(int toUserId ,int fromUserId) throws SQLException;
 
 }

@@ -1,8 +1,9 @@
 package org.example.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Contact {
+public class Contact implements Serializable {
     private FriendshipStatus friendshipStatus;
     private Date contactDate;
     private int userId;
