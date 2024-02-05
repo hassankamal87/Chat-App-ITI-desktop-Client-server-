@@ -39,28 +39,25 @@ public class SignUpController implements Initializable {
     private PasswordField password;
     @FXML
     private PasswordField confirmPassword;
-    DialogueManager dialogue;
+    private DialogueManager dialogueManager = DialogueManager.getInstance();
     SignupValidateService validateService = new SignupValidateService();
     private String hashedPassword;
 
     public void onGetStartedClicked(ActionEvent actionEvent) {
         if (!validateService.validName(firstName.getText()) || !validateService.validName(lastName.getText())){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Name",
+            dialogueManager.showErrorDialog("Error", "Invalid Name",
                     "First and Last name should only contains letters and spaces");
             return;
         }
 
         if (!validateService.validatePhoneNumber(phoneNumber.getText())){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Phone Number",
+            dialogueManager.showErrorDialog("Error", "Invalid Phone Number",
                     "Phone number should be exactly 11 numbers");
             return;
         }
 
         if (!validateService.validateEmail(email.getText())){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Email",
+            dialogueManager.showErrorDialog("Error", "Invalid Email",
                     "You email should contains numerics, lower and uppercase letters, those are examples " +
                             "of a valid email: \n" +
                             "username@domain.com\n" +
@@ -69,8 +66,7 @@ public class SignUpController implements Initializable {
         }
 
         if (!validateService.validatePassword(password.getText())){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Password",
+            dialogueManager.showErrorDialog("Error", "Invalid Password",
                     "Your password should contains\n" +
                             "at least one small letter\n" +
                             "at least one capital letter\n" +
@@ -82,8 +78,7 @@ public class SignUpController implements Initializable {
         }
 
         if (!validateService.validateConfirmPassword(password.getText(), confirmPassword.getText())){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Confirm Password",
+            dialogueManager.showErrorDialog("Error", "Invalid Confirm Password",
                     "Password and Confirm Password have to match!");
             return;
         }
@@ -92,14 +87,12 @@ public class SignUpController implements Initializable {
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             if (!authService.validatePhoneNumber(phoneNumber.getText())){
-                dialogue = new DialogueManager();
-                dialogue.setData("Error", "Invalid Phone number",
+                dialogueManager.showErrorDialog("Error", "Invalid Phone number",
                         "This phone number already exists, try another one");
                 return;
             }
             if (!authService.validateEmail(email.getText())){
-                dialogue = new DialogueManager();
-                dialogue.setData("Error", "Invalid Email Address",
+                dialogueManager.showErrorDialog("Error", "Invalid Email Address",
                         "This email address already exists, try another one");
                 return;
             }

@@ -57,9 +57,7 @@ public class ContinuingSignUpController
     private String email;
     private String phoneNumber;
     private String password;
-    private String confirmPassword;
-    DialogueManager dialogue;
-
+    DialogueManager dialogueManager = DialogueManager.getInstance();
 
     public ContinuingSignUpController(){
 
@@ -70,7 +68,6 @@ public class ContinuingSignUpController
         gender = new ToggleGroup();
         maleCheckBox.setToggleGroup(gender);
         femaleCheckBox.setToggleGroup(gender);
-        // Populate the ComboBox with a list of countries
         List<String> countryList = getAllCountries();
         ObservableList<String> observableList = FXCollections.observableArrayList(countryList);
         country.setItems(observableList);
@@ -95,6 +92,7 @@ public class ContinuingSignUpController
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+
     }
 
     @FXML
@@ -141,18 +139,15 @@ public class ContinuingSignUpController
         }
 
         if (country.getValue() == null){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Country", "Please Choose Your Country");
+            dialogueManager.showErrorDialog("Error", "Invalid Country", "Please Choose Your Country");
             return;
         }
         if (dateOfBirth.getValue() == null){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid date of birth", "Please Choose Your Date of Birth");
+            dialogueManager.showErrorDialog("Error", "Invalid date of birth", "Please Choose Your Date of Birth");
             return;
         }
         if (gender.getSelectedToggle() == null){
-            dialogue = new DialogueManager();
-            dialogue.setData("Error", "Invalid Gender", "Please Choose Your Gender");
+            dialogueManager.showErrorDialog("Error", "Invalid Gender", "Please Choose Your Gender");
             return;
         }
         try{

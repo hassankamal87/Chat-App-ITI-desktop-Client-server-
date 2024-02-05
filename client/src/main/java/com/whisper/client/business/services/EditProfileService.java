@@ -10,6 +10,7 @@ import java.rmi.registry.Registry;
 public class EditProfileService {
     private EditProfileServiceInt editService;
     private Registry reg;
+    DialogueManager dialogueManager = DialogueManager.getInstance();
 
     public EditProfileService() {
         try {
@@ -44,12 +45,12 @@ public class EditProfileService {
     private void displayError() {
         String Header = "Error happened while changing your profile data.";
         String content = "Please try again later.";
-        DialogueManager.setData("Error",Header,content);
+        dialogueManager.showErrorDialog("Error",Header,content);
     }
 
     private void displaySuccess() {
         String Header = "";
         String content = "Successfully changed your profile data.";
-        DialogueManager.showInformationDialog("Success",content);
+        dialogueManager.showInformationDialog("Success",content);
     }
 }

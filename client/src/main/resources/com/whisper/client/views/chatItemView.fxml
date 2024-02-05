@@ -10,18 +10,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="chatItemContainer" onMouseClicked="#onChatItemClicked" onMouseEntered="#onChatItemEntered" onMouseExited="#onChatItemExit" prefHeight="53.0" prefWidth="230.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.ChatItemController">
+<AnchorPane fx:id="chatItemContainer" onMouseClicked="#onChatItemClicked" onMouseEntered="#onChatItemEntered"
+            onMouseExited="#onChatItemExit" prefHeight="53.0" prefWidth="230.0" stylesheets="@../style/newCss.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.whisper.client.presentation.controllers.ChatItemController">
 
     <children>
         <HBox fx:id="chatItem" alignment="CENTER" spacing="10" style="-fx-background-color: transparent;">
             <ImageView fx:id="chatItemImage" fitHeight="43.0" fitWidth="51.0">
                 <image>
-                    <Image url="@../images/profile.png" />
+                    <Image url="@../images/profile.png"/>
                 </image>
                 <HBox.margin>
-                    <Insets top="6.0" />
+                    <Insets top="6.0"/>
                 </HBox.margin>
             </ImageView>
+
          <VBox alignment="CENTER">
             <children>
                   <Label fx:id="chatItemIName" text="John Wick" textFill="#fcf9f9">
@@ -43,10 +47,10 @@
                 <Font name="Berlin Sans FB Demi Bold" size="12.0" />
             </font>
             <opaqueInsets>
-                <Insets />
+                <Insets/>
             </opaqueInsets>
             <padding>
-                <Insets right="6.0" />
+                <Insets right="6.0"/>
             </padding>
         </Label>
     </children>
