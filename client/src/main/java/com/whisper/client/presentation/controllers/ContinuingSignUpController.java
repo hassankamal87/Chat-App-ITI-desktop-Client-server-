@@ -95,6 +95,7 @@ public class ContinuingSignUpController
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+
     }
 
     @FXML
