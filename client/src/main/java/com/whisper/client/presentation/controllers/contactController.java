@@ -41,7 +41,7 @@ public class contactController implements Initializable
     private Button createGroupButton;
     List<User> contacts = new ArrayList<>(contacts());
 
-    Set<Integer> groupChatUserIds = new HashSet<>();
+    Set<User> groupChatUserIds = new HashSet<>();
     @FXML
     private Button addFriendsToAGroupButton;
     StringBuilder usersNames = new StringBuilder();
@@ -80,7 +80,7 @@ public class contactController implements Initializable
     private void handleCreatingGroupChat(User user) {
         createGroupButton.setDisable(false);
         usersNames.append(user.getUserName()).append("\n");
-        groupChatUserIds.add(user.getUserId());
+        groupChatUserIds.add(user);
 
         System.out.println(groupChatUserIds);
     }
@@ -96,6 +96,15 @@ public class contactController implements Initializable
         mainController.navigateToHomeScreen();
     }
 
+    private void startGroup(List<User> contacts){
+        contacts.forEach(e->{
+            System.out.println(e.getUserName());
+        });
+        ChattingService.getInstance().createGroupChat(
+                MyApp.getInstance().getCurrentUser().getUserId(),contacts
+        );
+        mainController.navigateToHomeScreen();
+    }
     private List<User> contacts(){
         ContactService contactService= new ContactService();
         List<User>contacts =contactService.getContacts(MyApp.getInstance().getCurrentUser().getUserId());
@@ -105,6 +114,7 @@ public class contactController implements Initializable
     @FXML
     public void onCreateGroupChatClicked(ActionEvent actionEvent) {
         System.out.println("Group Chat Created with members: " + groupChatUserIds);
+        startGroup(groupChatUserIds.stream().toList());
         clearGroupChat();
     }
 

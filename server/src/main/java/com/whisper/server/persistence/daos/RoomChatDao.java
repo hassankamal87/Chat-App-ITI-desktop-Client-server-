@@ -186,11 +186,13 @@ public class RoomChatDao implements RoomChatDaoInterface {
     //get individual room chat
     @Override
     public int getRoomChatForUsers(int user1Id, int user2Id) throws SQLException {
-        String query = "SELECT room_chat_id\n" +
-                "        FROM room_chat_user\n" +
-                "        WHERE user_id IN (?,?)\n" +
-                "        GROUP BY room_chat_id\n" +
-                "        HAVING COUNT(DISTINCT user_id) = 2;";
+        String query = "SELECT rcu1.room_chat_id\n" +
+                "FROM room_chat_user rcu1\n" +
+                "JOIN room_chat_user rcu2 ON rcu1.room_chat_id = rcu2.room_chat_id\n" +
+                "JOIN room_chat rc ON rcu1.room_chat_id = rc.room_chat_id\n" +
+                "WHERE rcu1.user_id = ?" +
+                "  AND rcu2.user_id = ?" +
+                "  AND rc.type <> 'group';";
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
         ps.setInt(1,user1Id);
         ps.setInt(2,user2Id);

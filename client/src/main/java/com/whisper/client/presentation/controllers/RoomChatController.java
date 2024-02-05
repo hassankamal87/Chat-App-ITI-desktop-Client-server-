@@ -23,6 +23,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
+import org.example.entities.Type;
 import org.example.entities.User;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoomChatController implements ReceiveMessageInterface{
+public class RoomChatController implements ReceiveMessageInterface {
     @FXML
     private AnchorPane roomChatPane;
     @FXML
@@ -61,15 +62,20 @@ public class RoomChatController implements ReceiveMessageInterface{
     private List<User> friendsOnChat;
 
 
-    public void setData(int roomChatID, List<User> friendsOnChat){
-        this.roomChatID = roomChatID;
+    public void setData(RoomChat roomChat, List<User> friendsOnChat) {
+        this.roomChatID = roomChat.getRoomChatId();
         this.friendsOnChat = friendsOnChat;
-        nameText.setText(friendsOnChat.get(0).getUserName());
-        modeText.setText(friendsOnChat.get(0).getMode().name());
-        personalImage.setImage(new Image(new ByteArrayInputStream(friendsOnChat.get(0).getProfilePhoto())));
+        if (roomChat.getType() == Type.individual) {
+            nameText.setText(friendsOnChat.get(0).getUserName());
+            modeText.setText(friendsOnChat.get(0).getMode().name());
+            personalImage.setImage(new Image(new ByteArrayInputStream(friendsOnChat.get(0).getProfilePhoto())));
+        }else{
+            nameText.setText(roomChat.getGroupName());
+            modeText.setText("Group");
+        }
         makeImageRounded(personalImage);
         try {
-            ClientService.getInstance().registerChat(roomChatID,this);
+            ClientService.getInstance().registerChat(roomChatID, this);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
@@ -91,9 +97,9 @@ public class RoomChatController implements ReceiveMessageInterface{
         Document doc = Jsoup.parse(htmlContent);
         String textContent = doc.text();
 
-        if (!textContent.isEmpty()){
+        if (!textContent.isEmpty()) {
             appendMessageInList(htmlContent);
-            chattingService.sendMessage(MyApp.getInstance().getCurrentUser().getUserId(),roomChatID,htmlContent);
+            chattingService.sendMessage(MyApp.getInstance().getCurrentUser().getUserId(), roomChatID, htmlContent);
             messageEditor.setHtmlText("");
         }
     }
@@ -129,7 +135,7 @@ public class RoomChatController implements ReceiveMessageInterface{
             ImageView myImage = (ImageView) node.lookup("#ImageView");
             Label nameLabel = (Label) node.lookup("#nameLabel");
 
-            User friendUser = friendsOnChat.stream().filter(friend->friend.getUserId() == message.getFromUserId()).findFirst().get();
+            User friendUser = friendsOnChat.stream().filter(friend -> friend.getUserId() == message.getFromUserId()).findFirst().get();
             WebEngine messageEngine = messageWebView.getEngine();
             messageEngine.loadContent(message.getBody());
             myImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
@@ -144,17 +150,17 @@ public class RoomChatController implements ReceiveMessageInterface{
     }
 
     private void showOldMessages(List<Message> messages) {
-        for (Message message : messages){
-            if(message.getFromUserId() == MyApp.getInstance().getCurrentUser().getUserId()){
+        for (Message message : messages) {
+            if (message.getFromUserId() == MyApp.getInstance().getCurrentUser().getUserId()) {
                 appendMessageInList(message.getBody());
-            }else{
+            } else {
                 receiveMessageFromList(message);
             }
         }
     }
 
     private void makeImageRounded(ImageView chatItemImage) {
-        Circle clip = new Circle(chatItemImage.getFitWidth() / 2.6, chatItemImage.getFitHeight() / 2, chatItemImage.getFitWidth() /3);
+        Circle clip = new Circle(chatItemImage.getFitWidth() / 2.6, chatItemImage.getFitHeight() / 2, chatItemImage.getFitWidth() / 3);
         chatItemImage.setClip(clip);
         chatItemImage.setPreserveRatio(true);
     }
