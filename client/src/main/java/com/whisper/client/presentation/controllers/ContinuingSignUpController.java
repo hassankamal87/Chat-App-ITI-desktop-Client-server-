@@ -22,9 +22,9 @@ import org.example.entities.User;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import javax.imageio.ImageIO;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -89,13 +89,12 @@ public class ContinuingSignUpController
         return countryList;
     }
     public void setData(String firstName, String lastName, String email, String phoneNumber,
-                        String password, String confirmPassword){
+                        String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
     @FXML
