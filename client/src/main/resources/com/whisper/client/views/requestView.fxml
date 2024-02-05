@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainContactPane" prefHeight="545.0" prefWidth="801.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.RequestController">
+<AnchorPane fx:id="requestPane" prefHeight="545.0" prefWidth="801.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.RequestController">
    <children>
       <Label layoutX="14.0" layoutY="58.0" stylesheets="@../style/style.css" text="Pending Requests" AnchorPane.leftAnchor="14.0">
          <font>

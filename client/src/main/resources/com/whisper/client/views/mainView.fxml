@@ -14,7 +14,7 @@
       <AnchorPane fx:id="navigationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="800.0" styleClass="linear-grad4" stylesheets="@../style/newNewCss.css" BorderPane.alignment="CENTER">
          <children>
             <Line endX="800.0" endY="55.0" fill="#fefeff" startY="55.0" stroke="#fffbfb" />
-            <Button fx:id="homeBtn" contentDisplay="TOP" layoutX="744.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onHomeClicked" prefHeight="50.0" prefWidth="56.0" styleClass="button2" text="Home" textFill="WHITE" underline="true">
+            <Button fx:id="homeBtn" contentDisplay="TOP" layoutX="744.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onHomeClicked" prefHeight="50.0" prefWidth="56.0" styleClass="button2" text="Home" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -26,7 +26,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="contactsBtn" contentDisplay="TOP" layoutX="670.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onContactsClicked" prefHeight="50.0" prefWidth="70.0" styleClass="button5" text="Contacts" textFill="WHITE" underline="true">
+            <Button fx:id="contactsBtn" contentDisplay="TOP" layoutX="670.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onContactsClicked" prefHeight="50.0" prefWidth="70.0" styleClass="button5" text="Contacts" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -38,7 +38,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="profileBtn" contentDisplay="TOP" layoutX="75.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onProfileClicked" prefHeight="50.0" prefWidth="70.0" styleClass="button5" text="Profile" textFill="WHITE" underline="true">
+            <Button fx:id="profileBtn" contentDisplay="TOP" layoutX="72.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onProfileClicked" prefHeight="50.0" prefWidth="70.0" styleClass="button5" text="Profile" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -50,7 +50,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="signOutBtn" contentDisplay="TOP" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSignOutClicked" prefHeight="50.0" prefWidth="70.0" styleClass="button5" text="Log out" textFill="WHITE" underline="true">
+            <Button fx:id="signOutBtn" contentDisplay="TOP" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onSignOutClicked" prefHeight="50.0" prefWidth="70.0" styleClass="button5" text="Log out" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -72,7 +72,7 @@
                   <Image url="@../images/wlogo.png" />
                </image>
             </ImageView>
-            <Button fx:id="addContactBtn" contentDisplay="TOP" layoutX="581.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onAddContactClicked" prefHeight="50.0" prefWidth="88.0" styleClass="button5" text="Add Contact" textFill="WHITE" underline="true">
+            <Button fx:id="addContactBtn" contentDisplay="TOP" layoutX="581.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onAddContactClicked" prefHeight="50.0" prefWidth="88.0" styleClass="button5" text="Add Contact" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -84,7 +84,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="notificationBtn" contentDisplay="TOP" layoutX="490.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onNotificationsClicked" prefHeight="50.0" prefWidth="90.0" styleClass="button5" text="Notifications" textFill="WHITE" underline="true">
+            <Button fx:id="notificationBtn" contentDisplay="TOP" layoutX="490.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onNotificationsClicked" prefHeight="50.0" prefWidth="90.0" styleClass="button5" text="Notifications" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -96,7 +96,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="pendingBtn" contentDisplay="TOP" layoutX="146.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onInvitationClicked" onMouseClicked="#onProfileClicked" prefHeight="50.0" prefWidth="78.0" styleClass="button5" text="Invitations" textFill="WHITE" underline="true">
+            <Button fx:id="pendingBtn" contentDisplay="TOP" layoutX="143.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onInvetationClicked" prefHeight="50.0" prefWidth="78.0" styleClass="button5" text="Invitations" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
