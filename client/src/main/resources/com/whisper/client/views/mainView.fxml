@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.MainController">
+<BorderPane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.MainController">
    <top>
       <AnchorPane fx:id="navigationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="800.0" styleClass="linear-grad" stylesheets="@../style/newCss.css" BorderPane.alignment="CENTER">
          <children>

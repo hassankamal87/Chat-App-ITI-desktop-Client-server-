@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -25,6 +26,7 @@ import org.example.entities.User;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -63,6 +65,7 @@ public class RoomChatController implements ReceiveMessageInterface{
         this.friendsOnChat = friendsOnChat;
         nameText.setText(friendsOnChat.get(0).getUserName());
         modeText.setText(friendsOnChat.get(0).getMode().name());
+        personalImage.setImage(new Image(new ByteArrayInputStream(friendsOnChat.get(0).getProfilePhoto())));
 
         try {
             ClientService.getInstance().registerChat(roomChatID,this);
