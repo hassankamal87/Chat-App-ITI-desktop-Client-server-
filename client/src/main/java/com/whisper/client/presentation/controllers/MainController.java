@@ -5,12 +5,15 @@ import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -128,17 +131,26 @@ public class MainController {
     }
 
     @FXML
-    public void onSignOutClicked(Event event) throws RemoteException, NotBoundException {
-        Registry reg = LocateRegistry.getRegistry(1099);
-        SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
-        ClientServiceInt clientService = ClientServiceImpl.getInstance();
-        serverRef.ServerUnRegister(clientService);
+    public void onSignOutClicked(Event event)  {
+        Registry reg = null;
+        try {
+            SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
+            ClientServiceInt clientService = ClientServiceImpl.getInstance();
+            serverRef.ServerUnRegister(clientService);
 
-        //un register chats
-        ClientService.getInstance().unRegisterChats();
+            //un register chats
+            ClientService.getInstance().unRegisterChats();
 
-        //unregister user
-        ChattingService.getInstance().unRegisterUser();
+            //unregister user
+            ChattingService.getInstance().unRegisterUser();
+            reg = LocateRegistry.getRegistry(8000);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+        }
+
     }
 
     @FXML

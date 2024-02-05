@@ -5,6 +5,8 @@ import com.whisper.client.MyApp;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
@@ -74,7 +76,11 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
                             .show();
                     System.out.println("send success");
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("Exception is  : "+e.getMessage());
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+                    alert.showAndWait();
+                    Platform.exit();
+                    System.exit(0);
                 }
 
             });

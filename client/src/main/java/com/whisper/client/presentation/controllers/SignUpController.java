@@ -84,7 +84,7 @@ public class SignUpController implements Initializable {
         }
 
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             if (!authService.validatePhoneNumber(phoneNumber.getText())){
                 dialogueManager.showErrorDialog("Error", "Invalid Phone number",
