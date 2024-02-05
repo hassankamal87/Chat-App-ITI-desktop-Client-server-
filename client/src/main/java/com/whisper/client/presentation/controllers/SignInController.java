@@ -4,6 +4,8 @@ import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
+import com.whisper.client.presentation.services.UnRegister;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -34,7 +36,7 @@ public class SignInController implements Initializable {
 
     public void onSigninButtonClick(ActionEvent actionEvent) {
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             User currentUser  = authService.loginUser(phoneNumber.getText(), password.getText());
             if ( currentUser == null){
@@ -57,7 +59,14 @@ public class SignInController implements Initializable {
             }
             System.out.println("Client side: signing in succeed");
         } catch (RemoteException | NotBoundException e) {
-            throw new RuntimeException(e);
+
+
+            System.out.println("hoooooooooooooooo"+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Server is closed", ButtonType.OK);
+            alert.showAndWait();
+            UnRegister.getInstance().unregister();
+            Platform.exit();
+            System.exit(0);
         }
 
     }

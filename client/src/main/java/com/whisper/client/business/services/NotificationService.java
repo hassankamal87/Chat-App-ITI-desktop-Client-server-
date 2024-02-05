@@ -3,6 +3,8 @@ package com.whisper.client.business.services;
 import com.whisper.client.HelloApplication;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -30,10 +32,14 @@ public class NotificationService {
 
     public NotificationService() {
         try {
-            reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
             notificationRef = (NotificationServiceInt) reg.lookup("NotificationService");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -46,6 +52,11 @@ public class NotificationService {
 
         } catch (Exception e) {
             System.out.println("Exception is : " + e.getMessage());
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
         return notifications;
     }
@@ -57,6 +68,11 @@ public class NotificationService {
 
         } catch (Exception e) {
             System.out.println("Exception is : " + e.getMessage());
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
         return rowUpdate;
     }
@@ -76,7 +92,11 @@ public class NotificationService {
                         .hideAfter(Duration.seconds(10))
                         .show();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Exception is  : "+e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+                alert.showAndWait();
+                Platform.exit();
+                System.exit(0);
             }
 
         });
@@ -97,7 +117,11 @@ public class NotificationService {
                         .hideAfter(Duration.seconds(10))
                         .show();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Exception is  : "+e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+                alert.showAndWait();
+                Platform.exit();
+                System.exit(0);
             }
 
         });
@@ -121,7 +145,11 @@ public class NotificationService {
                        .hideAfter(Duration.seconds(60))
                         .show();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Exception is  : "+e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+                alert.showAndWait();
+                Platform.exit();
+                System.exit(0);
             }
 
         });

@@ -152,7 +152,7 @@ public class ContinuingSignUpController
         }
         try{
             Random rand = new Random();
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             authService.registerUser(new User(
                     rand.nextInt(10000),

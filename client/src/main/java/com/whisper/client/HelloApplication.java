@@ -27,7 +27,7 @@
 //        stage.setMinWidth(800);
 //        stage.setMinHeight(600);
 //        stage.setResizable(false);
-//        Registry reg = LocateRegistry.getRegistry(1099);
+//        Registry reg = LocateRegistry.getRegistry(8000);
 //        SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
 //        ClientServiceInt clientService =ClientServiceImpl.getInstance();
 //        serverRef.ServerRegister(clientService);
@@ -56,6 +56,7 @@ import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
+import com.whisper.client.presentation.services.UnRegister;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -75,7 +76,7 @@ import java.util.Optional;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) throws IOException, NotBoundException {
+    public void start(Stage stage) throws IOException {
         SceneManager.getInstance().initStage(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signUpView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
@@ -84,10 +85,22 @@ public class HelloApplication extends Application {
         stage.setMinWidth(800);
         stage.setMinHeight(600);
         stage.setResizable(false);
-        Registry reg = LocateRegistry.getRegistry(1099);
-        SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
+
+//        SendContactsInvitationServiceInt serverRef = null;
+//        try {
+//            Registry reg = LocateRegistry.getRegistry(8000);
+//            serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
+//        } catch (Exception e) {
+//
+//            System.out.println("hahahahhaah");
+//            Alert alert = new Alert(Alert.AlertType.ERROR, "Server is closed", ButtonType.OK);
+//            alert.showAndWait();
+//            Platform.exit();
+//            System.exit(0);
+//        }
 
 
+//        SendContactsInvitationServiceInt finalServerRef = serverRef;
         stage.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Confirmation");
@@ -95,22 +108,7 @@ public class HelloApplication extends Application {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                // User chose OK
-                ClientServiceInt clientService = null;
-                try {
-                    if(MyApp.getInstance().getCurrentUser()!=null){
-                        clientService =ClientServiceImpl.getInstance();
-                        serverRef.ServerUnRegister(clientService);
-                        
-                        //un register chat
-                        ClientService.getInstance().unRegisterChats();
-
-                        //un register user
-                        ChattingService.getInstance().unRegisterUser();
-                    }
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
+                UnRegister.getInstance().unregister();
                 Platform.exit();
                 System.exit(0);
             } else {

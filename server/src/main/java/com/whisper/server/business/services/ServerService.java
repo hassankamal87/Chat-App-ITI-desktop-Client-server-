@@ -42,7 +42,7 @@ public class ServerService implements serverServiceInt {
 
     private void openRmiConnection() {
         try {
-            reg = LocateRegistry.createRegistry(1099);
+            reg = LocateRegistry.createRegistry(8000);
             AuthenticationServiceInt authenticationService = AuthenticationServiceImpl.getInstance();
             ContactServiceInt contactService =  ContactServiceImpl.getInstance();
             SendContactsInvitationServiceInt sendContactsInvitationService = SendContactsInvitationServiceImpl.getInstance();

@@ -71,7 +71,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
                 String userName = user.getUserName();
                 // send notification
-                sendNotification(contactID,userName);
+                //sendNotification(contactID,userName);
                 for(ClientServiceInt c:clientsVector){
                     if(c.getClientId()==contactID){
                         c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"invitation"));

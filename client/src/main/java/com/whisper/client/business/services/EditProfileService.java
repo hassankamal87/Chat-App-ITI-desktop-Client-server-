@@ -1,6 +1,9 @@
 package com.whisper.client.business.services;
 
 import com.whisper.client.presentation.services.DialogueManager;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.example.entities.User;
 import org.example.serverinterfaces.EditProfileServiceInt;
 
@@ -14,10 +17,14 @@ public class EditProfileService {
 
     public EditProfileService() {
         try {
-            reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
+            reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
             editService = (EditProfileServiceInt) reg.lookup("EditProfileService");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -29,6 +36,11 @@ public class EditProfileService {
         } catch (Exception e) {
             System.out.println("Exception is : " + e.getMessage());
             displayError();
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -38,6 +50,11 @@ public class EditProfileService {
             user = editService.getUserData(id);
         } catch (Exception e) {
             System.out.println("Exception is : " + e.getMessage());
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
         return user;
     }

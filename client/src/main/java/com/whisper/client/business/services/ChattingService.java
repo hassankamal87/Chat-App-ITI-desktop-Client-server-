@@ -2,6 +2,9 @@ package com.whisper.client.business.services;
 
 import com.whisper.client.MyApp;
 import com.whisper.client.presentation.controllers.HandlingChatInterface;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
@@ -30,13 +33,17 @@ public class ChattingService {
 
     private ChattingService() {
         try {
-            Registry reg = LocateRegistry.getRegistry(1099);
+            Registry reg = LocateRegistry.getRegistry(8000);
             chatService = (ChatServiceInt) reg.lookup("ChatService");
             ClientInterface client = ClientService.getInstance();
             chatService.registerUser(MyApp.getInstance().getCurrentUser().getUserId(), client);
         } catch (NotBoundException | RemoteException | NullPointerException e) {
             System.out.println("cannot register user class chatting service line 37");
             // e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -45,7 +52,13 @@ public class ChattingService {
             chatService.unRegisterUser(MyApp.getInstance().getCurrentUser().getUserId(), ClientService.getInstance());
         } catch (RemoteException e) {
 
+
             System.out.println("cannot register user  class -> Chatting Service line 47");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -65,7 +78,12 @@ public class ChattingService {
         try {
             chatService.sendMessage(newMessage);
         } catch (RemoteException e) {
-            e.printStackTrace();
+
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -75,7 +93,11 @@ public class ChattingService {
             return roomChats;
         } catch (RemoteException e) {
             System.out.println("chatting service line 55");
-            e.printStackTrace();
+
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
 
         return null;
@@ -93,6 +115,11 @@ public class ChattingService {
                 handlingChat.addRoomChat(newId);
                 return newId;
             } catch (RemoteException e) {
+                System.out.println("Exception is  : "+e.getMessage());
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+                alert.showAndWait();
+                Platform.exit();
+                System.exit(0);
                 throw new RuntimeException(e);
             }
         }
@@ -104,6 +131,11 @@ public class ChattingService {
             handlingChat.addRoomChat(newId);
             return newId;
         } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
             throw new RuntimeException(e);
         }
 
@@ -115,6 +147,11 @@ public class ChattingService {
             System.out.println("user " + user1 + " and user " + user2 + " in room number " + roomId);
             return roomId;
         } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
             throw new RuntimeException(e);
         }
     }
@@ -126,6 +163,11 @@ public class ChattingService {
             Optional<User> optUser = users.stream().filter(user -> user.getUserId() != MyApp.getInstance().getCurrentUser().getUserId()).findFirst();
             return optUser.get();
         } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
             throw new RuntimeException(e);
         }
     }
@@ -134,6 +176,11 @@ public class ChattingService {
         try {
             return chatService.getUsersForRoomChat(roomChatId);
         } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
             throw new RuntimeException(e);
         }
     }
@@ -143,6 +190,11 @@ public class ChattingService {
         try {
             return chatService.getAllMessagesForRoomChat(roomChatId);
         } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
             throw new RuntimeException(e);
         }
     }
@@ -151,6 +203,11 @@ public class ChattingService {
         try {
             return chatService.getRoomChatByID(roomChatId);
         } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
             throw new RuntimeException(e);
         }
     }

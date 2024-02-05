@@ -1,6 +1,7 @@
 package com.whisper.server.presentation.controllers;
 
 //import com.whisper.server.business.services.SendContactsInvitationServiceImpl;
+import com.whisper.server.business.services.SendContactsInvitationServiceImpl;
 import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
@@ -16,9 +17,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import org.example.clientinterfaces.ClientServiceInt;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
+
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HomeServerController {
 
@@ -82,6 +87,7 @@ public class HomeServerController {
             if (circle.getTranslateX() <= -15) {
                 translateTransition.setToX(15);
                 rectangle.setFill(Color.RED);
+                performOperation();
                 isSwitchOn = false;
             } else {
                 translateTransition.setToX(-15);
@@ -94,7 +100,7 @@ public class HomeServerController {
             toggleSwitch.setDisable(true);
             disableButtons();
             new Thread(() -> {
-                performOperation();
+
                 Platform.runLater(() -> {
                     toggleSwitch.setDisable(false);
                     handleToggleSwitchChange(isSwitchOn);
@@ -129,30 +135,19 @@ public class HomeServerController {
     }
 
 
-    private void performOperation() {
-//        try {
-//            SendContactsInvitationServiceImpl.getInstance().inviteContacts(1, null);
-//        } catch (RemoteException e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-      /*  User myUser = new User(3,"0111111111","123","email"
-                ,"hassan", Gender.male,new Date(System.currentTimeMillis())
-                ,"Algeria","bio", Mode.avalible, Status.online);*/
-//        serverService serverService=new serverService();
-//        System.out.println(serverService.viewClients().size());
-//        List<User> contacts =new ArrayList<>();
-//        try {
-//            ContactServiceInt contactService = new ContactServiceImpl();
-//           contacts= contactService.getALLContacts(1);
-//        }catch (Exception e){
-//            System.out.println("Exception is : "+e.getMessage());
-//        }
-//        System.out.println("done"+contacts.size());
+    private void performOperation()  {
+
+        try {
+            SendContactsInvitationServiceInt sendContactsInvitationService= SendContactsInvitationServiceImpl.getInstance();
+
+            CopyOnWriteArrayList<ClientServiceInt> clients = SendContactsInvitationServiceImpl.clientsVector;
+            for(ClientServiceInt c:clients){
+                sendContactsInvitationService.ServerUnRegister(c);
+            }
+
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
