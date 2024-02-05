@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -66,6 +67,8 @@ public class ChatItemController
         openChat();
     }
 
+
+
     //work around to pre load and make loading faster.
     private void preLoad()  {
         Parent node = chatPanes.get(-1);
@@ -97,5 +100,16 @@ public class ChatItemController
             }
         }
         homePane.setCenter(node);
+    }
+
+
+    public void onChatItemEntered(MouseEvent mouseEvent) {
+        chatItemContainer.setStyle("-fx-background-color: #698B62");
+
+    }
+
+    public void onChatItemExit(MouseEvent mouseEvent) {
+        chatItemContainer.setStyle("-fx-background-color: #FFE0BF");
+
     }
 }

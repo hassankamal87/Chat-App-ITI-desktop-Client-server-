@@ -1,11 +1,9 @@
 package com.whisper.client.business.services;
 
-import com.whisper.client.presentation.services.ErrorDialogue;
+import com.whisper.client.presentation.services.DialogueManager;
 import org.example.entities.User;
 import org.example.serverinterfaces.EditProfileServiceInt;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -46,12 +44,12 @@ public class EditProfileService {
     private void displayError() {
         String Header = "Error happened while changing your profile data.";
         String content = "Please try again later.";
-        ErrorDialogue.setData("Error",Header,content);
+        DialogueManager.setData("Error",Header,content);
     }
 
     private void displaySuccess() {
         String Header = "";
         String content = "Successfully changed your profile data.";
-        ErrorDialogue.showInformationDialog("Success",content);
+        DialogueManager.showInformationDialog("Success",content);
     }
 }

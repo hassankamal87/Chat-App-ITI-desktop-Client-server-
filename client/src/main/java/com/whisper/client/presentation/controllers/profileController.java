@@ -2,8 +2,6 @@ package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.EditProfileService;
-import com.whisper.client.presentation.services.ErrorDialogue;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -18,11 +16,12 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 import org.example.entities.User;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.rmi.RemoteException;
 import java.sql.Date;
 import java.util.Arrays;
 
@@ -57,7 +56,8 @@ public class profileController {
             userMode.setValue(myUser.getMode());
             userDob.setValue(myUser.getDateOfBirth().toLocalDate());
             userProfile.setImage(new Image(new ByteArrayInputStream(myUser.getProfilePhoto())));
- }
+    }
+
 
 //    private Image byteArrayToImageView(byte[] profilePhoto) {
 //        ByteArrayInputStream bis = new ByteArrayInputStream(profilePhoto);
@@ -96,14 +96,20 @@ public class profileController {
 
     private byte[] imageViewToByteArray(ImageView imageView) {
         Image image = imageView.getImage();
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", byteArrayOutputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        PixelReader pixelReader = image.getPixelReader();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4 * width * height);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int argb = pixelReader.getArgb(x, y);
+                byteBuffer.putInt(argb);
+            }
         }
 
-        return byteArrayOutputStream.toByteArray();
+        return byteBuffer.array();
     }
 
     @FXML

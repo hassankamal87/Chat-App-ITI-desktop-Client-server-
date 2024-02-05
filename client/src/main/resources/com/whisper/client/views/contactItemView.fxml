@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="691.0" spacing="10.0" styleClass="menu-item" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.contactItemController">
+<HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="799.0" spacing="10.0" styleClass="menu-item" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.contactItemController">
    <children>
       <ImageView fx:id="photo" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
@@ -32,7 +32,7 @@
             <Font name="Corbel" size="20.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="160.0">
          <children>
             <Circle fx:id="modeIcon" fill="#ff271f" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="mode" text="Online">
