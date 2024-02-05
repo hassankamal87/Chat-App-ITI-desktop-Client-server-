@@ -4,16 +4,11 @@ import com.whisper.client.HelloApplication;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
-
 import com.whisper.client.presentation.services.DialogueManager;
-import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -135,12 +130,13 @@ public class contactController implements Initializable
         usersNames.setLength(0);
 
     }
-
+    @FXML
     public void onShowGroupMembersClicked(ActionEvent actionEvent) {
+        DialogueManager dialogueManager = DialogueManager.getInstance();
         if(!groupChatUserIds.isEmpty()) {
-            DialogueManager.showInformationDialog("Group Members", usersNames.toString());
+            dialogueManager.showInformationDialog("Group Members", usersNames.toString());
         } else {
-            DialogueManager.setData("Group Members", "No Members", "No members in the group chat");
+            dialogueManager.showInformationDialog("No Members", "No members in the group chat");
         }
     }
 }
