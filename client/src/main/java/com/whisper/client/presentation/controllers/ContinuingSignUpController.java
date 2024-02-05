@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-
 public class ContinuingSignUpController
 {
     @FXML
@@ -138,7 +137,6 @@ public class ContinuingSignUpController
                 e.printStackTrace();
             }
         }
-
 
         if (country.getValue() == null){
             dialogueManager.showErrorDialog("Error", "Invalid Country", "Please Choose Your Country");
