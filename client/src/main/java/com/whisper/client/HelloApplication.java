@@ -84,6 +84,7 @@ public class HelloApplication extends Application {
 
 
         stage.setOnCloseRequest(event -> {
+
             ClientServiceInt clientService = null;
             try {
                 if(MyApp.getInstance().getCurrentUser()!=null){

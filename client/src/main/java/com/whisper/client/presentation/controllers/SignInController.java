@@ -26,10 +26,7 @@ public class SignInController implements Initializable {
     private TextField phoneNumber;
     @javafx.fxml.FXML
     private PasswordField password;
-    @javafx.fxml.FXML
-    private CheckBox rememberMeChecked;
-    DialogueManager dialogue;
-
+    private DialogueManager dialogueManager = DialogueManager.getInstance();
 
     @javafx.fxml.FXML
     public void initialize() {
@@ -41,8 +38,7 @@ public class SignInController implements Initializable {
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             User currentUser  = authService.loginUser(phoneNumber.getText(), password.getText());
             if ( currentUser == null){
-                dialogue = new DialogueManager();
-                dialogue.setData("Error", "Invalid Credentials",
+                dialogueManager.showErrorDialog("Error", "Invalid Credentials",
                         "Phone number or Password is incorrect");
                 return;
             }else{
