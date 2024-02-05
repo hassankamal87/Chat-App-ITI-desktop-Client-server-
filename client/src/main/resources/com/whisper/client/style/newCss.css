@@ -7,6 +7,9 @@
 .linear-grad3{
     -fx-background-color: linear-gradient(to bottom left,#597E52 ,#597E52 );
 }
+.linear-grad4{
+    -fx-background-color: linear-gradient(to bottom left,#C6A969 ,#C6A969 );
+}
 /* General Styling */
 .root {
     -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -31,6 +34,13 @@
     -fx-font-size: 12px;
     -fx-weight: bold;
 }
+
+.button5 {
+
+    -fx-font-size: 12px;
+    -fx-weight: bold;
+}
+
 .button2 {
     -fx-background-color: #597E52; /* Darker green accent color */
     -fx-border-color: #43766C;

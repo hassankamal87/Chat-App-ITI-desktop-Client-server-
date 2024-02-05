@@ -1,0 +1,9 @@
+.linear-grad4{
+    -fx-background-color: linear-gradient(to bottom left,#C6A969 ,#C6A969 );
+}
+
+.button {
+    -fx-background-color: #C6A969;
+    -fx-text-fill: #ffffff;
+    -fx-weight: bold;
+}

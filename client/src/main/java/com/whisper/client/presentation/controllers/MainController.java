@@ -4,7 +4,7 @@ import com.whisper.client.HelloApplication;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
-import com.whisper.client.presentation.services.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.example.clientinterfaces.ClientServiceInt;
-import org.example.entities.User;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.io.IOException;
@@ -44,6 +43,8 @@ public class MainController {
     private HashMap<String, Parent> panes = new HashMap<>();
     @FXML
     private Button notificationBtn;
+    @FXML
+    private Button pendingBtn;
 
     @FXML
     public void initialize() {
@@ -185,4 +186,10 @@ public class MainController {
             }
         }
     }
+
+    @FXML
+    public void onInvitationClicked(ActionEvent actionEvent) {
+
+    }
+
 }
