@@ -7,3 +7,14 @@
     -fx-text-fill: #ffffff;
     -fx-weight: bold;
 }
+.button:hover {
+    -fx-background-color: #597E52;
+    -fx-text-fill: #ffffff;
+    -fx-weight: bold;
+}
+.button:pressed {
+    -fx-background-color: #3B5436;
+    -fx-text-fill: #ffffff;
+    -fx-weight: bold;
+}
+```

@@ -1,13 +1,14 @@
 package com.whisper.client.presentation.services;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SceneManager {
     private static final SceneManager instance = new SceneManager();
@@ -53,14 +54,14 @@ public class SceneManager {
             throw new RuntimeException("Stage Coordinator should be " +
                     "initialized with a Stage before it could be used");
         }
-        if(!panes.containsKey(name)){
+        if(!panes.containsKey(name) || Objects.equals(name, "pendingView")){
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                         .getResource(String.format("/com/whisper/client/views/%s.fxml", name)));
                 Parent root = fxmlLoader.load();
                 panes.put(name, root);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.toString());
             }
         }
         return panes.get(name);

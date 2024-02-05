@@ -1,14 +1,13 @@
 package com.whisper.server.business.services;
 
-import com.whisper.server.persistence.daos.NotificationDao;
-import com.whisper.server.persistence.daos.PendingRequestDao;
-import org.example.entities.PendingRequest;
-import org.example.serverinterfaces.ContactServiceInt;
 import com.whisper.server.persistence.daos.ContactDao;
+import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.Contact;
+import org.example.entities.PendingRequest;
 import org.example.entities.User;
+import org.example.serverinterfaces.ContactServiceInt;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
