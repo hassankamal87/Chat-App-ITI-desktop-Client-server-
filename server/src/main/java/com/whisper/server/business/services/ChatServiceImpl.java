@@ -72,6 +72,11 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     }
 
     @Override
+    public void unRegisterUser(int userId, ClientInterface client) throws RemoteException {
+        clients.remove(userId,client);
+    }
+
+    @Override
     public List<RoomChat> getRoomChatsForUser(int userId) throws RemoteException {
         try {
             RoomChatDaoInterface roomChatDao = RoomChatDao.getInstance(MyDatabase.getInstance());

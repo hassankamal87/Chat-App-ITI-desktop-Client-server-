@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,13 +10,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane fx:id="messageContainer" prefHeight="53.0" prefWidth="376.0" style="-fx-background-color: transparent;">
          <children>
-            <WebView fx:id="messageWebView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <WebView fx:id="messageWebView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
       </AnchorPane>
    </center>
    <right>
@@ -28,7 +31,7 @@
             </ImageView>
             <Label fx:id="nameLabel" text="You">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+                  <Font name="Berlin Sans FB Demi Bold" size="8.0" />
                </font>
             </Label>
          </children>

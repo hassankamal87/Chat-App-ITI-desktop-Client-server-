@@ -65,7 +65,7 @@
             </AnchorPane>
          </bottom>
          <center>
-            <ScrollPane fx:id="messagesScrollPane" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="539.0" stylesheets="@../lineargrad.css" BorderPane.alignment="TOP_LEFT">
+            <ScrollPane fx:id="messagesScrollPane" hbarPolicy="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="539.0" styleClass="chat-scroll-pane" stylesheets="@../lineargrad.css" vbarPolicy="NEVER" BorderPane.alignment="TOP_LEFT">
                <content>
                   <VBox fx:id="messageList" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="539.0" styleClass="bktransparent" stylesheets="@../lineargrad.css" />
                </content>

@@ -13,6 +13,7 @@ public interface ChatServiceInt extends Remote {
     void sendMessage(Message message) throws RemoteException;
 
     void registerUser(int userId,ClientInterface client) throws RemoteException;
+    void unRegisterUser(int userId,ClientInterface client) throws RemoteException;
 
     List<RoomChat> getRoomChatsForUser(int userId) throws RemoteException;
 

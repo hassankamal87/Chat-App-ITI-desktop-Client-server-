@@ -52,6 +52,8 @@
 
 package com.whisper.client;
 
+import com.whisper.client.business.services.ChattingService;
+import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.application.Application;
@@ -89,6 +91,12 @@ public class HelloApplication extends Application {
                 if(MyApp.getInstance().getCurrentUser()!=null){
                     clientService =ClientServiceImpl.getInstance();
                     serverRef.ServerUnRegister(clientService);
+
+                    //un register chat
+                    ClientService.getInstance().unRegisterChats();
+
+                    //un register user
+                    ChattingService.getInstance().unRegisterUser();
                 }
             } catch (RemoteException e) {
                 throw new RuntimeException(e);

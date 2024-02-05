@@ -19,6 +19,14 @@
     -fx-background-color: transparent;
 }
 
+.chat-scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.chat-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
 .scroll-pane .scroll-bar:vertical {
     -fx-background-color: #402e58;
     -fx-pref-width: 15px;
