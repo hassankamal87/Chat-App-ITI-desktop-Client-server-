@@ -22,7 +22,7 @@
                     <children>
                         <ImageView fitHeight="260.0" fitWidth="269.0" layoutX="20.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" styleClass="logo">
                             <image>
-                                <Image url="@../images/logo.png" />
+                                <Image url="@../images/wlogo.png" />
                             </image>
                         </ImageView>
                         <Text fill="#c6a969" layoutX="63.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="Whisper" textAlignment="CENTER" wrappingWidth="181.3463134765625">

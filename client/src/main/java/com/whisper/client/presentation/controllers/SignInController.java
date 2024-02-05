@@ -2,7 +2,7 @@ package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ClientServiceImpl;
-import com.whisper.client.presentation.services.ErrorDialogue;
+import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -19,7 +19,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class SignInController implements Initializable {
@@ -29,7 +28,7 @@ public class SignInController implements Initializable {
     private PasswordField password;
     @javafx.fxml.FXML
     private CheckBox rememberMeChecked;
-    ErrorDialogue dialogue;
+    DialogueManager dialogue;
 
 
     @javafx.fxml.FXML
@@ -42,7 +41,7 @@ public class SignInController implements Initializable {
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             User currentUser  = authService.loginUser(phoneNumber.getText(), password.getText());
             if ( currentUser == null){
-                dialogue = new ErrorDialogue();
+                dialogue = new DialogueManager();
                 dialogue.setData("Error", "Invalid Credentials",
                         "Phone number or Password is incorrect");
                 return;

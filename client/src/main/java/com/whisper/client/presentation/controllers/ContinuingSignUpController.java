@@ -1,6 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
-import com.whisper.client.presentation.services.ErrorDialogue;
+import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +33,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class ContinuingSignUpController
 {
@@ -59,7 +58,7 @@ public class ContinuingSignUpController
     private String phoneNumber;
     private String password;
     private String confirmPassword;
-    ErrorDialogue dialogue;
+    DialogueManager dialogue;
 
 
     public ContinuingSignUpController(){
@@ -90,12 +89,13 @@ public class ContinuingSignUpController
         return countryList;
     }
     public void setData(String firstName, String lastName, String email, String phoneNumber,
-                        String password){
+                        String password, String confirmPassword){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
     @FXML
@@ -142,17 +142,17 @@ public class ContinuingSignUpController
         }
 
         if (country.getValue() == null){
-            dialogue = new ErrorDialogue();
+            dialogue = new DialogueManager();
             dialogue.setData("Error", "Invalid Country", "Please Choose Your Country");
             return;
         }
         if (dateOfBirth.getValue() == null){
-            dialogue = new ErrorDialogue();
+            dialogue = new DialogueManager();
             dialogue.setData("Error", "Invalid date of birth", "Please Choose Your Date of Birth");
             return;
         }
         if (gender.getSelectedToggle() == null){
-            dialogue = new ErrorDialogue();
+            dialogue = new DialogueManager();
             dialogue.setData("Error", "Invalid Gender", "Please Choose Your Gender");
             return;
         }
