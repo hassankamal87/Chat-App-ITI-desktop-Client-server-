@@ -80,6 +80,28 @@ public class PendingRequestDao implements PendingRequestDaoInterface {
     }
 
     @Override
+    public List<PendingRequest> getPendingRequest(int toUserId) throws SQLException {
+
+        List<PendingRequest> requests = new ArrayList<>();
+        String query = "Select * from pending_request where to_user_id = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setInt(1, toUserId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                PendingRequest request = new PendingRequest(
+                        rs.getInt("to_user_id"),
+                        rs.getInt("from_user_id"),
+                        rs.getString("sent_date"),
+                        rs.getString("body")
+                );
+                requests.add(request);
+            }
+            rs.close();
+        }
+        return requests;
+    }
+
+    @Override
     public int deletePendingRequest(int toUserId ,int fromUserId) throws SQLException {
         String query = "Delete from pending_request where to_user_id = ? and from_user_id = ?";
         try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
