@@ -2,6 +2,7 @@ package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.EditProfileService;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -59,17 +60,6 @@ public class profileController {
     }
 
 
-//    private Image byteArrayToImageView(byte[] profilePhoto) {
-//        ByteArrayInputStream bis = new ByteArrayInputStream(profilePhoto);
-//        BufferedImage bImage2 = null;
-//        try {
-//            bImage2 = ImageIO.read(bis);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Image image = new Image(new ByteArrayInputStream(profilePhoto));
-//        return image;
-//    }
 
 
     @FXML
@@ -96,20 +86,14 @@ public class profileController {
 
     private byte[] imageViewToByteArray(ImageView imageView) {
         Image image = imageView.getImage();
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-
-        PixelReader pixelReader = image.getPixelReader();
-        ByteBuffer byteBuffer = ByteBuffer.allocate(4 * width * height);
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int argb = pixelReader.getArgb(x, y);
-                byteBuffer.putInt(argb);
-            }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", byteArrayOutputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return byteBuffer.array();
+        return byteArrayOutputStream.toByteArray();
     }
 
     @FXML
