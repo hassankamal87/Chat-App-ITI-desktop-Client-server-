@@ -45,6 +45,8 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 int contactID = UserDao.getInstance(MyDatabase.getInstance()).getIdByPhoneNumber(invitedContact);
                 User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
                 String userName = user.getUserName();
+//                User user1=UserDao.getInstance(MyDatabase.getInstance()).getUserById(contactID);
+//                String userName1 = user.getUserName();
                 if(alreadyGotInvite(id,contactID)){
                     return "already got invited";
 
@@ -53,13 +55,13 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                     ContactDao.getInstance(MyDatabase.getInstance())
                             .create(new Contact(FriendshipStatus.friend,
                                     Date.valueOf(LocalDate.now()), id, contactID));
-                    removeInvitation(contactID, id);
+                    removeInvitation(id, contactID);
 
-                    for(ClientServiceInt c:clientsVector){
-                        if(c.getClientId()==contactID){
-                            c.recieve(userName);
-                        }
-                    }
+//                    for(ClientServiceInt c:clientsVector){
+//                        if(c.getClientId()==contactID){
+//                            c.recieve(userName);
+//                        }
+//                    }
                     return "automatic Invitation";
                 }
                 if (contactID == -1){
@@ -104,7 +106,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     }
 
     @Override
-    public void removeInvitation(int contactId, int userId) throws RemoteException {
+    public void removeInvitation(int userId, int contactId) throws RemoteException {
         try {
             PendingRequestDao.getInstance(MyDatabase.getInstance()).deletePendingRequest(userId, contactId);
         } catch (SQLException e) {
@@ -173,7 +175,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     private boolean InviteAutomatic(int userId,int contactId) {
         PendingRequest result = null;
         try {
-            result = PendingRequestDao.getInstance(MyDatabase.getInstance()).getPendingRequest(contactId, userId);
+            result = PendingRequestDao.getInstance(MyDatabase.getInstance()).getPendingRequest(userId, contactId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
