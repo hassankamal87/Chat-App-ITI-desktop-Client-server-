@@ -1,19 +1,17 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -116,21 +114,14 @@ public class MainController {
     @FXML
     public void onProfileClicked(Event event) {
         if (!Objects.equals("profilePane", mainPane.getCenter().getId())) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/profileView.fxml"));
-                Parent root = fxmlLoader.load();
-
-                mainPane.setCenter(root);
-                profileBtn.setStyle("-fx-background-color: #597E52;");
-                homeBtn.setStyle("-fx-background-color: #trnasparent;");
-                addContactBtn.setStyle("-fx-background-color: #trnasparent;");
-                contactsBtn.setStyle("-fx-background-color: #trnasparent;");
-                notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Parent root = SceneManager.getInstance().loadPane("profileView");
+            mainPane.setCenter(root);
+            profileBtn.setStyle("-fx-background-color: #597E52;");
+            homeBtn.setStyle("-fx-background-color: #trnasparent;");
+            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+            pendingBtn.setStyle("-fx-background-color: #trnasparent;");
         }
     }
 
@@ -140,6 +131,7 @@ public class MainController {
         SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
         ClientServiceInt clientService = ClientServiceImpl.getInstance();
         serverRef.ServerUnRegister(clientService);
+        SceneManager.getInstance().clearPanes();
 
         // Unregister chats
         ClientService.getInstance().unRegisterChats();
@@ -161,6 +153,8 @@ public class MainController {
 
                 System.out.println("User signed out successfully.");
                 SceneManager.getInstance().loadView("signInView");
+                MyApp.getInstance().setCurrentUser(null);
+                System.out.println("6/2 user: " + MyApp.getInstance().getCurrentUser());
             } else {
                 System.out.println("userInfo.properties file does not exist.");
             }
