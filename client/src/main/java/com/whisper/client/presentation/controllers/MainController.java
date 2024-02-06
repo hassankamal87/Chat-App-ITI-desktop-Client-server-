@@ -146,7 +146,7 @@ public class MainController {
                 props.load(new FileInputStream(file));
 
                 props.setProperty("password", "");
-                props.setProperty("phoneNumber", "");
+//                props.setProperty("phoneNumber", "");
                 props.setProperty("rememberMe", "false");
 
                 props.store(new FileOutputStream(file), "User Properties");

@@ -53,13 +53,17 @@ public class SignInController implements Initializable {
                         "Phone number or Password is incorrect");
                 return;
             }else{
+                Properties props = new Properties();
+                props.setProperty("phoneNumber", EncryptionUtils.encrypt(phoneNumber.getText()));
+                props.store(new FileOutputStream("userInfo.properties"), "User Properties");
+                System.out.println("Property file added");
+
                 if (rememberMeChecked.isSelected()){
-                    Properties props = new Properties();
                     props.setProperty("phoneNumber", EncryptionUtils.encrypt(phoneNumber.getText()));
                     props.setProperty("password", EncryptionUtils.encrypt(password.getText()));
                     props.setProperty("rememberMe", String.valueOf(true));
                     props.store(new FileOutputStream("userInfo.properties"), "User Properties");
-                    System.out.println("Property file added");
+                    System.out.println("Property file modified by remember me");
                 }
                 MyApp.getInstance().setCurrentUser(currentUser);
                 System.out.println("current user "+currentUser.getUserId());
@@ -88,6 +92,7 @@ public class SignInController implements Initializable {
             if (file.exists()) {
                 Properties props = new Properties();
                 props.load(new FileInputStream(file));
+                phoneNumber.setText(EncryptionUtils.decrypt(props.getProperty("phoneNumber")));
                 String rememberMe = props.getProperty("rememberMe");
                 System.out.println(props.getProperty("rememberMe"));
                 if (rememberMe != null && rememberMe.equals("true")) {
@@ -114,9 +119,6 @@ public class SignInController implements Initializable {
             serverRef.ServerRegister(clientService);
 
             System.out.println(password2);
-//            if (currentUser!=null){
-//                dialogueManager.showInformationDialog("sign in", "User signed in with remember me");
-//            }
             Platform.runLater(()->{
                 SceneManager.getInstance().loadView("mainView");
             });
