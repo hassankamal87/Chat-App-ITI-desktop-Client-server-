@@ -47,6 +47,7 @@ public class profileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         myUser = MyApp.getInstance().getCurrentUser();
+
         showUserData();
     }
 
@@ -63,7 +64,7 @@ public class profileController implements Initializable {
 
     @FXML
     private void onSaveChangesClicked(ActionEvent actionEvent) {
-
+        myUser = MyApp.getInstance().getCurrentUser();
         int userId = myUser.getUserId();
         String phoneNumber = myUser.getPhoneNumber();
         String password = myUser.getPassword();
@@ -74,9 +75,7 @@ public class profileController implements Initializable {
         String country = myUser.getCountry();
         String bio = userBio.getText();
         Mode mode = Mode.valueOf(userMode.getValue().toString());
-
-        Status status = Status.online;
-
+        Status status = Status.valueOf(myUser.getStatus().toString());
         byte[] profilePicture = imageViewToByteArray(userProfile);
 
         User newUser = new User(userId, phoneNumber, password, email, name, gender,
