@@ -14,12 +14,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SignUpController implements Initializable {
@@ -44,6 +48,24 @@ public class SignUpController implements Initializable {
     private String hashedPassword;
 
     public void onGetStartedClicked(ActionEvent actionEvent) {
+        try {
+            File file = new File("userInfo.properties");
+            if (file.exists()) {
+                Properties props = new Properties();
+                props.load(new FileInputStream(file));
+
+                props.setProperty("password", "");
+                props.setProperty("phoneNumber", "");
+                props.setProperty("rememberMe", "false");
+
+                props.store(new FileOutputStream(file), "User Properties");
+            } else {
+                System.out.println("userInfo.properties file does not exist.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (!validateService.validName(firstName.getText()) || !validateService.validName(lastName.getText())){
             dialogueManager.showErrorDialog("Error", "Invalid Name",
                     "First and Last name should only contains letters and spaces");

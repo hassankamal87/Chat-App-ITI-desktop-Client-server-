@@ -5,21 +5,21 @@ import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -27,6 +27,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Properties;
 
 public class MainController {
     @FXML
@@ -79,8 +80,6 @@ public class MainController {
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
             notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-            pendingBtn.setStyle("-fx-background-color: #trnasparent;");
-
         }
 
     }
@@ -101,8 +100,6 @@ public class MainController {
                 addContactBtn.setStyle("-fx-background-color: #trnasparent;");
                 profileBtn.setStyle("-fx-background-color: #trnasparent;");
                 notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
-
             } catch (IOException e) {
                 System.out.println("exception in main Controller class line 93");
             }
@@ -122,8 +119,6 @@ public class MainController {
                 addContactBtn.setStyle("-fx-background-color: #trnasparent;");
                 contactsBtn.setStyle("-fx-background-color: #trnasparent;");
                 notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -131,27 +126,40 @@ public class MainController {
     }
 
     @FXML
-    public void onSignOutClicked(Event event)  {
-        Registry reg = null;
+    public void onSignOutClicked(Event event) throws RemoteException, NotBoundException {
+        Registry reg = LocateRegistry.getRegistry(8000);
+        SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
+        ClientServiceInt clientService = ClientServiceImpl.getInstance();
+        serverRef.ServerUnRegister(clientService);
+
+        // Unregister chats
+        ClientService.getInstance().unRegisterChats();
+
+        // Unregister user
+        ChattingService.getInstance().unRegisterUser();
+
         try {
-            SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
-            ClientServiceInt clientService = ClientServiceImpl.getInstance();
-            serverRef.ServerUnRegister(clientService);
+            File file = new File("userInfo.properties");
+            if (file.exists()) {
+                Properties props = new Properties();
+                props.load(new FileInputStream(file));
 
-            //un register chats
-            ClientService.getInstance().unRegisterChats();
+                props.setProperty("password", "");
+                props.setProperty("phoneNumber", "");
+                props.setProperty("rememberMe", "false");
 
-            //unregister user
-            ChattingService.getInstance().unRegisterUser();
-            reg = LocateRegistry.getRegistry(8000);
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
-            alert.showAndWait();
-            Platform.exit();
-            System.exit(0);
+                props.store(new FileOutputStream(file), "User Properties");
+
+                System.out.println("User signed out successfully.");
+                SceneManager.getInstance().loadView("signInView");
+            } else {
+                System.out.println("userInfo.properties file does not exist.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
+
 
     @FXML
     public void onAddContactClicked(MouseEvent mouseEvent) {
@@ -174,8 +182,6 @@ public class MainController {
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
             notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-            pendingBtn.setStyle("-fx-background-color: #trnasparent;");
-
         }
     }
 
@@ -187,8 +193,6 @@ public class MainController {
         contactsBtn.setStyle("-fx-background-color: #trnasparent;");
         profileBtn.setStyle("-fx-background-color: #trnasparent;");
         notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-        pendingBtn.setStyle("-fx-background-color: #trnasparent;");
-
     }
 
     @FXML
@@ -204,7 +208,6 @@ public class MainController {
                 addContactBtn.setStyle("-fx-background-color: #trnasparent;");
                 profileBtn.setStyle("-fx-background-color: #trnasparent;");
                 contactsBtn.setStyle("-fx-background-color: #trnasparent;");
-                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
             } catch (IOException e) {
                 System.out.println("exception in main Controller class line 93");
             }
@@ -212,19 +215,8 @@ public class MainController {
     }
 
     @FXML
-    public void onInvetationClicked(ActionEvent actionEvent) {
-        //System.out.println("request clicked");
-        if (!Objects.equals("requestPane", mainPane.getCenter().getId())) {
-            //System.out.println("request clicked2");
-            Parent root = SceneManager.getInstance().loadPane("requestView");
+    public void onInvitationClicked(ActionEvent actionEvent) {
 
-            mainPane.setCenter(root);
-            pendingBtn.setStyle("-fx-background-color: #597E52;");
-            homeBtn.setStyle("-fx-background-color: #trnasparent;");
-            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
-            profileBtn.setStyle("-fx-background-color: #trnasparent;");
-            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
-            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
-        }
     }
+
 }

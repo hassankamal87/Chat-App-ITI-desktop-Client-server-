@@ -38,13 +38,15 @@ public class AuthenticationServiceImpl extends UnicastRemoteObject implements Au
     public User loginUser(String phoneNumber, String password) throws RemoteException {
         User user= null;
         try {
-            String hashedPassword = UserDao.getInstance(MyDatabase.getInstance()).getPasswordByPhoneNumber(phoneNumber);
-            boolean validPassword = BCrypt.checkpw(password, hashedPassword);
-            System.out.println(validPassword);
-            if (validPassword) {
-                if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, hashedPassword) != null) {
-                    System.out.println("User signed in successfully");
-                    return UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, hashedPassword);
+            if (UserDao.getInstance(MyDatabase.getInstance()).isPhoneNumberExists(phoneNumber)){
+                String hashedPassword = UserDao.getInstance(MyDatabase.getInstance()).getPasswordByPhoneNumber(phoneNumber);
+                boolean validPassword = BCrypt.checkpw(password, hashedPassword);
+                System.out.println(validPassword);
+                if (validPassword) {
+                    if (UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, hashedPassword) != null) {
+                        System.out.println("User signed in successfully");
+                        return UserDao.getInstance(MyDatabase.getInstance()).getByPhoneAndPassword(phoneNumber, hashedPassword);
+                    }
                 }
             }
         } catch (SQLException e) {
