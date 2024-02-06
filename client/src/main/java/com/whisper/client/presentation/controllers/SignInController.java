@@ -71,10 +71,10 @@ public class SignInController implements Initializable {
             }else{
                 MyApp.getInstance().setCurrentUser(currentUser);
                 System.out.println("current user "+currentUser.getUserId());
-                Parent root = SceneManager.getInstance().loadPane("mainView");
-                Scene scene = password.getScene();
-                scene.setRoot(root);
-//                SceneManager.getInstance().loadView("mainView.fxml");
+//                Parent root = SceneManager.getInstance().loadPane("mainView");
+//                Scene scene = password.getScene();
+//                scene.setRoot(root);
+                SceneManager.getInstance().loadView("mainView");
 
 
 
