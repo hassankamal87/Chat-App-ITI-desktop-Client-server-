@@ -1,10 +1,17 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.HelloApplication;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
+import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
@@ -25,6 +32,7 @@ public class UserSearchService {
                     inform="Done ,Now you can send a message to "+contact;
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, inform, ButtonType.OK);
                     alert.showAndWait();
+
                 }
                 else if(response.equals("Not Found")){
                     inform="This Phone Number "+contact+" is Not Found.";

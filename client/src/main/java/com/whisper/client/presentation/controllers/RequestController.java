@@ -6,6 +6,7 @@ import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
 
 import com.whisper.client.business.services.NotificationService;
+import com.whisper.client.business.services.UserSearchService;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
@@ -27,6 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.entities.Notification;
 import org.example.entities.User;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,7 +86,15 @@ public class RequestController implements Initializable
         HBox notificationBox = (HBox) deleteButton.getParent();
         boxes.remove(notificationBox);
         requests().remove(i);
-        contactService.addContact(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
+
+        //contactService.addContact(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
+        //contactService.deleleteRequest(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
+
+        List<String> phone = new ArrayList<>();
+        phone.add(MyApp.getInstance().getCurrentUser().getPhoneNumber());
+        UserSearchService userSearchService = new UserSearchService();
+        userSearchService.sendInvitation(requests().get(i).getUserId(),phone);
+
 
     }
 
