@@ -5,12 +5,15 @@ import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -80,6 +83,8 @@ public class MainController {
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
             notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+            pendingBtn.setStyle("-fx-background-color: #trnasparent;");
+
         }
 
     }
@@ -100,6 +105,8 @@ public class MainController {
                 addContactBtn.setStyle("-fx-background-color: #trnasparent;");
                 profileBtn.setStyle("-fx-background-color: #trnasparent;");
                 notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
+
             } catch (IOException e) {
                 System.out.println("exception in main Controller class line 93");
             }
@@ -119,6 +126,8 @@ public class MainController {
                 addContactBtn.setStyle("-fx-background-color: #trnasparent;");
                 contactsBtn.setStyle("-fx-background-color: #trnasparent;");
                 notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -160,7 +169,6 @@ public class MainController {
         }
     }
 
-
     @FXML
     public void onAddContactClicked(MouseEvent mouseEvent) {
         if (!Objects.equals("userSearchPane", mainPane.getCenter().getId())) {
@@ -182,6 +190,8 @@ public class MainController {
             contactsBtn.setStyle("-fx-background-color: #trnasparent;");
             profileBtn.setStyle("-fx-background-color: #trnasparent;");
             notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+            pendingBtn.setStyle("-fx-background-color: #trnasparent;");
+
         }
     }
 
@@ -193,6 +203,8 @@ public class MainController {
         contactsBtn.setStyle("-fx-background-color: #trnasparent;");
         profileBtn.setStyle("-fx-background-color: #trnasparent;");
         notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+        pendingBtn.setStyle("-fx-background-color: #trnasparent;");
+
     }
 
     @FXML
@@ -208,6 +220,7 @@ public class MainController {
                 addContactBtn.setStyle("-fx-background-color: #trnasparent;");
                 profileBtn.setStyle("-fx-background-color: #trnasparent;");
                 contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+                pendingBtn.setStyle("-fx-background-color: #trnasparent;");
             } catch (IOException e) {
                 System.out.println("exception in main Controller class line 93");
             }
@@ -216,7 +229,18 @@ public class MainController {
 
     @FXML
     public void onInvitationClicked(ActionEvent actionEvent) {
+        //System.out.println("request clicked");
+        if (!Objects.equals("requestPane", mainPane.getCenter().getId())) {
+            //System.out.println("request clicked2");
+            Parent root = SceneManager.getInstance().loadPane("requestView");
 
+            mainPane.setCenter(root);
+            pendingBtn.setStyle("-fx-background-color: #597E52;");
+            homeBtn.setStyle("-fx-background-color: #trnasparent;");
+            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+            profileBtn.setStyle("-fx-background-color: #trnasparent;");
+            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+        }
     }
-
 }
