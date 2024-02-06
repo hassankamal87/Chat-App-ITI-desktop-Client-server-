@@ -68,4 +68,8 @@ public class SceneManager {
         }
         return panes.get(name);
     }
+    public void clearPanes(){
+        panes.clear();
+        scenes.clear();
+    }
 }

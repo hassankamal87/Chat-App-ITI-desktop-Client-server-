@@ -8,7 +8,6 @@ import javafx.scene.control.ButtonType;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
-import org.example.entities.Type;
 import org.example.entities.User;
 import org.example.serverinterfaces.ChatServiceInt;
 
@@ -16,11 +15,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.sql.Blob;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,9 +46,8 @@ public class ChattingService {
     public void unRegisterUser() {
         try {
             chatService.unRegisterUser(MyApp.getInstance().getCurrentUser().getUserId(), ClientService.getInstance());
+            MyApp.getInstance().setCurrentUser(null);
         } catch (RemoteException e) {
-
-
             System.out.println("cannot register user  class -> Chatting Service line 47");
 
             Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);

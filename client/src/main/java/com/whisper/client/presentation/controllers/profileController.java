@@ -6,10 +6,10 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.entities.Gender;
@@ -17,16 +17,16 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 import org.example.entities.User;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.ByteBuffer;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
-import java.util.Arrays;
+import java.util.ResourceBundle;
 
-public class profileController {
+public class profileController implements Initializable {
     @FXML
     private TextField userName;
     @FXML
@@ -44,10 +44,9 @@ public class profileController {
     @FXML
     private ImageView userProfile;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         myUser = MyApp.getInstance().getCurrentUser();
-
         showUserData();
     }
 
@@ -75,7 +74,7 @@ public class profileController {
         String country = myUser.getCountry();
         String bio = userBio.getText();
         Mode mode = Mode.valueOf(userMode.getValue().toString());
-        Status status = myUser.getStatus();
+        Status status = Status.online;
         byte[] profilePicture = imageViewToByteArray(userProfile);
 
         User newUser = new User(userId, phoneNumber, password, email, name, gender,
@@ -108,4 +107,6 @@ public class profileController {
             userProfile.setImage(image);
         }
     }
+
+
 }
