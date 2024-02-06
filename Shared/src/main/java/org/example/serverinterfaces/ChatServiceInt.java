@@ -5,12 +5,16 @@ import org.example.entities.Message;
 import org.example.entities.RoomChat;
 import org.example.entities.User;
 
+import java.io.File;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ChatServiceInt extends Remote {
     void sendMessage(Message message) throws RemoteException;
+
+    void sendFileMessage(int senderId ,int roomChatId, File file) throws RemoteException;
 
     void registerUser(int userId,ClientInterface client) throws RemoteException;
     void unRegisterUser(int userId,ClientInterface client) throws RemoteException;
@@ -26,5 +30,9 @@ public interface ChatServiceInt extends Remote {
     List<User> getUsersForRoomChat(int roomChatId) throws RemoteException;
 
     List<Message> getAllMessagesForRoomChat(int roomChatId) throws RemoteException;
+
+    List<File> getAllFilesForRoomChat(int roomChatId) throws RemoteException;
+
+    HashMap<Message,File> getMessagesAndFilesForRoomChat(int roomChatId) throws RemoteException;
     RoomChat getRoomChatByID(int roomChatId) throws RemoteException;
 }
