@@ -216,7 +216,16 @@ public class MainController {
 
     @FXML
     public void onInvitationClicked(ActionEvent actionEvent) {
+        if (!Objects.equals("requestPane", mainPane.getCenter().getId())) {
+            Parent root = SceneManager.getInstance().loadPane("requestView");
+            mainPane.setCenter(root);
+            pendingBtn.setStyle("-fx-background-color: #597E52;");
+            homeBtn.setStyle("-fx-background-color: #trnasparent;");
+            addContactBtn.setStyle("-fx-background-color: #trnasparent;");
+            profileBtn.setStyle("-fx-background-color: #trnasparent;");
+            contactsBtn.setStyle("-fx-background-color: #trnasparent;");
+            notificationBtn.setStyle("-fx-background-color: #trnasparent;");
+        }
 
     }
-
 }
