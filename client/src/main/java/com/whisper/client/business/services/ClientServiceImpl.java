@@ -88,6 +88,29 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
 
     }
 
+    @Override
+    public void recieve(String contact) throws RemoteException {
+        Platform.runLater(()->{
+
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/notificationBodyView.fxml"));
+            try {
+                HBox hBox = fxmlLoader.load();
+
+                Label l =(Label)hBox.getChildren().get(0);
+                l.setText("You have accepted invitation from "+contact);
+                Notifications.create()
+                        .title("Accepted")
+                        .graphic(hBox)
+                        .hideAfter(Duration.seconds(10))
+                        .show();
+            } catch (IOException e) {
+                System.out.println("Exception is  : "+e.getMessage());
+
+            }
+
+        });
+    }
+
     public int getClientId() throws RemoteException{
         return ClientId;
     }

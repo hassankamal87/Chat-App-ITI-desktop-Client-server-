@@ -11,6 +11,7 @@ public interface ClientServiceInt extends Remote {
     public void receiveNotification(Notification notification) throws RemoteException;
 
     public void ClientStatusAnnounce(User user) throws RemoteException;
+    public void recieve(String s) throws RemoteException;
 
     public int getClientId()throws RemoteException;
 }

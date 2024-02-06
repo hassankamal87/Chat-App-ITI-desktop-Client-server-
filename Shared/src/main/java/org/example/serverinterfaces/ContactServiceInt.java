@@ -13,4 +13,5 @@ public interface ContactServiceInt extends Remote {
     public List<User> getALLRequests(int Id) throws RemoteException;
     public int deletePendingRequest(int to_id,int from_id) throws RemoteException;
     public int addContact(Contact contact) throws RemoteException;
+
 }
