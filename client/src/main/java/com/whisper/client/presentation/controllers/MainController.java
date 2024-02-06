@@ -229,11 +229,10 @@ public class MainController {
 
     @FXML
     public void onInvitationClicked(ActionEvent actionEvent) {
-        //System.out.println("request clicked");
+
         if (!Objects.equals("requestPane", mainPane.getCenter().getId())) {
             //System.out.println("request clicked2");
             Parent root = SceneManager.getInstance().loadPane("requestView");
-
             mainPane.setCenter(root);
             pendingBtn.setStyle("-fx-background-color: #597E52;");
             homeBtn.setStyle("-fx-background-color: #trnasparent;");
