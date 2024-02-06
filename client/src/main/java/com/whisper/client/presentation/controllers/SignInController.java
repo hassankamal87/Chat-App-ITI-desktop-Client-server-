@@ -6,6 +6,7 @@ import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.EncryptionUtils;
 import com.whisper.client.presentation.services.SceneManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,20 +37,11 @@ public class SignInController implements Initializable {
     @javafx.fxml.FXML
     private CheckBox rememberMeChecked;
 
-//    private Stage stage;
 
     @javafx.fxml.FXML
     public void initialize() {
 
     }
-
-    public SignInController() {
-
-    }
-
-//    public void setStage(Stage stage){
-//        this.stage = stage;
-//    }
 
     public void onSigninButtonClick(ActionEvent actionEvent) {
         try {
@@ -71,12 +63,7 @@ public class SignInController implements Initializable {
             }else{
                 MyApp.getInstance().setCurrentUser(currentUser);
                 System.out.println("current user "+currentUser.getUserId());
-//                Parent root = SceneManager.getInstance().loadPane("mainView");
-//                Scene scene = password.getScene();
-//                scene.setRoot(root);
                 SceneManager.getInstance().loadView("mainView");
-
-
 
                 SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
                 ClientServiceInt clientService = ClientServiceImpl.getInstance();
@@ -114,8 +101,6 @@ public class SignInController implements Initializable {
         }
     }
 
-
-
     private void signInWithProperties(String phoneNumber2, String password2) {
         try {
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
@@ -129,27 +114,12 @@ public class SignInController implements Initializable {
             serverRef.ServerRegister(clientService);
 
             System.out.println(password2);
-            if (currentUser!=null){
-                dialogueManager.showInformationDialog("sign in", "User signed in with remember me");
-            }
-//            SceneManager.getInstance().loadView("mainView");
-//            Parent root = SceneManager.getInstance().loadPane("mainview");
-//            Scene scene = password.getScene();
-//            scene.setRoot(root);
-//            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/mainView.fxml"));
-//            Scene scene = new Scene(fxmlLoader.load());
-//            stage.setScene(scene);
-//            SceneManager.getInstance().initStage(stage);
-//            stage.show();
-//
-////            Scene scene = password.getScene();
-////            scene.setRoot(root);
-////            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/mainView.fxml"));
-////            Parent root = loader.load();
-////            Scene scene = new Scene(root);
-////            Stage stage = (Stage) password.getScene().getWindow();
-////            stage.setScene(scene);
-////            stage.show();
+//            if (currentUser!=null){
+//                dialogueManager.showInformationDialog("sign in", "User signed in with remember me");
+//            }
+            Platform.runLater(()->{
+                SceneManager.getInstance().loadView("mainView");
+            });
             System.out.println(password2);
         } catch (Exception e) {
             throw new RuntimeException(e.toString());
