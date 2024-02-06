@@ -87,13 +87,13 @@ public class RequestController implements Initializable
         boxes.remove(notificationBox);
         requests().remove(i);
 
-        //contactService.addContact(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
-        //contactService.deleleteRequest(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
+        contactService.addContact(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
+        contactService.deleleteRequest(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
 
-        List<String> phone = new ArrayList<>();
-        phone.add(MyApp.getInstance().getCurrentUser().getPhoneNumber());
-        UserSearchService userSearchService = new UserSearchService();
-        userSearchService.sendInvitation(requests().get(i).getUserId(),phone);
+//        List<String> phone = new ArrayList<>();
+//        phone.add(MyApp.getInstance().getCurrentUser().getPhoneNumber());
+//        UserSearchService userSearchService = new UserSearchService();
+//        userSearchService.sendInvitation(requests().get(i).getUserId(),phone);
 
 
     }
