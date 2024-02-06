@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class SceneManager {
     private static final SceneManager instance = new SceneManager();
@@ -43,18 +42,20 @@ public class SceneManager {
                 Parent root = fxmlLoader.load();
                 Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
                 scenes.put(name, scene);
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
         primaryStage.setScene(scenes.get(name));
+
     }
     public Parent loadPane(String name){
         if(primaryStage==null){
             throw new RuntimeException("Stage Coordinator should be " +
                     "initialized with a Stage before it could be used");
         }
-        if(!panes.containsKey(name) || Objects.equals(name, "pendingView")){
+        if(!panes.containsKey(name) || name.equals("requestView")){
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                         .getResource(String.format("/com/whisper/client/views/%s.fxml", name)));
@@ -62,9 +63,13 @@ public class SceneManager {
                 panes.put(name, root);
                 return root;
             } catch (IOException e) {
-                System.out.println(e.toString());
+                throw new RuntimeException(e);
             }
         }
         return panes.get(name);
+    }
+    public void clearPanes(){
+        panes.clear();
+        scenes.clear();
     }
 }

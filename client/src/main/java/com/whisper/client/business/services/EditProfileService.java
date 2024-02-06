@@ -4,6 +4,7 @@ import com.whisper.client.presentation.services.DialogueManager;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.example.entities.Status;
 import org.example.entities.User;
 import org.example.serverinterfaces.EditProfileServiceInt;
 
@@ -33,6 +34,7 @@ public class EditProfileService {
         try {
             editService.saveProfileChanges(user);
             displaySuccess();
+            user.setStatus(Status.online);
         } catch (Exception e) {
             System.out.println("Exception is : " + e.getMessage());
             displayError();

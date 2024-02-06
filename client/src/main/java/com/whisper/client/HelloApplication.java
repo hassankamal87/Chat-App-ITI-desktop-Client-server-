@@ -78,7 +78,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.getInstance().initStage(stage);
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signUpView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signInView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Whisper!");
         stage.setScene(scene);
@@ -86,21 +86,6 @@ public class HelloApplication extends Application {
         stage.setMinHeight(600);
         stage.setResizable(false);
 
-//        SendContactsInvitationServiceInt serverRef = null;
-//        try {
-//            Registry reg = LocateRegistry.getRegistry(8000);
-//            serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
-//        } catch (Exception e) {
-//
-//            System.out.println("hahahahhaah");
-//            Alert alert = new Alert(Alert.AlertType.ERROR, "Server is closed", ButtonType.OK);
-//            alert.showAndWait();
-//            Platform.exit();
-//            System.exit(0);
-//        }
-
-
-//        SendContactsInvitationServiceInt finalServerRef = serverRef;
         stage.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Confirmation");

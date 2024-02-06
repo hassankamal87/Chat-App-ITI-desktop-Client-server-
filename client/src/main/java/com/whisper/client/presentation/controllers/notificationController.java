@@ -79,7 +79,7 @@ public class notificationController implements Initializable {
         Notification not=notifications.get(i);
         notifications.remove(not);
         notificationService.deleteNotification(not.getNotificationId());
-        notificationService.sendMessage(not);
+        //notificationService.sendMessage(not);
     }
     private List<Notification> notifications() {
         List<Notification>notifications =notificationService.getNotifications(MyApp.getInstance().getCurrentUser().getUserId());

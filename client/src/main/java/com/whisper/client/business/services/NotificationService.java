@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.example.entities.NotifactionType;
 import org.example.entities.Notification;
 import org.example.entities.User;
 import org.example.serverinterfaces.ContactServiceInt;
@@ -43,6 +44,11 @@ public class NotificationService {
         }
     }
 
+    public void addNotification(Notification notification) throws RemoteException {
+
+        notificationRef.addNotification(notification);
+
+    }
     public List<Notification> getNotifications(int Id) {
         List<Notification> notifications = new ArrayList<>();
         try {
@@ -85,7 +91,7 @@ public class NotificationService {
                 HBox hBox = fxmlLoader.load();
 
                 Label l =(Label)hBox.getChildren().get(0);
-                l.setText("You have a new invitation from "+notification.getFromUserName());
+                l.setText(notification.getBody()+notification.getFromUserName());
                 Notifications.create()
                         .title("Invitation")
                         .graphic(hBox)

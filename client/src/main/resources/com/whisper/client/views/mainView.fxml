@@ -96,7 +96,7 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="pendingBtn" contentDisplay="TOP" layoutX="143.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onInvetationClicked" prefHeight="50.0" prefWidth="78.0" styleClass="button5" text="Invitations" textFill="WHITE">
+            <Button fx:id="pendingBtn" contentDisplay="TOP" layoutX="143.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onInvitationClicked" prefHeight="50.0" prefWidth="78.0" styleClass="button5" text="Invitations" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>

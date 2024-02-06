@@ -4,7 +4,9 @@ import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
 import com.whisper.client.business.services.ClientServiceImpl;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
@@ -31,8 +33,6 @@ public class UnRegister {
             Registry reg = LocateRegistry.getRegistry(8000);
             SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
 
-
-
             if(MyApp.getInstance().getCurrentUser()!=null){
                 ClientServiceInt clientService = ClientServiceImpl.getInstance();
                 serverRef.ServerUnRegister(clientService);
@@ -44,12 +44,12 @@ public class UnRegister {
                 ChattingService.getInstance().unRegisterUser();
             }
 
-        } catch (AccessException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+
+            System.out.println("Exception is  : "+e.getMessage());
+            Platform.exit();
+            System.exit(0);
+
         }
     }
 
