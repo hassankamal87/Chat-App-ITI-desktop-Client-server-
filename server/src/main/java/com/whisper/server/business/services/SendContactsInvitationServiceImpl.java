@@ -45,8 +45,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 int contactID = UserDao.getInstance(MyDatabase.getInstance()).getIdByPhoneNumber(invitedContact);
                 User user =UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
                 String userName = user.getUserName();
-//                User user1=UserDao.getInstance(MyDatabase.getInstance()).getUserById(contactID);
-//                String userName1 = user.getUserName();
+
                 if(alreadyGotInvite(id,contactID)){
                     return "already got invited";
 
@@ -81,10 +80,10 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
 
                 // send notification
-                //sendNotification(contactID,userName);
+                sendNotification(contactID,userName);
                 for(ClientServiceInt c:clientsVector){
                     if(c.getClientId()==contactID){
-                        c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"invitation"));
+                        c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"You have a request invitation from "));
                     }
                 }
 
@@ -100,7 +99,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     private void sendNotification(int contactID,String userName) throws RemoteException {
         NotificationServiceImpl notificationService =  NotificationServiceImpl.getInstance();
         notificationService.addNotification( new Notification(0, contactID, userName,
-                NotifactionType.inv, "I want to add you"));
+                NotifactionType.inv, "You have a request invitation from "));
 
 
     }

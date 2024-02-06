@@ -78,7 +78,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.getInstance().initStage(stage);
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signUpView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signInView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Whisper!");
         stage.setScene(scene);

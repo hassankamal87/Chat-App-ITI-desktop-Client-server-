@@ -4,6 +4,7 @@ import com.whisper.server.persistence.daos.ContactDao;
 import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
+import org.example.clientinterfaces.ClientServiceInt;
 import org.example.entities.Contact;
 import org.example.entities.PendingRequest;
 import org.example.entities.User;
@@ -71,8 +72,15 @@ public class ContactServiceImpl extends UnicastRemoteObject implements ContactSe
     public int deletePendingRequest(int to_id, int from_id) throws RemoteException {
         int rowupdates = 0;
         try {
+               User user=UserDao.getInstance(MyDatabase.getInstance()).getUserById(to_id);
+                String userName = user.getUserName();
             rowupdates= PendingRequestDao.getInstance(MyDatabase.getInstance()).deletePendingRequest(to_id,from_id);
 
+            for(ClientServiceInt c:SendContactsInvitationServiceImpl.clientsVector){
+                if(c.getClientId()==from_id){
+                    c.recieve(userName);
+                }
+            }
         }catch (SQLException e){
             System.out.println("SQL Exception : "+e);
         }
