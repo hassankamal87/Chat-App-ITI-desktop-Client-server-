@@ -11,6 +11,7 @@ import org.example.entities.RoomChat;
 import org.example.entities.User;
 import org.example.serverinterfaces.ChatServiceInt;
 
+import java.io.File;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -72,6 +73,19 @@ public class ChattingService {
         Message newMessage = new Message(-1, roomChatId, Date.valueOf(LocalDate.now()), senderId, messageStr, null);
         try {
             chatService.sendMessage(newMessage);
+        } catch (RemoteException e) {
+
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+        }
+    }
+
+    public void sendFile(int senderId, int roomChatId, File file){
+        try {
+            chatService.sendFileMessage(senderId,roomChatId,file);
         } catch (RemoteException e) {
 
             System.out.println("Exception is  : "+e.getMessage());
@@ -184,6 +198,32 @@ public class ChattingService {
     public List<Message> getAllMessagesForRoomChat(int roomChatId) {
         try {
             return chatService.getAllMessagesForRoomChat(roomChatId);
+        } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<File> getAllFilesForRoomChat(int roomChatId){
+        try {
+            return chatService.getAllFilesForRoomChat(roomChatId);
+        } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public HashMap<Message,File> getMessagesWithFilesForRoomChat(int roomChatId){
+        try {
+            return chatService.getMessagesAndFilesForRoomChat(roomChatId);
         } catch (RemoteException e) {
             System.out.println("Exception is  : "+e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);

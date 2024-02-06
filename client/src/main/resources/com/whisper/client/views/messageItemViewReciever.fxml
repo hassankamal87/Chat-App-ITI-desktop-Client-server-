@@ -15,6 +15,11 @@
       <AnchorPane fx:id="messageContainer" prefHeight="53.0" prefWidth="376.0" style="-fx-background-color: transparent;">
          <children>
             <WebView fx:id="messageWebView" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="0.0" />
+            <Label fx:id="timeLabel" layoutX="275.0" layoutY="46.0" maxWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="50.0" text="06:23 PM" textFill="#7c7979">
+               <font>
+                  <Font name="Bell MT Bold" size="9.0" />
+               </font>
+            </Label>
          </children>
          <BorderPane.margin>
             <Insets bottom="5.0" top="5.0" />

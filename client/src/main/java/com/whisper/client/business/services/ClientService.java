@@ -9,6 +9,7 @@ import org.example.entities.Message;
 import org.example.entities.NotifactionType;
 import org.example.entities.Notification;
 
+import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -42,6 +43,21 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
 
     @Override
     public void notifyUserWithMessage(Message message) throws RemoteException {
+        System.out.println(message.getBody());
+        Platform.runLater(()->{
+            ReceiveMessageInterface toChat = chats.get(message.getToChatId());
+            if(toChat!= null)
+                toChat.receiveMessageFromList(message);
+            else{
+                Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(),"message.getFromUserId()", NotifactionType.msg,message.getBody());
+                NotificationService notifyService = new NotificationService();
+                notifyService.sendMessage(messageNotification);
+            }
+        });
+    }
+
+    @Override
+    public void notifyUserWithFile(Message message, File file) throws RemoteException {
         System.out.println(message.getBody());
         Platform.runLater(()->{
             ReceiveMessageInterface toChat = chats.get(message.getToChatId());
