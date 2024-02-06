@@ -82,7 +82,7 @@ public class ContactServiceImpl extends UnicastRemoteObject implements ContactSe
                         c.recieve(userName);
                     }
                 }catch(RemoteException e){
-                    SendContactsInvitationServiceImpl.clientsVector.remove(c);
+                    SendContactsInvitationServiceImpl.getInstance().ServerUnRegister(c);
                 }
 
             }

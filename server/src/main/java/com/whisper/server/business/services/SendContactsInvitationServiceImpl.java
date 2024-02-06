@@ -87,7 +87,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                             c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"You have a request invitation from "));
                         }
                     }catch (RemoteException e){
-                        clientsVector.remove(c);
+                        ServerUnRegister(c);
                     }
 
                 }
@@ -139,7 +139,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                        c.ClientStatusAnnounce(user1);
                    }
                }catch (RemoteException e){
-                   clientsVector.remove(c);
+                   ServerUnRegister(c);
                }
             }
 
@@ -173,7 +173,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                         c.ClientStatusAnnounce(user1);
                     }
                 }catch (RemoteException e){
-                    clientsVector.remove(c);
+                    ServerUnRegister(c);
                 }
 
             }
