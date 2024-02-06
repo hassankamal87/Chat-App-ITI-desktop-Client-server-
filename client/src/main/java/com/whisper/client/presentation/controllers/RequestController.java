@@ -6,6 +6,7 @@ import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
 
 import com.whisper.client.business.services.NotificationService;
+import com.whisper.client.business.services.UserSearchService;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
@@ -25,11 +26,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.example.entities.NotifactionType;
 import org.example.entities.Notification;
 import org.example.entities.User;
+import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class RequestController implements Initializable
@@ -83,9 +87,20 @@ public class RequestController implements Initializable
         Button deleteButton = (Button) event.getSource();
         HBox notificationBox = (HBox) deleteButton.getParent();
         boxes.remove(notificationBox);
-        requests().remove(i);
-        contactService.addContact(MyApp.getInstance().getCurrentUser().getUserId(),requests().get(i).getUserId());
 
+
+        contactService.addContact(MyApp.getInstance().getCurrentUser().getUserId(),requests.get(i).getUserId());
+        contactService.deleleteRequest(MyApp.getInstance().getCurrentUser().getUserId(),requests.get(i).getUserId());
+
+        Notification notification = new Notification(-1,requests.get(i).getUserId(),MyApp.getInstance().getCurrentUser().getUserName(), NotifactionType.inv,"You have accepted invitation from ");
+        NotificationService notificationService = new NotificationService();
+        try {
+            notificationService.addNotification(notification);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        requests.remove(i);
     }
 
     private void deleteAction(Event event, int i) {

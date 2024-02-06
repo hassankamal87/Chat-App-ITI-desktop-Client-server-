@@ -67,6 +67,7 @@ public class SceneManager {
                         .getResource(String.format("/com/whisper/client/views/%s.fxml", name)));
                 Parent root = fxmlLoader.load();
                 panes.put(name, root);
+                return root;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
