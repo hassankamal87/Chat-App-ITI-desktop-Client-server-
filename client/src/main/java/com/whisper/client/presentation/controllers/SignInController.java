@@ -45,14 +45,6 @@ public class SignInController implements Initializable {
 
     public void onSigninButtonClick(ActionEvent actionEvent) {
         try {
-            if (rememberMeChecked.isSelected()){
-                Properties props = new Properties();
-                props.setProperty("phoneNumber", EncryptionUtils.encrypt(phoneNumber.getText()));
-                props.setProperty("password", EncryptionUtils.encrypt(password.getText()));
-                props.setProperty("rememberMe", String.valueOf(true));
-                props.store(new FileOutputStream("userInfo.properties"), "User Properties");
-                System.out.println("Property file added");
-            }
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             User currentUser  = authService.loginUser(phoneNumber.getText(), password.getText());
@@ -61,6 +53,14 @@ public class SignInController implements Initializable {
                         "Phone number or Password is incorrect");
                 return;
             }else{
+                if (rememberMeChecked.isSelected()){
+                    Properties props = new Properties();
+                    props.setProperty("phoneNumber", EncryptionUtils.encrypt(phoneNumber.getText()));
+                    props.setProperty("password", EncryptionUtils.encrypt(password.getText()));
+                    props.setProperty("rememberMe", String.valueOf(true));
+                    props.store(new FileOutputStream("userInfo.properties"), "User Properties");
+                    System.out.println("Property file added");
+                }
                 MyApp.getInstance().setCurrentUser(currentUser);
                 System.out.println("current user "+currentUser.getUserId());
                 SceneManager.getInstance().loadView("mainView");
