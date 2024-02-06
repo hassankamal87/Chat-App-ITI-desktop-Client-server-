@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 public interface NotificationServiceInt extends Remote {
+    int addNotification(Notification notification) throws RemoteException;
     List<Notification> getALLNotifications(int Id) throws RemoteException;
     int deleteNotificationById(int Id) throws RemoteException;
 }

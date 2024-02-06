@@ -63,7 +63,7 @@ public class ContactService {
             rowUpdate = contactRef.deletePendingRequest(to_Id,from_Id);
 
         } catch (Exception e) {
-            System.out.println("Exception is : " + e.getMessage());
+
             System.out.println("Exception is  : "+e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
             alert.showAndWait();
