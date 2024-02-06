@@ -76,6 +76,7 @@ public class profileController {
         String bio = userBio.getText();
         Mode mode = Mode.valueOf(userMode.getValue().toString());
         Status status = myUser.getStatus();
+
         byte[] profilePicture = imageViewToByteArray(userProfile);
 
         User newUser = new User(userId, phoneNumber, password, email, name, gender,
