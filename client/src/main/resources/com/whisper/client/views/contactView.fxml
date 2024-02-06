@@ -76,8 +76,10 @@
                 </ScrollPane>
             </children>
         </HBox>
-        <Button fx:id="createGroupButton" layoutX="631.0" layoutY="41.0" mnemonicParsing="false" onAction="#onCreateGroupChatClicked" text="Create Group" />
-      <Button fx:id="addFriendsToAGroupButton" layoutX="400.0" layoutY="15.0" mnemonicParsing="false" onAction="#addFriendsToAGroupClicked" text="Add members to a group" />
-      <Button layoutX="410.0" layoutY="66.0" mnemonicParsing="false" onAction="#onShowGroupMembersClicked" text="Show group members" />
+        <Button fx:id="createGroupButton" layoutX="658.0" layoutY="46.0" mnemonicParsing="false" onAction="#onCreateGroupChatClicked" text="Create Group" />
+      <Button fx:id="addFriendsToAGroupButton" layoutX="468.0" layoutY="17.0" mnemonicParsing="false" onAction="#addFriendsToAGroupClicked" text="Add members to a group" />
+      <Button layoutX="485.0" layoutY="64.0" mnemonicParsing="false" onAction="#onShowGroupMembersClicked" text="Show members list" />
+      <Label layoutX="316.0" layoutY="39.0" prefHeight="21.0" prefWidth="138.0" text="Add members to a group" />
+      <Label layoutX="327.0" layoutY="70.0" text="then create the group" />
     </children>
 </AnchorPane>
