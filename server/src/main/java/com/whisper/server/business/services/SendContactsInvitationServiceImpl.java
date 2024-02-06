@@ -37,7 +37,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     }
 
     @Override
-    public String inviteContacts(int id, String invitedContact) throws RemoteException {
+    public String inviteContacts(int id, String invitedContact)  {
 
 
             try {
@@ -82,9 +82,14 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                 // send notification
                 sendNotification(contactID,userName);
                 for(ClientServiceInt c:clientsVector){
-                    if(c.getClientId()==contactID){
-                        c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"You have a request invitation from "));
+                    try{
+                        if(c.getClientId()==contactID){
+                            c.receiveNotification(new Notification(1,id,user.getUserName(),NotifactionType.inv,"You have a request invitation from "));
+                        }
+                    }catch (RemoteException e){
+                        clientsVector.remove(c);
                     }
+
                 }
 
 
@@ -114,7 +119,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     }
 
     @Override
-    public void ServerRegister(ClientServiceInt clientService) throws RemoteException {
+    public void ServerRegister(ClientServiceInt clientService)  {
 
         clientsVector.add(clientService);
         try{
@@ -129,9 +134,13 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
             UserDao.getInstance(MyDatabase.getInstance()).updateUser(user1);
            ContactDao contactRef = (ContactDao) ContactDao.getInstance(MyDatabase.getInstance());
             for(ClientServiceInt c: clientsVector){
-                if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
-                    c.ClientStatusAnnounce(user1);
-                }
+               try{
+                   if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
+                       c.ClientStatusAnnounce(user1);
+                   }
+               }catch (RemoteException e){
+                   clientsVector.remove(c);
+               }
             }
 
             Platform.runLater(()->{
@@ -140,6 +149,8 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
         }catch (SQLException e){
             System.out.println("SQL Exception is :" + e.getMessage());
+        } catch (RemoteException e) {
+            clientsVector.remove(clientService);
         }
     }
 
@@ -156,10 +167,15 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
             ContactDao contactRef = (ContactDao) ContactDao.getInstance(MyDatabase.getInstance());
 
             for(ClientServiceInt c: clientsVector){
-                if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
-                    System.out.println("notify "+c.getClientId());
-                    c.ClientStatusAnnounce(user1);
+                try{
+                    if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
+                        System.out.println("notify "+c.getClientId());
+                        c.ClientStatusAnnounce(user1);
+                    }
+                }catch (RemoteException e){
+                    clientsVector.remove(c);
                 }
+
             }
 
             Platform.runLater(()->{

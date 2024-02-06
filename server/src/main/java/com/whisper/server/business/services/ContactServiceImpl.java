@@ -77,9 +77,14 @@ public class ContactServiceImpl extends UnicastRemoteObject implements ContactSe
             rowupdates= PendingRequestDao.getInstance(MyDatabase.getInstance()).deletePendingRequest(to_id,from_id);
 
             for(ClientServiceInt c:SendContactsInvitationServiceImpl.clientsVector){
-                if(c.getClientId()==from_id){
-                    c.recieve(userName);
+                try{
+                    if(c.getClientId()==from_id){
+                        c.recieve(userName);
+                    }
+                }catch(RemoteException e){
+                    SendContactsInvitationServiceImpl.clientsVector.remove(c);
                 }
+
             }
         }catch (SQLException e){
             System.out.println("SQL Exception : "+e);

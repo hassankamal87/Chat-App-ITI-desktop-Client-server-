@@ -33,20 +33,24 @@ public class AnnouncerHomeController
         System.out.println(htmlText);
         htmlEditor.setHtmlText("");
 
-        try {
+
             CopyOnWriteArrayList<ClientServiceInt> clients = SendContactsInvitationServiceImpl.clientsVector;
             for(ClientServiceInt c:clients){
-                Notification notification = new Notification(0, c.getClientId(), "Admin",
-                        NotifactionType.board,htmlText );
-                NotificationServiceImpl notificationService =  NotificationServiceImpl.getInstance();
-                notificationService.addNotification(notification );
-                c.receiveNotification(notification);
+                try{
+                    Notification notification = new Notification(0, c.getClientId(), "Admin",
+                            NotifactionType.board,htmlText );
+                    NotificationServiceImpl notificationService =  NotificationServiceImpl.getInstance();
+                    notificationService.addNotification(notification );
+                    c.receiveNotification(notification);
+                }catch (RemoteException e){
+                    clients.remove(c);
+                }
+
+
 
             }
 
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+
 
         // the htmlText contains the text with its style
         // need to pass this string to a web view to display it
