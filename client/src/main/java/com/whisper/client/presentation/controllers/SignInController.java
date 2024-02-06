@@ -71,7 +71,11 @@ public class SignInController implements Initializable {
             }
             System.out.println("Client side: signing in succeed");
         } catch (Exception e) {
-            throw new RuntimeException(e.toString());
+            System.out.println("Exception : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 
@@ -122,7 +126,11 @@ public class SignInController implements Initializable {
             });
             System.out.println(password2);
         } catch (Exception e) {
-            throw new RuntimeException(e.toString());
+            System.out.println("Exception is : "+e.toString());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
         }
     }
 }

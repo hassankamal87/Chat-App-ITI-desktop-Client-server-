@@ -33,8 +33,6 @@ public class UnRegister {
             Registry reg = LocateRegistry.getRegistry(8000);
             SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
 
-
-
             if(MyApp.getInstance().getCurrentUser()!=null){
                 ClientServiceInt clientService = ClientServiceImpl.getInstance();
                 serverRef.ServerUnRegister(clientService);
