@@ -32,6 +32,7 @@ public class EditProfileService {
 
     public void saveProfileChanges(User user) {
         try {
+            //System.out.println("7/2" + user.getStatus());
             editService.saveProfileChanges(user);
             displaySuccess();
             user.setStatus(Status.online);

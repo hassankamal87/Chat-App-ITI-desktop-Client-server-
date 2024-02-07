@@ -31,6 +31,7 @@ public class EditProfileServiceImpl extends UnicastRemoteObject implements EditP
     @Override
     public void saveProfileChanges(User user) throws RemoteException {
         try {
+            //System.out.println("7/2" + user.getStatus());
             UserDao.getInstance(MyDatabase.getInstance()).updateUser(user);
             ClientsProfileService.getInstance().updateDataFromDb();
         } catch (SQLException e) {
