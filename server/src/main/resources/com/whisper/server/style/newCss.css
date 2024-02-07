@@ -76,11 +76,14 @@
 }
 
 .table-row-cell:odd {
-    -fx-background-color: #F1E4C3; /* Alternate row color */
+    -fx-background-color: #FFFFEC;
 }
 
 .table-row-cell:even {
     -fx-background-color: #FFFFEC;
+}
+.table-row-cell:selected {
+    -fx-background-color: #597E52; /* Light brown on selected rows */
 }
 
 /* ScrollPane */

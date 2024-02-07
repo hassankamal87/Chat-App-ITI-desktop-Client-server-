@@ -4,7 +4,7 @@ import org.example.entities.User;
 
 import java.util.List;
 
-public interface serverServiceInt {
+public interface ServerServiceInt {
     public void startServer();
     public void stopServer();
     public void Announcement(String s);

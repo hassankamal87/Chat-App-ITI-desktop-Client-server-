@@ -1,14 +1,12 @@
 package com.whisper.server.business.services;
 
 import com.whisper.server.persistence.daos.ContactDao;
-import com.whisper.server.persistence.daos.NotificationDao;
 import com.whisper.server.persistence.daos.PendingRequestDao;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.db.MyDatabase;
 import javafx.application.Platform;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.entities.*;
-import org.example.serverinterfaces.NotificationServiceInt;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.rmi.RemoteException;
@@ -16,8 +14,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SendContactsInvitationServiceImpl extends UnicastRemoteObject implements SendContactsInvitationServiceInt {
@@ -145,6 +141,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
             Platform.runLater(()->{
                 ServerStatistics.getInstance().updateData();
+                ClientsProfileService.getInstance().updateDataFromDb();
             });
 
         }catch (SQLException e){
@@ -180,6 +177,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
             Platform.runLater(()->{
                 ServerStatistics.getInstance().updateData();
+                ClientsProfileService.getInstance().updateDataFromDb();
             });
         }catch (SQLException e){
             System.out.println("SQL Exception is :" + e.getMessage());
