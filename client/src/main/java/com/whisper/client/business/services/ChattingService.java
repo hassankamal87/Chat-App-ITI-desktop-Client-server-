@@ -247,4 +247,17 @@ public class ChattingService {
             throw new RuntimeException(e);
         }
     }
+
+    public User getUserById(int userId){
+        try {
+            return chatService.getUserById(userId);
+        } catch (RemoteException e) {
+            System.out.println("Exception is  : "+e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+            throw new RuntimeException(e);
+        }
+    }
 }

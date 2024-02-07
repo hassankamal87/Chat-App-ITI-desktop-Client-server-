@@ -35,4 +35,6 @@ public interface ChatServiceInt extends Remote {
 
     HashMap<Message,File> getMessagesAndFilesForRoomChat(int roomChatId) throws RemoteException;
     RoomChat getRoomChatByID(int roomChatId) throws RemoteException;
+
+    User getUserById(int userId) throws RemoteException;
 }

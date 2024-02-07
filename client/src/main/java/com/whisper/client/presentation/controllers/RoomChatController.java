@@ -4,6 +4,7 @@ import com.whisper.client.HelloApplication;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -90,7 +91,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
         HashMap<Message, File> messagesAndFiles = chattingService.getMessagesWithFilesForRoomChat(roomChatID);
 
-        showOldMessages(messagesAndFiles);
+        Platform.runLater(()->{showOldMessages(messagesAndFiles);});
 
     }
 
