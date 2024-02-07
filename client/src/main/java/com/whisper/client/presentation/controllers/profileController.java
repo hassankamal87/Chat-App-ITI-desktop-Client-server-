@@ -76,12 +76,10 @@ public class profileController implements Initializable {
         String bio = userBio.getText();
         Mode mode = Mode.valueOf(userMode.getValue().toString());
         Status status = Status.valueOf(Status.online.toString());
-        System.out.println("7/2 status: " + status);
         byte[] profilePicture = imageViewToByteArray(userProfile);
 
         User newUser = new User(userId, phoneNumber, password, email, name, gender,
                 dob, country, bio, mode, status, profilePicture);
-        System.out.println("7/2 new user: " + newUser.getStatus());
 
         profileService.saveProfileChanges(newUser);
     }

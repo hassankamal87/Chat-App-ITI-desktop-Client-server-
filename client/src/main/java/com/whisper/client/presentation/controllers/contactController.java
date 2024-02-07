@@ -5,6 +5,7 @@ import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ContactService;
 import com.whisper.client.presentation.services.DialogueManager;
+import com.whisper.client.presentation.services.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,7 +52,6 @@ public class contactController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        createGroupButton.setDisable(true);
 
         List<User> contacts = new ArrayList<>(contacts());
         for(int i=0;i<contacts.size();i++){
@@ -97,13 +97,7 @@ public class contactController implements Initializable
     }
 
     private void startGroup(List<User> contacts){
-        contacts.forEach(e->{
-            System.out.println(e.getUserName());
-        });
-        ChattingService.getInstance().createGroupChat(
-                MyApp.getInstance().getCurrentUser().getUserId(),contacts
-        );
-        mainController.navigateToHomeScreen();
+        SceneManager.getInstance().loadView("creatingGroupView");
     }
     private List<User> contacts(){
         ContactService contactService= new ContactService();

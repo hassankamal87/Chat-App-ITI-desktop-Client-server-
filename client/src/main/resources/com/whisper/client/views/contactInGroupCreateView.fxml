@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="70.0" prefWidth="800.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.ContactInGroupCreateController">
+    <children>
+        <ImageView fx:id="contactPhoto" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/Father.png"/>
+            </image>
+            <HBox.margin>
+                <Insets right="60.0"/>
+            </HBox.margin>
+        </ImageView>
+        <Text fx:id="contactName" strokeType="OUTSIDE" strokeWidth="0.0" text="Father ( اب )">
+            <HBox.margin>
+                <Insets right="50.0"/>
+            </HBox.margin>
+            <font>
+                <Font size="22.0"/>
+            </font>
+        </Text>
+        <Text fx:id="contactNumber" strokeType="OUTSIDE" strokeWidth="0.0" text="01234567891">
+            <HBox.margin>
+                <Insets right="40.0"/>
+            </HBox.margin>
+            <font>
+                <Font size="22.0"/>
+            </font>
+        </Text>
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="160.0">
+            <children>
+                <Circle fx:id="modeColor" fill="#ff271f" radius="10.0" stroke="BLACK" strokeType="INSIDE">
+                    <HBox.margin>
+                        <Insets right="10.0"/>
+                    </HBox.margin>
+                </Circle>
+                <Text fx:id="modeStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="online">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Text>
+            </children>
+        </HBox>
+        <ToggleButton fx:id="addedbutton" mnemonicParsing="false" onAction="#onAddClicked" prefHeight="36.0"
+                      prefWidth="64.0" style="-fx-font-size: 18;" text="Add" wrapText="true">
+            <HBox.margin>
+                <Insets left="80.0"/>
+            </HBox.margin>
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </ToggleButton>
+    </children>
+</HBox>
