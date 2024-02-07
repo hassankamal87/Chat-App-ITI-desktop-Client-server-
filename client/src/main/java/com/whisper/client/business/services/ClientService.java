@@ -1,13 +1,14 @@
 package com.whisper.client.business.services;
 
 import com.whisper.client.MyApp;
+import com.whisper.client.presentation.controllers.HandlingChatInterface;
 import com.whisper.client.presentation.controllers.ReceiveMessageInterface;
-import com.whisper.client.presentation.controllers.RoomChatController;
 import javafx.application.Platform;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.NotifactionType;
 import org.example.entities.Notification;
+import org.example.entities.User;
 
 import java.io.File;
 import java.rmi.RemoteException;
@@ -19,6 +20,7 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
 
     private static ClientService instance = null;
     private HashMap<Integer, ReceiveMessageInterface> chats = new HashMap<>();
+    private HandlingChatInterface handlingChatInHome;
 
     public static synchronized ClientService getInstance() throws RemoteException {
         if (instance == null){
@@ -28,6 +30,11 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
     }
     protected ClientService() throws RemoteException {
 
+    }
+
+    //this register to access add room chat function to add new room if user start chat with another user, sorry for this :(
+    public void registerHomePane(HandlingChatInterface handlingChat){
+        this.handlingChatInHome = handlingChat;
     }
 
     public void registerChat(int roomId,ReceiveMessageInterface chat){
@@ -43,31 +50,37 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
 
     @Override
     public void notifyUserWithMessage(Message message) throws RemoteException {
+        User user = ChattingService.getInstance().getUserById(message.getFromUserId());
         System.out.println(message.getBody());
         Platform.runLater(()->{
             ReceiveMessageInterface toChat = chats.get(message.getToChatId());
             if(toChat!= null)
                 toChat.receiveMessageFromList(message);
             else{
-                Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(),"message.getFromUserId()", NotifactionType.msg,message.getBody());
-                NotificationService notifyService = new NotificationService();
-                notifyService.sendMessage(messageNotification);
+                sendNotification(message, user);
+                handlingChatInHome.addRoomChat(message.getToChatId());
             }
         });
     }
 
     @Override
     public void notifyUserWithFile(Message message, File file) throws RemoteException {
+        User user = ChattingService.getInstance().getUserById(message.getFromUserId());
         System.out.println(message.getBody());
         Platform.runLater(()->{
             ReceiveMessageInterface toChat = chats.get(message.getToChatId());
             if(toChat!= null)
                 toChat.receiveMessageFromList(message);
             else{
-                Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(),"message.getFromUserId()", NotifactionType.msg,message.getBody());
-                NotificationService notifyService = new NotificationService();
-                notifyService.sendMessage(messageNotification);
+                sendNotification(message, user);
+                handlingChatInHome.addRoomChat(message.getToChatId());
             }
         });
+    }
+
+    private void sendNotification(Message message, User user) {
+        Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(), user.getUserName(), NotifactionType.msg, message.getBody());
+        NotificationService notifyService = new NotificationService();
+        notifyService.sendMessage(messageNotification);
     }
 }

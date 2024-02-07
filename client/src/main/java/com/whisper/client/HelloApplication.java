@@ -63,6 +63,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
@@ -81,6 +82,8 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signInView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Whisper!");
+        Image icon = new Image(getClass().getResourceAsStream("images/logo.png")); // Adjust the path accordingly
+        stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);

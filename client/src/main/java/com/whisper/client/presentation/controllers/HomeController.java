@@ -3,8 +3,8 @@ package com.whisper.client.presentation.controllers;
 import com.whisper.client.HelloApplication;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.whisper.client.business.services.ClientService;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +17,10 @@ import org.example.entities.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-
 public class HomeController implements Initializable, HandlingChatInterface {
     @FXML
     private AnchorPane chatsPane;
@@ -35,7 +35,7 @@ public class HomeController implements Initializable, HandlingChatInterface {
     @FXML
     private BorderPane homePane;
 
-    private HashMap<Integer,ChatItemController> itemsControllers = new HashMap<>();
+    public HashMap<Integer, ChatItemController> itemsControllers = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -48,39 +48,52 @@ public class HomeController implements Initializable, HandlingChatInterface {
         System.out.println("initialize user");
         initializeRoomChats();
         ChattingService.getInstance().registerHandlingInterface(this);
+        try {
+            ClientService.getInstance().registerHomePane(this);
+        } catch (RemoteException e) {
+            System.out.println("cannot register user class Home Controller 58");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+        }
     }
 
     private void initializeRoomChats() {
         List<RoomChat> roomChats = ChattingService.getInstance().getAllRoomChatsForUser(MyApp.getInstance().getCurrentUser().getUserId());
-        Node[] nodes = new Node[roomChats.size()];
 
-        for (int i = 0; i < nodes.length; i++) {
+        for (RoomChat roomChat : roomChats) {
+            loadChatItemController(roomChat);
+        }
+    }
 
-            try {
-                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/chatItemView.fxml"));
-                nodes[i] = loader.load();
-                ChatItemController controller = loader.getController();
-                controller.setData(homePane, roomChats.get(i).getRoomChatId());
-                itemsControllers.put(roomChats.get(i).getRoomChatId(),controller);
-                chatList.getChildren().add(nodes[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void loadChatItemController(RoomChat roomChat) {
+        try {
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/chatItemView.fxml"));
+            Node node = loader.load();
+            ChatItemController controller = loader.getController();
+            controller.setData(homePane, roomChat.getRoomChatId());
+            itemsControllers.put(roomChat.getRoomChatId(), controller);
+            chatList.getChildren().add(node);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void addRoomChat(int roomChatID){
-        try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/chatItemView.fxml"));
-            Parent node = loader.load();
-            ChatItemController controller = loader.getController();
-            controller.setData(homePane, roomChatID);
-            controller.openChat();
-            itemsControllers.put(roomChatID,controller);
-            chatList.getChildren().add(node);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void addRoomChat(int roomChatID) {
+        if (!itemsControllers.containsKey(roomChatID)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("views/chatItemView.fxml"));
+                Parent node = loader.load();
+                ChatItemController controller = loader.getController();
+                controller.setData(homePane, roomChatID);
+                controller.openChat();
+                itemsControllers.put(roomChatID, controller);
+                chatList.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
