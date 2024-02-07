@@ -52,9 +52,6 @@
 
 package com.whisper.client;
 
-import com.whisper.client.business.services.ChattingService;
-import com.whisper.client.business.services.ClientService;
-import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.SceneManager;
 import com.whisper.client.presentation.services.UnRegister;
 import javafx.application.Application;
@@ -64,14 +61,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import org.example.clientinterfaces.ClientServiceInt;
-import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.io.IOException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.Optional;
 
 public class HelloApplication extends Application {
@@ -84,7 +75,7 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
-        stage.setResizable(false);
+        //stage.setResizable(false);
 
         stage.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

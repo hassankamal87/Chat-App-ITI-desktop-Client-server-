@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -37,32 +39,61 @@
                                 <Image url="@../images/wlogo.png" />
                             </image>
                         </ImageView>
+                        <Button layoutX="49.0" layoutY="37.0" mnemonicParsing="false" onAction="#onGoBackCLicked" text="&lt;- Back" />
+                        <Button layoutX="178.0" layoutY="37.0" mnemonicParsing="false" onAction="#onGoNextClicked" text="Next -&gt;" />
                     </children>
                 </Pane>
             </left>
             <center>
-                <Pane fx:id="firstSignUpSubPane" prefHeight="600.0" prefWidth="500.0" styleClass="linear-grad" BorderPane.alignment="CENTER">
+                <VBox fx:id="firstSignupPane" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="linear-grad" stylesheets="@../style/newCss.css" BorderPane.alignment="CENTER">
                     <children>
-                        <Text fill="#597e52" layoutX="148.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="Whisper">
-                            <font>
-                                <Font size="38.0" />
-                            </font>
+                        <Text fill="#597e52" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="logo-text" text="Whisper" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="firstName" prefHeight="45.0" prefWidth="200.0" promptText="First name">
+                                    <HBox.margin>
+                                        <Insets right="50.0" />
+                                    </HBox.margin>
+                                </TextField>
+                                <TextField fx:id="lastName" layoutX="124.0" layoutY="42.0" prefHeight="45.0" prefWidth="200.0" promptText="Last name" />
+                            </children>
+                        </HBox>
+                        <TextField fx:id="phoneNumber" maxHeight="45.0" maxWidth="256.0" minHeight="45.0" minWidth="256.0" prefHeight="45.0" prefWidth="256.0" promptText="Phone number">
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="email" layoutX="132.0" layoutY="366.0" maxHeight="45.0" maxWidth="256.0" minHeight="45.0" minWidth="256.0" prefHeight="45.0" prefWidth="256.0" promptText="Email">
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="password" layoutX="132.0" layoutY="389.0" maxHeight="45.0" maxWidth="256.0" minHeight="45.0" minWidth="256.0" prefHeight="45.0" prefWidth="256.0" promptText="Password">
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="confirmPassword" layoutX="132.0" layoutY="411.0" maxHeight="45.0" maxWidth="256.0" minHeight="45.0" minWidth="256.0" prefHeight="45.0" prefWidth="256.0" promptText="Confirm password" />
+                        <Text fill="#c30000" strokeType="OUTSIDE" strokeWidth="0.0" text="All fields are mandatory" textAlignment="CENTER">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="200.0" top="20.0" />
+                            </VBox.margin>
                         </Text>
-                        <TextField fx:id="firstName" layoutX="45.0" layoutY="123.0" prefHeight="45.0" prefWidth="190.0" promptText="First name" />
-                        <TextField fx:id="lastName" layoutX="265.0" layoutY="123.0" prefHeight="45.0" prefWidth="190.0" promptText="Last name" />
-                        <TextField fx:id="phoneNumber" layoutX="44.0" layoutY="188.0" prefHeight="45.0" prefWidth="300.0" promptText="Phone number" />
-                        <TextField fx:id="email" layoutX="44.0" layoutY="259.0" prefHeight="45.0" prefWidth="300.0" promptText="Email" />
-                        <Button layoutX="172.0" layoutY="471.0" mnemonicParsing="false" onAction="#onGetStartedClicked" prefHeight="57.0" prefWidth="157.0" text="Get started" />
-                        <Button layoutX="125.0" layoutY="542.0" mnemonicParsing="false" onAction="#onAlreadyHaveAccountClicked" prefHeight="34.0" prefWidth="251.0" text="Already have an account? sign in!" textAlignment="CENTER" textFill="WHITE" underline="true">
+                        <Button mnemonicParsing="false" onAction="#getStartedClicked" prefHeight="61.0" prefWidth="165.0" style="-fx-font-weight: bold; -fx-font-size: 20;" text="Get started!">
                             <font>
-                                <Font size="10.0" />
+                                <Font name="System Bold" size="29.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="alreadyGotAccountCLicked" mnemonicParsing="false" onAction="#onAlreadyHaveAccountClicked" text="Already got an account? Sign in!" underline="true" wrapText="true">
+                            <font>
+                                <Font size="20.0" />
                             </font>
                         </Button>
-                        <PasswordField fx:id="password" layoutX="44.0" layoutY="324.0" prefHeight="45.0" prefWidth="300.0" promptText="Password" />
-                        <PasswordField fx:id="confirmPassword" layoutX="44.0" layoutY="389.0" prefHeight="45.0" prefWidth="300.0" promptText="Confirm password" />
-                  <Text fill="#f77272" layoutX="285.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="All fields are mandatory" />
                     </children>
-                </Pane>
+                </VBox>
             </center>
         </BorderPane>
     </children>
