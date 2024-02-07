@@ -17,13 +17,16 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SendContactsInvitationServiceImpl extends UnicastRemoteObject implements SendContactsInvitationServiceInt {
 
     public static CopyOnWriteArrayList<ClientServiceInt> clientsVector = new CopyOnWriteArrayList<>();
 
+    public Map<ClientServiceInt,Integer> ClientsId = new HashMap<>();
     private static SendContactsInvitationServiceImpl instance = null;
 
     private SendContactsInvitationServiceImpl() throws RemoteException {
@@ -121,8 +124,11 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     @Override
     public void ServerRegister(ClientServiceInt clientService)  {
 
-        clientsVector.add(clientService);
+
         try{
+            clientsVector.add(clientService);
+            ClientsId.put(clientService,clientService.getClientId());
+
 
            User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(clientService.getClientId());
             System.out.println("user id is "+clientService.getClientId());
@@ -158,22 +164,24 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
     public void ServerUnRegister(ClientServiceInt clientService) throws RemoteException {
 
         try{
-            User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(clientService.getClientId());
+            int id=ClientsId.get(clientService);
+            User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
 
             clientsVector.remove(clientService);
-            User user1=new User(clientService.getClientId(), user.getPhoneNumber(), user.getPassword(), user.getEmail(), user.getUserName(), user.getGender(),user.getDateOfBirth(),user.getCountry(), user.getBio(), user.getMode(),Status.offline, user.getProfilePhoto());
+            ClientsId.remove(clientService);
+            User user1=new User(id, user.getPhoneNumber(), user.getPassword(), user.getEmail(), user.getUserName(), user.getGender(),user.getDateOfBirth(),user.getCountry(), user.getBio(), user.getMode(),Status.offline, user.getProfilePhoto());
             UserDao.getInstance(MyDatabase.getInstance()).updateUser(user1);
 
             ContactDao contactRef = (ContactDao) ContactDao.getInstance(MyDatabase.getInstance());
 
             for(ClientServiceInt c: clientsVector){
                 try{
-                    if(c!=clientService&&contactRef.isContact(clientService.getClientId(),c.getClientId())){
-                        System.out.println("notify "+c.getClientId());
+                    if(contactRef.isContact(id,c.getClientId())){
                         c.ClientStatusAnnounce(user1);
                     }
                 }catch (RemoteException e){
-                    ServerUnRegister(c);
+                    throw new RuntimeException();
+
                 }
 
             }
