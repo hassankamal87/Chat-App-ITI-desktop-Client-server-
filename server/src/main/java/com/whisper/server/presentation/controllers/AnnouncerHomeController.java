@@ -37,13 +37,19 @@ public class AnnouncerHomeController
             CopyOnWriteArrayList<ClientServiceInt> clients = SendContactsInvitationServiceImpl.clientsVector;
             for(ClientServiceInt c:clients){
                 try{
+
                     Notification notification = new Notification(0, c.getClientId(), "Admin",
                             NotifactionType.board,htmlText );
                     NotificationServiceImpl notificationService =  NotificationServiceImpl.getInstance();
                     notificationService.addNotification(notification );
                     c.receiveNotification(notification);
                 }catch (RemoteException e){
+
+                    System.out.println("here"+c);
                     SendContactsInvitationServiceImpl.getInstance().ServerUnRegister(c);
+                    clients.remove(c);
+                    System.out.println("Remote Exception : "+e.getMessage());
+                   // throw new RuntimeException();
                 }
 
 
