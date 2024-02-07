@@ -1,13 +1,15 @@
 package com.whisper.server.presentation.controllers;
 
-import javafx.event.Event;
+import com.whisper.server.persistence.daos.UserDao;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
 
-public class UsersController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class UsersController implements Initializable {
 
     @FXML
     private TableView usersTable;
@@ -27,12 +29,15 @@ public class UsersController {
     private TableColumn modeColumn;
     @FXML
     private TableColumn statusColumn;
+    private UserDao userDao;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 
     @FXML
-    public void onInputMethodTextChanged(Event event) {
+    public void onInputMethodTextChanged(){
+
     }
 }
