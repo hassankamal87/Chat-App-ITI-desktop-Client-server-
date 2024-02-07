@@ -28,7 +28,7 @@ public class AnnouncerHomeController
 
     }
 
-    public void onAnnounceClicked(ActionEvent actionEvent) {
+    public void onAnnounceClicked(ActionEvent actionEvent) throws RemoteException {
         String htmlText = htmlEditor.getHtmlText();
         System.out.println(htmlText);
         htmlEditor.setHtmlText("");
@@ -43,7 +43,7 @@ public class AnnouncerHomeController
                     notificationService.addNotification(notification );
                     c.receiveNotification(notification);
                 }catch (RemoteException e){
-                    clients.remove(c);
+                    SendContactsInvitationServiceImpl.getInstance().ServerUnRegister(c);
                 }
 
 
