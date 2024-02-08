@@ -38,7 +38,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     protected ChatServiceImpl() throws RemoteException {
     }
 
-    public static synchronized ChatServiceInt getInstance() throws RemoteException {
+    public static synchronized ChatServiceImpl getInstance() throws RemoteException {
         if (instance == null) {
             instance = new ChatServiceImpl();
         }
@@ -105,7 +105,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                     } catch (RemoteException e) {
                         try {
                             SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(id);
-                            unRegisterUser(id,client);
+                             unRegisterUser(id,client);
                         } catch (RemoteException ex) {
                             System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
                         }
@@ -169,6 +169,12 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     @Override
     public void unRegisterUser(int userId, ClientInterface client) throws RemoteException {
         clients.remove(userId, client);
+    }
+
+
+    public void unRegisterUser(int userId) {
+        //clients.remove(userId, client);
+        clients.remove(userId);
     }
 
     @Override
