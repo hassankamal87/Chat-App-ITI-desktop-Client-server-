@@ -241,7 +241,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
 
         return result != null;
     }
-    private boolean alreadyGotInvite(int userId,int contactId) {
+    public boolean alreadyGotInvite(int userId,int contactId) {
         Boolean result = null;
         try {
             result = ContactDao.getInstance(MyDatabase.getInstance()).isContact(contactId, userId);
