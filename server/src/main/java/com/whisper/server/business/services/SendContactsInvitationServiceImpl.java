@@ -139,6 +139,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                         c.ClientStatusAnnounce(user1);
                     }
                 } catch (RemoteException e) {
+                    ChatServiceImpl.getInstance().unRegisterUser(ClientsId.get(c));
                     ServerUnRegister(c);
                 }
             }
