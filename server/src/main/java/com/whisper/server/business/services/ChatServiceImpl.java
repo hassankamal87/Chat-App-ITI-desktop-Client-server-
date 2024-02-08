@@ -105,6 +105,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                     } catch (RemoteException e) {
                         try {
                             SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(id);
+                            unRegisterUser(id,client);
                         } catch (RemoteException ex) {
                             System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
                         }
@@ -131,6 +132,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                 } catch (RemoteException e) {
                     try {
                         SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(message.getFromUserId());
+                        unRegisterUser(message.getFromUserId(),client);
                     } catch (RemoteException ex) {
                         System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
                     }
