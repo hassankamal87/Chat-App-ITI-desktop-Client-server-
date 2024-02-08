@@ -12,4 +12,7 @@ public interface SendContactsInvitationServiceInt extends Remote {
     public void ServerRegister(ClientServiceInt clientService) throws RemoteException;
 
     public void ServerUnRegister(ClientServiceInt clientService) throws RemoteException;
+
+
+    public void ServerUnRegisterWithId(int id) throws RemoteException;
 }

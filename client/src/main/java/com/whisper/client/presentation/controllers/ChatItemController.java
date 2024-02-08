@@ -2,6 +2,7 @@ package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
 import com.whisper.client.business.services.ChattingService;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -124,7 +125,7 @@ public class ChatItemController
                 node = fxmlLoader.load();
                 System.out.println("loaded");
                 RoomChatController controller = fxmlLoader.getController();
-                controller.setData(roomChat,friendsOnChat);
+                Platform.runLater(()->{controller.setData(roomChat,friendsOnChat);});
                 chatPanes.put(roomChatId,node);
             } catch (IOException e) {
                 throw new RuntimeException(e);
