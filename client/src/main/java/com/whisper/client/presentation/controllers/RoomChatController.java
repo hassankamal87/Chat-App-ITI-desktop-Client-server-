@@ -91,7 +91,9 @@ public class RoomChatController implements ReceiveMessageInterface {
 
         HashMap<Message, File> messagesAndFiles = chattingService.getMessagesWithFilesForRoomChat(roomChatID);
 
-        Platform.runLater(()->{showOldMessages(messagesAndFiles);});
+        Platform.runLater(() -> {
+            showOldMessages(messagesAndFiles);
+        });
 
     }
 
@@ -150,9 +152,15 @@ public class RoomChatController implements ReceiveMessageInterface {
             WebEngine messageEngine = messageWebView.getEngine();
             makeWebViewTransparent(messageEngine);
             messageEngine.loadContent(message.getBody());
-            myImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
+            if (message.getMessageId() != -3) {
+                myImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
+                nameLabel.setText(friendUser.getUserName());
+            }else{
+                //if message id = -3 that's means sender is ChatBot
+                myImage.setImage(new Image(getClass().getResourceAsStream("/com/whisper/client/images/robot.png")));
+                nameLabel.setText("Whisper Bot");
+            }
             makeImageRounded(myImage);
-            nameLabel.setText(friendUser.getUserName());
             messageList.getChildren().add(node);
 
             messagesScrollPane.setVvalue(1D);
@@ -186,6 +194,7 @@ public class RoomChatController implements ReceiveMessageInterface {
             e.printStackTrace();
         }
     }
+
     @Override
     public void receiveFileFromList(Message message, File file) {
         try {
@@ -302,7 +311,7 @@ public class RoomChatController implements ReceiveMessageInterface {
         return sdf.format(utilDate);
     }
 
-    private void makeWebViewTransparent(WebEngine engine){
+    private void makeWebViewTransparent(WebEngine engine) {
         final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
         webPage.setBackgroundColor(0);
     }

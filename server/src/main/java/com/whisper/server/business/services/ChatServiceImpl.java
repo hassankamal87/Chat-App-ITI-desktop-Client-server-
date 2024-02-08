@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceInt {
 
@@ -110,9 +111,36 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                     }
                 }
             });
+            startMessageBot(users, message);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    //check if room chat is individual && if another user is offline and send to him message from Bot
+    private void startMessageBot(List<User> users, Message message) {
+        if(users.size() == 2){
+            Optional<User> contact = users.stream().filter(user -> user.getUserId() != message.getFromUserId()).findFirst();
+            if(contact.get().getStatus() == Status.offline){
+
+                ClientInterface client = clients.get(message.getFromUserId());
+                String botMessage = getMessageFromBot(message.getBody());
+                try {
+                    client.notifyUserWithMessage(new Message(-3,message.getToChatId(),new java.util.Date(),contact.get().getUserId(),"Bot : "+botMessage,null));
+                } catch (RemoteException e) {
+                    try {
+                        SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(message.getFromUserId());
+                    } catch (RemoteException ex) {
+                        System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
+    private String getMessageFromBot(String body) {
+        return null;
     }
 
     private File readFileFromDirectory(String fileName) {
