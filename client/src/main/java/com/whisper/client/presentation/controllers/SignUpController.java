@@ -3,13 +3,13 @@ package com.whisper.client.presentation.controllers;
 import com.whisper.client.business.services.SignupValidateService;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import org.example.serverinterfaces.AuthenticationServiceInt;
@@ -23,8 +23,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -43,11 +41,11 @@ public class SignUpController implements Initializable {
     SignupValidateService validateService = new SignupValidateService();
     private String hashedPassword;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
-    private TextField confirmPassword;
-    private Map<String,Parent> panes = new HashMap();
-    @FXML
+    private PasswordField confirmPassword;
+
+    @Deprecated
     public void getStartedClicked(ActionEvent actionEvent) {
         try {
             File file = new File("userInfo.properties");
@@ -147,21 +145,6 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        panes.put("signUpView", (Parent)mainSignUpPane.getCenter());
-        panes.put("continuingSignUpView", SceneManager.getInstance().loadPane("continuingSignUpView"));
-    }
 
-    @FXML
-    public void onGoBackCLicked(ActionEvent actionEvent) {
-        Platform.runLater(() -> {
-            mainSignUpPane.setCenter(panes.get("signUpView"));
-        });
     }
-    @FXML
-    public void onGoNextClicked(ActionEvent actionEvent) {
-        Platform.runLater(() -> {
-            mainSignUpPane.setCenter(panes.get("continuingSignUpView"));
-        });
-    }
-
 }

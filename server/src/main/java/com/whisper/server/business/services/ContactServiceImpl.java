@@ -76,16 +76,19 @@ public class ContactServiceImpl extends UnicastRemoteObject implements ContactSe
                 String userName = user.getUserName();
             rowupdates= PendingRequestDao.getInstance(MyDatabase.getInstance()).deletePendingRequest(to_id,from_id);
 
-            for(ClientServiceInt c:SendContactsInvitationServiceImpl.clientsVector){
-                try{
-                    if(c.getClientId()==from_id){
-                        c.recieve(userName);
+            if(SendContactsInvitationServiceImpl.getInstance().alreadyGotInvite(to_id,from_id)){
+                for(ClientServiceInt c:SendContactsInvitationServiceImpl.clientsVector){
+                    try{
+                        if(c.getClientId()==from_id){
+                            c.recieve(userName);
+                        }
+                    }catch(RemoteException e){
+                        SendContactsInvitationServiceImpl.getInstance().ServerUnRegister(c);
                     }
-                }catch(RemoteException e){
-                    SendContactsInvitationServiceImpl.getInstance().ServerUnRegister(c);
-                }
 
+                }
             }
+
         }catch (SQLException e){
             System.out.println("SQL Exception : "+e);
         }

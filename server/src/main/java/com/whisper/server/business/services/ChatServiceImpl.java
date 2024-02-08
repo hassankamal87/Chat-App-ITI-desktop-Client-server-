@@ -212,10 +212,12 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
         try {
             User adminUser = userDao.getUserById(user1Id);
             StringBuilder groupChatName = new StringBuilder();
-            groupChatName.append(adminUser.getUserName(), 0, 5).append(", ");
+            groupChatName.append(adminUser.getUserName(), 0, 4).append(", ");
             for (User user : users) {
-                groupChatName.append(user.getUserName(), 0, 5).append(", ");
+                groupChatName.append(user.getUserName(), 0, 4).append(", ");
             }
+            groupChatName.delete(groupChatName.length() - 2, groupChatName.length());
+
             int newRoomChatID = roomChatDao.createRoomChat(new RoomChat(-1, Date.valueOf(LocalDate.now()), true, groupChatName.toString(), null, user1Id, "", Type.group));
             roomChatDao.addRoomMember(new RoomMember(newRoomChatID, user1Id));
             for (User user : users) {
