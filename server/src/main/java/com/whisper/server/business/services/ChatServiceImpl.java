@@ -264,4 +264,14 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public User getUserById(int userId) throws RemoteException {
+        UserDaoInterface userDao = UserDao.getInstance(MyDatabase.getInstance());
+        try {
+            return userDao.getUserById(userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
