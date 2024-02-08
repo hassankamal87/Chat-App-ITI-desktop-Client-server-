@@ -40,16 +40,6 @@
                                 <Image url="@../images/wlogo.png" />
                             </image>
                         </ImageView>
-                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="35.0" layoutY="13.0" onMouseClicked="#onGoBackCLicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/leftArrow.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="187.0" layoutY="13.0" onMouseClicked="#onGoNextClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/rightArrow.png" />
-                     </image>
-                  </ImageView>
                     </children>
                 </Pane>
             </left>

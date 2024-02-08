@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane fx:id="mainContactPane" prefHeight="545.0" prefWidth="801.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.contactController">
     <children>
         <Label layoutX="14.0" layoutY="58.0" stylesheets="@../style/style.css" text="Contacts" AnchorPane.leftAnchor="14.0">
@@ -23,7 +24,7 @@
                     <content>
                         <VBox fx:id="contactsLayout" styleClass="light-gray-background" stylesheets="@../style/style.css">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="53.0" spacing="20.0" styleClass="linear-grad2">
+                                <HBox alignment="CENTER_LEFT" prefHeight="53.0" spacing="20.0" styleClass="linear-grad4">
                                     <children>
                                         <Label alignment="CENTER" prefHeight="20.0" prefWidth="37.0" text="A" textFill="WHITE">
                                             <font>
@@ -75,10 +76,7 @@
                 </ScrollPane>
             </children>
         </HBox>
-        <Button fx:id="createGroupButton" layoutX="658.0" layoutY="46.0" mnemonicParsing="false" onAction="#onCreateGroupChatClicked" text="Create Group" />
-        <Button fx:id="addFriendsToAGroupButton" layoutX="468.0" layoutY="17.0" mnemonicParsing="false" onAction="#addFriendsToAGroupClicked" text="Add members to a group" />
-        <Button layoutX="485.0" layoutY="64.0" mnemonicParsing="false" onAction="#onShowGroupMembersClicked" text="Show members list" />
-        <Label layoutX="316.0" layoutY="39.0" prefHeight="21.0" prefWidth="138.0" text="Add members to a group" />
-        <Label layoutX="327.0" layoutY="70.0" text="then create the group" />
+        <Button fx:id="createGroupButton" layoutX="586.0" layoutY="33.0" mnemonicParsing="false" onAction="#onCreateGroupChatClicked" prefHeight="50.0" prefWidth="190.0" style="-fx-font-size: 22; -fx-font-weight: bold;" text="Create Group" />
+        <Button fx:id="addFriendsToAGroupButton" layoutX="377.0" layoutY="33.0" mnemonicParsing="false" onAction="#addFriendsToAGroupClicked" prefHeight="50.0" prefWidth="190.0" style="-fx-font-size: 14;" text="Add members to a group" />
     </children>
 </AnchorPane>

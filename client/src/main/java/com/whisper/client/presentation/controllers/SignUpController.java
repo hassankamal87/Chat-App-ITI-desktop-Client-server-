@@ -3,19 +3,15 @@ package com.whisper.client.presentation.controllers;
 import com.whisper.client.business.services.SignupValidateService;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import java.io.File;
@@ -27,8 +23,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -46,11 +40,6 @@ public class SignUpController implements Initializable {
     private DialogueManager dialogueManager = DialogueManager.getInstance();
     SignupValidateService validateService = new SignupValidateService();
     private String hashedPassword;
-    private Map<String,Parent> panes = new HashMap();
-    @FXML
-    private VBox firstSignupPane;
-    @FXML
-    private Button alreadyGotAccountCLicked;
     @FXML
     private PasswordField password;
     @FXML
@@ -156,22 +145,6 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        panes.put("signUpView", (Parent)mainSignUpPane.getCenter());
-        panes.put("continuingSignUpView", SceneManager.getInstance().loadPane("continuingSignUpView"));
-    }
 
-    @Deprecated
-    public void onGoBackCLicked(MouseEvent actionEvent) {
-        Platform.runLater(() -> {
-            mainSignUpPane.setCenter(panes.get("signUpView"));
-        });
     }
-
-    @Deprecated
-    public void onGoNextClicked(MouseEvent actionEvent) {
-        Platform.runLater(() -> {
-            mainSignUpPane.setCenter(panes.get("continuingSignUpView"));
-        });
-    }
-
 }

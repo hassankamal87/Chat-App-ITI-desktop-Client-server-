@@ -143,6 +143,6 @@ public class ChatItemController
 
     @FXML
     public void onChatItemExit(MouseEvent mouseEvent) {
-        chatItemContainer.setStyle("-fx-background-color: #FFFFEC");
+        chatItemContainer.setStyle("-fx-background-color: #FFE4C4 ");
     }
 }
