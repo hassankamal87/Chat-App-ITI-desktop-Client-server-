@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="usersPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.server.presentation.controllers.UsersController">
+<BorderPane fx:id="usersPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="800.0" stylesheets="@../style/newCss.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.server.presentation.controllers.UsersController">
    <top>
-      <AnchorPane nodeOrientation="RIGHT_TO_LEFT" prefHeight="83.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="83.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="313.0" layoutY="26.0" text="Current Users">
+            <Text fill="#597e52" layoutX="285.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label2" text="Users" textAlignment="CENTER" wrappingWidth="229.005859375">
                <font>
-                  <Font name="Arial Bold" size="28.0" />
+                  <Font name="Arial Bold" size="51.0" />
                </font>
-            </Label>
+            </Text>
          </children>
       </AnchorPane>
    </top>
    <center>
-      <TableView fx:id="usersTable" onInputMethodTextChanged="#onInputMethodTextChanged" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="usersTable" onInputMethodTextChanged="#onInputMethodTextChanged" prefHeight="200.0" prefWidth="200.0" styleClass="linear-grad" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="userNameColumn" prefWidth="98.0" text="User Name" />
           <TableColumn fx:id="emailColumn" prefWidth="120.0" text="Email" />

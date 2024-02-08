@@ -1,13 +1,12 @@
 package com.whisper.server.business.services;
 
-import com.whisper.server.business.services.interfaces.serverServiceInt;
+import com.whisper.server.business.services.interfaces.ServerServiceInt;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
 import com.whisper.server.persistence.db.MyDatabase;
 import org.example.entities.User;
 import org.example.serverinterfaces.*;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -16,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerService implements serverServiceInt {
+public class ServerService implements ServerServiceInt {
 
     private static ServerService instance = null;
     private ServerService(){}

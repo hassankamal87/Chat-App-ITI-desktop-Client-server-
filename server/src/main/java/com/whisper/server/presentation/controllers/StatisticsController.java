@@ -12,7 +12,6 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 
-import java.util.Collection;
 import java.util.Map;
 
 public class StatisticsController implements StatisticsUpdateInt {
@@ -51,7 +50,6 @@ public class StatisticsController implements StatisticsUpdateInt {
     public void updateOnlineOfflineUsers(SimpleIntegerProperty onlineCount, IntegerProperty offlineCount) {
         this.onlineCount.set(onlineCount.get());
         this.offlineCount.set(offlineCount.get());
-        System.out.println("Online: " + onlineCount + " Offline: " + offlineCount);
     }
 
     @Override
@@ -61,7 +59,6 @@ public class StatisticsController implements StatisticsUpdateInt {
                 new PieChart.Data("Male", maleCount),
                 new PieChart.Data("Female", femaleCount)
         );
-        System.out.println("male: " + maleCount + "female: "+ femaleCount);
     }
 
     @Override

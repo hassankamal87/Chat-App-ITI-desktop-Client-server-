@@ -1,15 +1,16 @@
 package com.whisper.server.presentation.services;
 
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URL;
+import java.util.*;
 
-public class SceneManager {
+public class SceneManager implements Initializable{
     private static final SceneManager instance = new SceneManager();
 
     private Stage primaryStage;
@@ -17,9 +18,16 @@ public class SceneManager {
     private final Map<String, Scene> scenes = new HashMap<>();
 
     private final Map <String, Parent> panes = new HashMap<>();
+    private final List<String> mustBeLoaded = new ArrayList<>();
 
     private static final int SCENE_WIDTH = 800;
     private static final int SCENE_HEIGHT = 600;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mustBeLoaded.add("statisticsView");
+        mustBeLoaded.add("users-view");
+    }
 
     public static SceneManager getInstance() {
         return instance;
@@ -54,7 +62,7 @@ public class SceneManager {
             throw new RuntimeException("Stage Coordinator should be " +
                     "initialized with a Stage before it could be used");
         }
-        if(!panes.containsKey(name) || name == "statisticsView"){
+        if(!panes.containsKey(name) || mustBeLoaded.contains(name)){
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                         .getResource(String.format("/com/whisper/server/views/%s.fxml", name)));
@@ -66,4 +74,6 @@ public class SceneManager {
         }
         return panes.get(name);
     }
+
+
 }

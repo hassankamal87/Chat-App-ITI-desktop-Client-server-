@@ -75,7 +75,7 @@ public class profileController implements Initializable {
         String country = myUser.getCountry();
         String bio = userBio.getText();
         Mode mode = Mode.valueOf(userMode.getValue().toString());
-        Status status = Status.valueOf(myUser.getStatus().toString());
+        Status status = Status.valueOf(Status.online.toString());
         byte[] profilePicture = imageViewToByteArray(userProfile);
 
         User newUser = new User(userId, phoneNumber, password, email, name, gender,

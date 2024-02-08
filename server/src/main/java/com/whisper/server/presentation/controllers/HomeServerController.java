@@ -1,10 +1,12 @@
 package com.whisper.server.presentation.controllers;
 
 //import com.whisper.server.business.services.SendContactsInvitationServiceImpl;
+
 import com.whisper.server.business.services.SendContactsInvitationServiceImpl;
 import com.whisper.server.business.services.ServerService;
 import com.whisper.server.persistence.db.MyDatabase;
 import com.whisper.server.presentation.services.SceneManager;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -12,17 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
-import javafx.animation.TranslateTransition;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.example.clientinterfaces.ClientServiceInt;
 import org.example.serverinterfaces.SendContactsInvitationServiceInt;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HomeServerController {
@@ -64,7 +63,8 @@ public class HomeServerController {
     private void gettingPanes(){
         announcementPane = SceneManager.getInstance().loadPane("announcerHomeView");
         welcomePane = SceneManager.getInstance().loadPane("welcomeView");
-        //statisticsPane = SceneManager.getInstance().loadPane("statisticsView");
+    }
+    private void getUsersPane(){
         usersPane = SceneManager.getInstance().loadPane("users-view");
     }
 
@@ -158,6 +158,7 @@ public class HomeServerController {
             enableButtons();
             setupButtonHandlers();
             getStatisticsPane();
+            getUsersPane();
         } else {
             ServerService.getInstance().stopServer();
             disableButtons();
