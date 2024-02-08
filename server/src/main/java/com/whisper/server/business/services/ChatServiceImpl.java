@@ -89,7 +89,6 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
         List<User> users;
         try {
             users = roomChatDao.getAllUsers(message.getToChatId());
-            users.forEach(user -> System.out.println(user.getUserId()));
             List<Integer> userIds = users.stream()
                     .map(User::getUserId)
                     .toList();
@@ -103,7 +102,11 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                             client.notifyUserWithFile(message,file);
                         }
                     } catch (RemoteException e) {
-                        throw new RuntimeException(e);
+                        try {
+                            SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(id);
+                        } catch (RemoteException ex) {
+                            System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
+                        }
                     }
                 }
             });

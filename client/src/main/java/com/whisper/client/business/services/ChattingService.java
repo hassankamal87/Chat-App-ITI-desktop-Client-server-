@@ -130,7 +130,7 @@ public class ChattingService {
                 alert.showAndWait();
                 Platform.exit();
                 System.exit(0);
-                throw new RuntimeException(e);
+                return -1;
             }
         }
     }
@@ -146,9 +146,8 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return -1;
         }
-
     }
 
     private int getRoomChatForUsers(int user1, int user2) {
@@ -162,7 +161,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return -1;
         }
     }
 
@@ -178,7 +177,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -191,7 +190,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -205,7 +204,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -218,7 +217,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -231,7 +230,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -244,7 +243,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 
@@ -257,7 +256,7 @@ public class ChattingService {
             alert.showAndWait();
             Platform.exit();
             System.exit(0);
-            throw new RuntimeException(e);
+            return null;
         }
     }
 }
