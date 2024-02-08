@@ -125,6 +125,7 @@ public class RoomChatController implements ReceiveMessageInterface {
             WebView messageWebView = (WebView) node.lookup("#messageWebView");
             ImageView myImage = (ImageView) node.lookup("#ImageView");
             WebEngine messageEngine = messageWebView.getEngine();
+            makeWebViewTransparent(messageEngine);
             myImage.setImage(new Image(new ByteArrayInputStream(MyApp.getInstance().getCurrentUser().getProfilePhoto())));
             makeImageRounded(myImage);
             messageEngine.loadContent(htmlContent);
@@ -147,6 +148,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
             User friendUser = friendsOnChat.stream().filter(friend -> friend.getUserId() == message.getFromUserId()).findFirst().get();
             WebEngine messageEngine = messageWebView.getEngine();
+            makeWebViewTransparent(messageEngine);
             messageEngine.loadContent(message.getBody());
             myImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
             makeImageRounded(myImage);
@@ -298,5 +300,10 @@ public class RoomChatController implements ReceiveMessageInterface {
 
         // Format the utilDate to a string
         return sdf.format(utilDate);
+    }
+
+    private void makeWebViewTransparent(WebEngine engine){
+        final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
+        webPage.setBackgroundColor(0);
     }
 }
