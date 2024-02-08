@@ -58,6 +58,7 @@ public class notificationController implements Initializable {
                 nic = fxmlLoader.getController();
                 nic.setData(notifications.get(i));
                 boxes.add(hBox);
+                System.out.println(i);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -73,13 +74,16 @@ public class notificationController implements Initializable {
 
     }
     private void deleteAction(Event event,int i) {
+
         Button deleteButton = (Button) event.getSource();
         HBox notificationBox = (HBox) deleteButton.getParent();
         boxes.remove(notificationBox);
+
         Notification not=notifications.get(i);
-        notifications.remove(not);
+        //notifications.remove(not);
         notificationService.deleteNotification(not.getNotificationId());
-        //notificationService.sendMessage(not);
+
+
     }
     private List<Notification> notifications() {
         List<Notification>notifications =notificationService.getNotifications(MyApp.getInstance().getCurrentUser().getUserId());
