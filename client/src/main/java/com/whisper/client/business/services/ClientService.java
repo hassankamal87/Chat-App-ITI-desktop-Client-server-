@@ -4,6 +4,8 @@ import com.whisper.client.MyApp;
 import com.whisper.client.presentation.controllers.HandlingChatInterface;
 import com.whisper.client.presentation.controllers.ReceiveMessageInterface;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.NotifactionType;
@@ -82,5 +84,14 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
         Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(), user.getUserName(), NotifactionType.msg, message.getBody());
         NotificationService notifyService = new NotificationService();
         notifyService.sendMessage(messageNotification);
+        try {
+            notifyService.addNotification(messageNotification);
+        } catch (RemoteException e) {
+            System.out.println("exception in client service line 90");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
+            alert.showAndWait();
+            Platform.exit();
+            System.exit(0);
+        }
     }
 }
