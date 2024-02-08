@@ -10,8 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import java.io.File;
@@ -42,12 +46,17 @@ public class SignUpController implements Initializable {
     private DialogueManager dialogueManager = DialogueManager.getInstance();
     SignupValidateService validateService = new SignupValidateService();
     private String hashedPassword;
-    @FXML
-    private TextField password;
-    @FXML
-    private TextField confirmPassword;
     private Map<String,Parent> panes = new HashMap();
     @FXML
+    private VBox firstSignupPane;
+    @FXML
+    private Button alreadyGotAccountCLicked;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private PasswordField confirmPassword;
+
+    @Deprecated
     public void getStartedClicked(ActionEvent actionEvent) {
         try {
             File file = new File("userInfo.properties");
@@ -151,14 +160,15 @@ public class SignUpController implements Initializable {
         panes.put("continuingSignUpView", SceneManager.getInstance().loadPane("continuingSignUpView"));
     }
 
-    @FXML
-    public void onGoBackCLicked(ActionEvent actionEvent) {
+    @Deprecated
+    public void onGoBackCLicked(MouseEvent actionEvent) {
         Platform.runLater(() -> {
             mainSignUpPane.setCenter(panes.get("signUpView"));
         });
     }
-    @FXML
-    public void onGoNextClicked(ActionEvent actionEvent) {
+
+    @Deprecated
+    public void onGoNextClicked(MouseEvent actionEvent) {
         Platform.runLater(() -> {
             mainSignUpPane.setCenter(panes.get("continuingSignUpView"));
         });
