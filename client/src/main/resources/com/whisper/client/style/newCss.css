@@ -10,6 +10,10 @@
 .linear-grad4{
     -fx-background-color: linear-gradient(to bottom left,#C6A969 ,#C6A969 );
 }
+
+.linear-grad5{
+    -fx-background-color: linear-gradient(to bottom left,#FFFFEC ,#FFFFEC );
+}
 /* General Styling */
 .root {
     -fx-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

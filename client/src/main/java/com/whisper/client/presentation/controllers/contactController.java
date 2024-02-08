@@ -96,8 +96,8 @@ public class contactController implements Initializable
     }
     @FXML
     public void onCreateGroupChatClicked(ActionEvent actionEvent) {
-        System.out.println("Group Chat Created with members: " + groupChatUserIds);
         startGroup(groupChatUserIds.stream().toList());
+        System.out.println("Group Chat: " + groupChatUserIds);
         clearGroupChat();
     }
     @FXML
