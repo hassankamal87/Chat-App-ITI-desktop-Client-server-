@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.IPConfig;
 import com.whisper.client.presentation.services.UnRegister;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -23,7 +24,7 @@ public class ContactService {
     public List<User> getContacts(int Id) {
         List<User>contacts =new ArrayList<>();
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             ContactServiceInt contactRef = (ContactServiceInt) reg.lookup("ContactsService");
             contacts=contactRef.getALLContacts(Id);
         }catch (Exception e){
@@ -41,7 +42,7 @@ public class ContactService {
     public List<User> getRequests(int Id) {
         List<User>requests =new ArrayList<>();
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             ContactServiceInt contactRef = (ContactServiceInt) reg.lookup("ContactsService");
             requests=contactRef.getALLRequests(Id);
         }catch (Exception e){
@@ -57,7 +58,7 @@ public class ContactService {
     public int deleleteRequest(int to_Id,int from_Id) {
         int rowUpdate = 0;
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             ContactServiceInt contactRef = (ContactServiceInt) reg.lookup("ContactsService");
 
             rowUpdate = contactRef.deletePendingRequest(to_Id,from_Id);
@@ -76,7 +77,7 @@ public class ContactService {
     public int addContact(int user_id,int contact_id){
         int rowUpdate = 0;
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             ContactServiceInt contactRef = (ContactServiceInt) reg.lookup("ContactsService");
 
             rowUpdate = contactRef.addContact(new Contact(FriendshipStatus.friend, Date.valueOf(LocalDate.now()),user_id,contact_id));

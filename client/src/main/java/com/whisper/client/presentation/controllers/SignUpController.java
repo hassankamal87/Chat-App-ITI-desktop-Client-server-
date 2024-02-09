@@ -1,5 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
+import com.whisper.client.IPConfig;
 import com.whisper.client.business.services.SignupValidateService;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
@@ -105,7 +106,7 @@ public class SignUpController implements Initializable {
         }
 
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             if (!authService.validatePhoneNumber(phoneNumber.getText())){
                 dialogueManager.showErrorDialog("Error", "Invalid Phone number",

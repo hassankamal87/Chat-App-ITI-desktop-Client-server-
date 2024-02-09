@@ -1,5 +1,6 @@
 package com.whisper.client.presentation.controllers;
 
+import com.whisper.client.IPConfig;
 import com.whisper.client.presentation.services.DialogueManager;
 import com.whisper.client.presentation.services.SceneManager;
 import javafx.collections.FXCollections;
@@ -152,7 +153,7 @@ public class ContinuingSignUpController
         }
         try{
             Random rand = new Random();
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             authService.registerUser(new User(
                     rand.nextInt(10000),
