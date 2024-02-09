@@ -76,38 +76,44 @@ public class profileGroupController implements Initializable {
         myUser = MyApp.getInstance().getCurrentUser();
         otherContacts = contactService.getContacts(myUser.getUserId());
 //        otherContacts = contactService.getContacts(myUser.getUserId());
-        groupMembers = chattingService.getGroupMembers(4);
+        groupMembers = chattingService.getGroupMembers(5);
         System.out.println(groupMembers.size());
-        roomChat = chattingService.getRoomChatByID(4);
+        roomChat = chattingService.getRoomChatByID(5);
 
 
-        for (int i=0; i<groupMembers.size();i++){
+        for (User user: groupMembers){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/groupMemberView.fxml"));
             try{
                 hBox = fxmlLoader.load();
                 groupMemberController = fxmlLoader.getController();
-                groupMemberController.setData(groupMembers.get(i));
+                groupMemberController.setData(user);
                 boxes.add(hBox);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println("loop:" + i);
         }
         groupMembersList.setItems(boxes);
 
-        System.out.println(otherContacts.size());
-        otherContacts.removeIf(contact -> groupMembers.contains(contact));
-        otherContacts.removeAll(groupMembers);
+//        System.out.println(otherContacts.size());
+//        otherContacts.removeIf(contact -> groupMembers.contains(contact));
+//        otherContacts.removeAll(groupMembers);
+//
+//        // Remove elements from otherContacts that exist in groupMembers
+//        otherContacts.removeAll(groupMembers);
 
-        // Remove elements from otherContacts that exist in groupMembers
-        otherContacts.removeAll(groupMembers);
+        for (int i=0; i<groupMembers.size(); i++){
+            for (int j=0; j<otherContacts.size(); j++){
+                if (groupMembers.get(i).getUserId() == otherContacts.get(j).getUserId())
+                    otherContacts.remove(j);
+            }
+        }
 
-        for (int i=0; i<otherContacts.size();i++){
+        for (User user: otherContacts){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/groupMemberView.fxml"));
             try{
                 hBox = fxmlLoader.load();
                 groupMemberController = fxmlLoader.getController();
-                groupMemberController.setData(otherContacts.get(i));
+                groupMemberController.setData(user);
                 othersBox.add(hBox);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -130,12 +136,15 @@ public class profileGroupController implements Initializable {
     @javafx.fxml.FXML
     public void onClickRemove(ActionEvent actionEvent) {
         int userIndex = groupMembersList.getSelectionModel().getSelectedIndex();
-        boxes.remove(userIndex);
+        HBox removedBox = boxes.remove(userIndex);
 //        System.out.println(userIndex);
 //        System.out.println(groupMembers.size());
 //        System.out.println(groupMembers.size());
-        chattingService.removeGroupMember(4, groupMembers.get(userIndex).getUserId());
+        chattingService.removeGroupMember(5, groupMembers.get(userIndex).getUserId());
         groupMembers.remove(userIndex);
+        othersBox.add(removedBox);
+        contactList.setItems(othersBox);
+        otherContacts.add(groupMembers.get(userIndex));
     }
 
     @javafx.fxml.FXML
@@ -144,6 +153,6 @@ public class profileGroupController implements Initializable {
         HBox box = (HBox) contactList.getSelectionModel().getSelectedItem();
         boxes.add(box);
         othersBox.remove(box);
-        chattingService.addGroupMember(4, otherContacts.get(userIndex).getUserId());
+        chattingService.addGroupMember(5, otherContacts.get(userIndex).getUserId());
     }
 }
