@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox fx:id="groupMember" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="199.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whisper.client.presentation.controllers.GroupMemberController">
+   <children>
+      <Label fx:id="memberName" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="144.0" text="Menna Moataz" />
+   </children>
+</HBox>

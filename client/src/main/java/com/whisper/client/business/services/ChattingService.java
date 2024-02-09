@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
+import org.example.entities.RoomMember;
 import org.example.entities.User;
 import org.example.serverinterfaces.ChatServiceInt;
 
@@ -17,6 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -257,6 +259,31 @@ public class ChattingService {
             Platform.exit();
             System.exit(0);
             return null;
+        }
+    }
+
+    public List<User> getGroupMembers(int roomId){
+        List<User> members;
+        try {
+            members = chatService.getGroupMembers(roomId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        return members;
+    }
+    public void removeGroupMember(int roomId, int memberId){
+        try {
+            chatService.removeGroupMembers(roomId, memberId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addGroupMember(int roomID, int memberId){
+        try {
+            chatService.addRoomMember(roomID, memberId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 }

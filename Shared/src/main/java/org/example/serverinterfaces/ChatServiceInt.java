@@ -3,6 +3,7 @@ package org.example.serverinterfaces;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
+import org.example.entities.RoomMember;
 import org.example.entities.User;
 
 import java.io.File;
@@ -37,4 +38,10 @@ public interface ChatServiceInt extends Remote {
     RoomChat getRoomChatByID(int roomChatId) throws RemoteException;
 
     User getUserById(int userId) throws RemoteException;
+
+    List<User> getGroupMembers(int roomId) throws RemoteException;
+
+    void removeGroupMembers(int roomId, int memberId) throws RemoteException;
+
+    void addRoomMember(int roomId, int memberId) throws RemoteException;
 }
