@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.IPConfig;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -14,7 +15,7 @@ import java.rmi.registry.Registry;
 public class AddContactsService {
     public void addContact(int userId, int contactId) {
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             AddContactsServiceInt addContactsServiceInt = (AddContactsServiceInt) reg.lookup("AddContactsService");
             addContactsServiceInt.addContact(userId, contactId);
         } catch (Exception e) {

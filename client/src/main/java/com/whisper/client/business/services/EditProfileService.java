@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.IPConfig;
 import com.whisper.client.presentation.services.DialogueManager;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
@@ -18,7 +19,7 @@ public class EditProfileService {
 
     public EditProfileService() {
         try {
-            reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             editService = (EditProfileServiceInt) reg.lookup("EditProfileService");
         } catch (Exception e) {
             System.out.println("Exception is  : "+e.getMessage());

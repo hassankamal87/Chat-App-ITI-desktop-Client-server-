@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.IPConfig;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ClientServiceImpl;
 import com.whisper.client.presentation.services.DialogueManager;
@@ -45,7 +46,7 @@ public class SignInController implements Initializable {
 
     public void onSigninButtonClick(ActionEvent actionEvent) {
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             User currentUser  = authService.loginUser(phoneNumber.getText(), password.getText());
             if ( currentUser == null){
@@ -112,7 +113,7 @@ public class SignInController implements Initializable {
 
     private void signInWithProperties(String phoneNumber2, String password2) {
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
             User currentUser  = authService.loginUser(
                     EncryptionUtils.decrypt(phoneNumber2), EncryptionUtils.decrypt(password2));
