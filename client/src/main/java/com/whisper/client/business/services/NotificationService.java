@@ -1,6 +1,7 @@
 package com.whisper.client.business.services;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.IPConfig;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -33,7 +34,7 @@ public class NotificationService {
 
     public NotificationService() {
         try {
-            reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             notificationRef = (NotificationServiceInt) reg.lookup("NotificationService");
         } catch (Exception e) {
             System.out.println("Exception is  : "+e.getMessage());
