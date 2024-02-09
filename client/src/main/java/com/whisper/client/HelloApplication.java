@@ -70,7 +70,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         SceneManager.getInstance().initStage(stage);
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signInView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/enterIPView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Whisper!");
         Image icon = new Image(getClass().getResourceAsStream("images/logo.png")); // Adjust the path accordingly

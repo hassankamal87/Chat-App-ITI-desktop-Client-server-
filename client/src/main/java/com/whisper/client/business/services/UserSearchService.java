@@ -1,6 +1,7 @@
 package com.whisper.client.business.services;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.IPConfig;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -19,7 +20,7 @@ import java.util.List;
 public class UserSearchService {
     public void sendInvitation(int id, List<String> contacts) {
         try {
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP, 8000);
             SendContactsInvitationServiceInt sendContactsInvitationInt = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
             for(String contact :contacts){
                 String inform ;
