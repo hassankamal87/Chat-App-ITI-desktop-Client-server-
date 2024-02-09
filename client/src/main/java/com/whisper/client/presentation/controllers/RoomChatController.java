@@ -185,7 +185,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
     private void appendMessageFile(File selectedFile, Date date) {
         try {
-            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemView.fxml")));
+            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemView.fxml")));
 
             ImageView myImage = (ImageView) node.lookup("#ImageView");
             Button downloadBtn = (Button) node.lookup("#downloadBtn");
