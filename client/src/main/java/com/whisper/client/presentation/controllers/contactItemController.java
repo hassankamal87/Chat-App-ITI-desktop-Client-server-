@@ -37,7 +37,6 @@ public class contactItemController implements Initializable {
     private Circle modeIcon;
     public void setData(User contact ){
         try{
-            Image img = new Image(getClass().getResourceAsStream("/com/whisper/client/images/modePhoto/" +contact.getMode()+".jpg"));
 
             Color color = null;
             if(contact.getMode()==Mode.offline)

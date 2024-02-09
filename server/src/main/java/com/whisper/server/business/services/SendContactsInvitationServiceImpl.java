@@ -139,7 +139,7 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
                         c.ClientStatusAnnounce(user1);
                     }
                 } catch (RemoteException e) {
-                    ChatServiceImpl.getInstance().unRegisterUser(ClientsId.get(c));
+                    //ChatServiceImpl.getInstance().unRegisterUser(ClientsId.get(c));
                     ServerUnRegister(c);
                 }
             }
@@ -202,6 +202,9 @@ public class SendContactsInvitationServiceImpl extends UnicastRemoteObject imple
         try{
             int id=ClientsId.get(clientService);
             User user = UserDao.getInstance(MyDatabase.getInstance()).getUserById(id);
+
+            System.out.println(id);
+            ChatServiceImpl.getInstance().unRegisterUser(id);
 
             clientsVector.remove(clientService);
             ClientsId.remove(clientService);
