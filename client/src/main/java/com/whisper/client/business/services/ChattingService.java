@@ -271,7 +271,19 @@ public class ChattingService {
         }
         return members;
     }
-    public void removeGroupMember(RoomMember member){
-        chatService.removeGroupMembers(member);
+    public void removeGroupMember(int roomId, int memberId){
+        try {
+            chatService.removeGroupMembers(roomId, memberId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void addGroupMember(int roomID, int memberId){
+        try {
+            chatService.addRoomMember(roomID, memberId);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -184,11 +184,11 @@ public class RoomChatDao implements RoomChatDaoInterface {
     }
 
     @Override
-    public int removeRoomMember(RoomMember object) throws SQLException {
+    public int removeRoomMember(int roomId, int memberId) throws SQLException {
         String query = "DELETE FROM room_chat_user WHERE room_chat_id = ? AND user_id = ?";
         PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
-        ps.setInt(1, object.getRoomChatId());
-        ps.setInt(2, object.getUserId());
+        ps.setInt(1, roomId);
+        ps.setInt(2, memberId);
 
         int rowsDeleted = ps.executeUpdate();
         ps.close();

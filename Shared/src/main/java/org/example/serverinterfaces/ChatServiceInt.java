@@ -41,5 +41,7 @@ public interface ChatServiceInt extends Remote {
 
     List<User> getGroupMembers(int roomId) throws RemoteException;
 
-    void removeGroupMembers(RoomMember member);
+    void removeGroupMembers(int roomId, int memberId) throws RemoteException;
+
+    void addRoomMember(int roomId, int memberId) throws RemoteException;
 }
