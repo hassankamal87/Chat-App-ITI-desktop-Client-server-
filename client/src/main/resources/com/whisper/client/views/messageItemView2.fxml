@@ -14,11 +14,11 @@
    <center>
       <AnchorPane fx:id="messageContainer" maxWidth="307.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <AnchorPane maxWidth="307.0" minHeight="50.0" minWidth="300.0" styleClass="message-receive" stylesheets="@../lineargrad.css" AnchorPane.topAnchor="20.0">
+            <AnchorPane maxWidth="307.0" minHeight="50.0" minWidth="300.0" styleClass="message-send" stylesheets="@../lineargrad.css" AnchorPane.topAnchor="20.0">
                <children>
                   <WebView fx:id="messageWebView" layoutX="9.0" layoutY="11.0" maxHeight="-1.0" maxWidth="307.0" minHeight="50.0" minWidth="300.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                </children></AnchorPane>
-            <Label fx:id="timeLabel" layoutX="251.0" layoutY="67.0" maxWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="50.0" text="06:23 PM" textFill="#7c7979">
+            <Label fx:id="timeLabel" layoutX="11.0" layoutY="62.0" maxWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="50.0" text="06:23 PM" textFill="#7c7979">
                <font>
                   <Font name="Bell MT Bold" size="9.0" />
                </font>
@@ -29,7 +29,7 @@
          </BorderPane.margin>
       </AnchorPane>
    </center>
-   <left>
+   <right>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="ImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -44,5 +44,5 @@
             </Label>
          </children>
       </VBox>
-   </left>
+   </right>
 </BorderPane>

@@ -1,5 +1,6 @@
 package com.whisper.server.business.services;
 
+import com.whisper.server.business.services.interfaces.ChatterBotService;
 import com.whisper.server.persistence.daos.MessageDao;
 import com.whisper.server.persistence.daos.RoomChatDao;
 import com.whisper.server.persistence.daos.UserDao;
@@ -11,6 +12,8 @@ import com.whisper.server.utils.Constants;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.*;
 import org.example.serverinterfaces.ChatServiceInt;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -142,8 +145,15 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     }
 
     private String getMessageFromBot(String body) {
-        return null;
+        try {
+            Document doc = Jsoup.parse(body);
+            String textContent = doc.text();
+            return ChatterBotService.getChatterBotResponse(textContent);
+        } catch (Exception e) {
+            return "sorry you friend is offline";
+        }
     }
+
 
     private File readFileFromDirectory(String fileName) {
         try {
