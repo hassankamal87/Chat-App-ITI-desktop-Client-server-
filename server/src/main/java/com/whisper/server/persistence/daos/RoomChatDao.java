@@ -183,6 +183,19 @@ public class RoomChatDao implements RoomChatDaoInterface {
         return rowsInserted;
     }
 
+    @Override
+    public int removeRoomMember(RoomMember object) throws SQLException {
+        String query = "DELETE FROM room_chat_user WHERE room_chat_id = ? AND user_id = ?";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, object.getRoomChatId());
+        ps.setInt(2, object.getUserId());
+
+        int rowsDeleted = ps.executeUpdate();
+        ps.close();
+        return rowsDeleted;
+    }
+
+
     //get individual room chat
     @Override
     public int getRoomChatForUsers(int user1Id, int user2Id) throws SQLException {
@@ -207,5 +220,53 @@ public class RoomChatDao implements RoomChatDaoInterface {
         rs.close();
         ps.close();
         return roomChatId;
+    }
+
+    @Override
+    public List<User> getGroupMembers(int roomChatId) throws SQLException {
+        List<User> users = new ArrayList<>();
+        String query = "select * from \n" +
+                "room_chat \n" +
+                "where room_chat_id  in (select room_chat_id \n" +
+                "from room_chat_user \n" +
+                "where user_id = ?);";
+        PreparedStatement ps = myDatabase.getConnection().prepareStatement(query);
+        ps.setInt(1, roomChatId);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()){
+            int userId = rs.getInt(1);
+            String phoneNumber = rs.getString(2);
+            String password = rs.getString(3);
+            String email = rs.getString(4);
+            String userName = rs.getString(5);
+            String genderStr = rs.getString(6);
+            Gender gender = Objects.equals(genderStr, "female") ? Gender.female : Gender.male;
+            Date date = rs.getDate(7);
+            String country = rs.getString(8);
+            String bio = rs.getString(9);
+            String modeStr = rs.getString(10);
+            Mode mode = switch (modeStr) {
+                case "away" -> Mode.away;
+                case "busy" -> Mode.busy;
+                case "offline" -> Mode.offline;
+                default -> Mode.available;
+            };
+            String statusStr = rs.getString(11);
+            Status status = Objects.equals(statusStr, "online") ? Status.online : Status.offline;
+            Blob profilePhotoBlob = rs.getBlob("profile_photo");
+            byte[] profilePhotoBytes=null;
+            if (profilePhotoBlob != null) {
+                int blobLength = (int) profilePhotoBlob.length();
+                profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+            }
+
+            User user = new User(userId, phoneNumber, password, email, userName, gender, date, country, bio, mode, status,profilePhotoBytes);
+
+            users.add(user);
+        }
+        rs.close();
+        ps.close();
+        return users;
     }
 }

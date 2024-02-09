@@ -67,7 +67,7 @@ public class SignInController implements Initializable {
                 }
                 MyApp.getInstance().setCurrentUser(currentUser);
                 System.out.println("current user "+currentUser.getUserId());
-                SceneManager.getInstance().loadView("mainView");
+                SceneManager.getInstance().loadView("profileGroupView");
 
                 SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
                 ClientServiceInt clientService = ClientServiceImpl.getInstance();

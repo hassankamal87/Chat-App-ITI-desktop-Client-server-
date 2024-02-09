@@ -15,5 +15,9 @@ public interface RoomChatDaoInterface {
     public List<User> getAllUsers(int roomChatId) throws SQLException;
     public int addRoomMember(RoomMember object) throws SQLException;
 
+    int removeRoomMember(RoomMember object) throws SQLException;
+
     int getRoomChatForUsers(int user1Id, int user2Id) throws SQLException;
+
+    List<User> getGroupMembers(int roomChatId) throws SQLException;
 }
