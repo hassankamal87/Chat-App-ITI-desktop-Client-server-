@@ -4,7 +4,10 @@ import com.whisper.client.HelloApplication;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +27,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.entities.Message;
 import org.example.entities.RoomChat;
 import org.example.entities.Type;
@@ -134,6 +138,11 @@ public class RoomChatController implements ReceiveMessageInterface {
             messageList.getChildren().add(node);
 
             messagesScrollPane.setVvalue(1D);
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.seconds(0.7), // Set the delay duration here (e.g., 0.5 seconds)
+                    event -> messagesScrollPane.setVvalue(1D) // Code to execute after the delay
+            ));
+            timeline.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,6 +173,11 @@ public class RoomChatController implements ReceiveMessageInterface {
             messageList.getChildren().add(node);
 
             messagesScrollPane.setVvalue(1D);
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.seconds(0.7), // Set the delay duration here (e.g., 0.5 seconds)
+                    event -> messagesScrollPane.setVvalue(1D) // Code to execute after the delay
+            ));
+            timeline.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -171,7 +185,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
     private void appendMessageFile(File selectedFile, Date date) {
         try {
-            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemView.fxml")));
+            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemView2.fxml")));
 
             ImageView myImage = (ImageView) node.lookup("#ImageView");
             Button downloadBtn = (Button) node.lookup("#downloadBtn");

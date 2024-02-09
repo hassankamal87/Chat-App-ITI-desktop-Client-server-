@@ -16,7 +16,7 @@
          <children>
             <AnchorPane layoutX="69.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="60.0" prefWidth="307.0" styleClass="message-send" stylesheets="@../lineargrad.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <WebView fx:id="messageWebView" disable="true" layoutX="69.0" prefHeight="60.0" prefWidth="307.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label fx:id="timeLabel" layoutX="155.0" layoutY="41.0" maxWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="50.0" text="06:23 PM" textFill="#7c7979">
+            <Label fx:id="timeLabel" layoutX="155.0" layoutY="41.0" maxWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="50.0" text="06:23 PM" textFill="#FFFFFF">
                <font>
                   <Font name="Bell MT Bold" size="9.0" />
                </font>
