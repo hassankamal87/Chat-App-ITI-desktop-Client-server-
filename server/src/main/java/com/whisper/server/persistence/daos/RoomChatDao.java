@@ -10,6 +10,7 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 import org.example.entities.Type;
 
+import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -268,5 +269,19 @@ public class RoomChatDao implements RoomChatDaoInterface {
         rs.close();
         ps.close();
         return users;
+    }
+
+    @Override
+    public int updateRoomChat(RoomChat roomChat) throws SQLException{
+        String query = "Update room_chat set group_name = ?, photo=?, description= ? " +
+                "where room_chat_id = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, roomChat.getGroupName());
+//            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(roomChat.getPhotoBlob());
+            ps.setBlob(2, roomChat.getPhotoBlob());
+            ps.setString(3, roomChat.getDescription());
+            ps.setInt(4, roomChat.getRoomChatId());
+            return ps.executeUpdate();
+        }
     }
 }

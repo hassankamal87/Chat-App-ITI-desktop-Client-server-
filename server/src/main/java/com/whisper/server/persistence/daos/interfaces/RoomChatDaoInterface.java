@@ -20,4 +20,6 @@ public interface RoomChatDaoInterface {
     int getRoomChatForUsers(int user1Id, int user2Id) throws SQLException;
 
     List<User> getGroupMembers(int roomChatId) throws SQLException;
+
+    int updateRoomChat(RoomChat roomChat) throws SQLException;
 }
