@@ -16,10 +16,7 @@ import org.example.utils.Converters;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -248,7 +245,23 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     public int createRoomChat(int user1Id, int user2Id) throws RemoteException {
         RoomChatDaoInterface roomChatDao = RoomChatDao.getInstance(MyDatabase.getInstance());
         try {
-            int newRoomChatID = roomChatDao.createRoomChat(new RoomChat(-1, Date.valueOf(LocalDate.now()), true, "", null, user1Id, "", Type.individual));
+
+            System.out.println("malk");
+            byte[] profilePhoto = null;
+
+                InputStream defaultImageStream = getClass().getResourceAsStream("/com/whisper/server/images/profile.png");
+                try {
+                    System.out.println("hereRoom");
+                    if (defaultImageStream != null) {
+
+                        profilePhoto = defaultImageStream.readAllBytes();
+                        defaultImageStream.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            int newRoomChatID = roomChatDao.createRoomChat(new RoomChat(-1, Date.valueOf(LocalDate.now()), true, "", profilePhoto, user1Id, "", Type.individual));
             roomChatDao.addRoomMember(new RoomMember(newRoomChatID, user1Id));
             roomChatDao.addRoomMember(new RoomMember(newRoomChatID, user2Id));
             return newRoomChatID;
@@ -270,7 +283,24 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
             }
             groupChatName.delete(groupChatName.length() - 2, groupChatName.length());
 
-            int newRoomChatID = roomChatDao.createRoomChat(new RoomChat(-1, Date.valueOf(LocalDate.now()), true, groupChatName.toString(), null, user1Id, "", Type.group));
+            System.out.println("here");
+            byte[] profilePhoto = null;
+
+                InputStream defaultImageStream = getClass().getResourceAsStream("/com/whisper/server/images/profile.png");
+            System.out.println("here");
+                try {
+                    if (defaultImageStream != null) {
+                        System.out.println("not null");
+                        profilePhoto = defaultImageStream.readAllBytes();
+                        defaultImageStream.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            int newRoomChatID = roomChatDao.createRoomChat(new RoomChat(-1, Date.valueOf(LocalDate.now()), true, groupChatName.toString(), profilePhoto, user1Id, "", Type.group));
             roomChatDao.addRoomMember(new RoomMember(newRoomChatID, user1Id));
             for (User user : users) {
                 roomChatDao.addRoomMember(new RoomMember(newRoomChatID, user.getUserId()));
