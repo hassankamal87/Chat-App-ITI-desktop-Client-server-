@@ -4,6 +4,7 @@ import com.whisper.client.HelloApplication;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
+import com.whisper.client.presentation.services.SceneManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -12,6 +13,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -73,6 +76,8 @@ public class RoomChatController implements ReceiveMessageInterface {
     private List<User> friendsOnChat;
     @FXML
     private Button attachBtn;
+    @FXML
+    private Button editBtn;
 
 
     public void setData(RoomChat roomChat, List<User> friendsOnChat) {
@@ -85,6 +90,10 @@ public class RoomChatController implements ReceiveMessageInterface {
         } else {
             nameText.setText(roomChat.getGroupName());
             modeText.setText("Group");
+            editBtn.setVisible(true);
+            if(roomChat.getAdminId() == MyApp.getInstance().getCurrentUser().getUserId()){
+                editBtn.setDisable(false);
+            }
         }
         makeImageRounded(personalImage);
         try {
@@ -150,6 +159,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
     @Override
     public void receiveMessageFromList(Message message) {
+        friendsOnChat = chattingService.getUsersInCommonRoomChat(roomChatID);
         try {
             Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/messageItemViewReciever.fxml")));
 
@@ -216,6 +226,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
     @Override
     public void receiveFileFromList(Message message, File file) {
+        friendsOnChat = chattingService.getUsersInCommonRoomChat(roomChatID);
         try {
             Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemViewReciever2.fxml")));
 
@@ -337,5 +348,28 @@ public class RoomChatController implements ReceiveMessageInterface {
     private void makeWebViewTransparent(WebEngine engine) {
         final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
         webPage.setBackgroundColor(0);
+    }
+
+    @FXML
+    public void onEditBtnClickLed(Event event) {
+       /* try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/profileGroupView.fxml"));
+            Parent root = fxmlLoader.load();
+
+            profileGroupController controller = fxmlLoader.getController();
+            controller.setData(roomChatID);
+
+            Scene scene = new Scene(root);
+
+            Stage newStage= new Stage();
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+            newStage.setTitle("Edit Group");
+            //   Image icon = new Image(getClass().getResourceAsStream("images/wlogo.png")); // Adjust the path accordingly
+            //   newStage.getIcons().add(icon);
+            newStage.show();
+        } catch (IOException e) {
+            System.out.println("exception in main Controller class line 93");
+        }*/
     }
 }
