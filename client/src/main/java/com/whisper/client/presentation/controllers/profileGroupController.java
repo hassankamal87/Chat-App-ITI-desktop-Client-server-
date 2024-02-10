@@ -114,9 +114,9 @@ public class profileGroupController implements Initializable {
         myUser = MyApp.getInstance().getCurrentUser();
         otherContacts = contactService.getContacts(myUser.getUserId());
 //        otherContacts = contactService.getContacts(myUser.getUserId());
-        groupMembers = chattingService.getGroupMembers(5);
+        groupMembers = chattingService.getGroupMembers(25);
         System.out.println(groupMembers.size());
-        roomChat = chattingService.getRoomChatByID(5);
+        roomChat = chattingService.getRoomChatByID(25);
 
         for (User user: groupMembers){
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/groupMemberView.fxml"));
