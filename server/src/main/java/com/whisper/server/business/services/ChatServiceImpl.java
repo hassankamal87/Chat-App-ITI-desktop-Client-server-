@@ -12,11 +12,13 @@ import com.whisper.server.utils.Constants;
 import org.example.clientinterfaces.ClientInterface;
 import org.example.entities.*;
 import org.example.serverinterfaces.ChatServiceInt;
+import org.example.utils.Converters;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,7 +65,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
     @Override
     public void sendFileMessage(int senderId, int roomChatId, File file) throws RemoteException {
         MessageDaoInterface dao = MessageDao.getInstance(MyDatabase.getInstance());
-        String filePath = saveFileInSeparateDirector(file);
+        String filePath = saveFileInSeparateDirector(file, file.getName());
         Message newMessage = new Message(-1, roomChatId, Date.valueOf(LocalDate.now()), senderId, file.getName(), filePath);
         try {
             dao.createMessage(newMessage);
@@ -74,14 +76,28 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
         broadCastMessageToCustomChat(newMessage);
     }
 
-    private String saveFileInSeparateDirector(File file) {
+    @Override
+    public void sendFileMessage(int senderId, int roomChatId, byte[] fileBytes, String fileName) throws RemoteException {
+        MessageDaoInterface dao = MessageDao.getInstance(MyDatabase.getInstance());
+        try {
+            File file = Converters.convertBytesToFile(fileBytes,fileName);
+            String filePath = saveFileInSeparateDirector(file, fileName);
+            Message newMessage = new Message(-1, roomChatId, Date.valueOf(LocalDate.now()), senderId, fileName, filePath);
+            dao.createMessage(newMessage);
+            broadCastMessageToCustomChat(newMessage);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String saveFileInSeparateDirector(File file, String fileName) {
         try {
             String absolutePath = Constants.FILES_PATH;
             Path targetDirectory = Paths.get(absolutePath);
             Files.createDirectories(targetDirectory);
-            Path destinationPath = targetDirectory.resolve(file.getName());
+            Path destinationPath = targetDirectory.resolve(fileName);
             Files.copy(file.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("file saved to directory: " + destinationPath);
             return destinationPath.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -101,17 +117,19 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                     try {
                         if (message.getAttachment() == null) {
                             client.notifyUserWithMessage(message);
-                        }else {
-                            File file = readFileFromDirectory(message.getBody());
-                            client.notifyUserWithFile(message,file);
+                        } else {
+                            File file = readFileFromDirectory(message);
+                            client.notifyUserWithFile(message, Converters.convertFileToBytes(file));
                         }
                     } catch (RemoteException e) {
                         try {
                             SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(id);
-                             unRegisterUser(id,client);
+                            unRegisterUser(id, client);
                         } catch (RemoteException ex) {
-                            System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
+                            System.out.println("exception in Client Service Impl line 109" + e.getMessage());
                         }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             });
@@ -124,20 +142,20 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
 
     //check if room chat is individual && if another user is offline and send to him message from Bot
     private void startMessageBot(List<User> users, Message message) {
-        if(users.size() == 2){
+        if (users.size() == 2) {
             Optional<User> contact = users.stream().filter(user -> user.getUserId() != message.getFromUserId()).findFirst();
-            if(contact.get().getStatus() == Status.offline){
+            if (contact.get().getStatus() == Status.offline) {
 
                 ClientInterface client = clients.get(message.getFromUserId());
                 String botMessage = getMessageFromBot(message.getBody());
                 try {
-                    client.notifyUserWithMessage(new Message(-3,message.getToChatId(),new java.util.Date(),contact.get().getUserId(),"Bot : "+botMessage,null));
+                    client.notifyUserWithMessage(new Message(-3, message.getToChatId(), new java.util.Date(), contact.get().getUserId(), "Bot : " + botMessage, null));
                 } catch (RemoteException e) {
                     try {
                         SendContactsInvitationServiceImpl.getInstance().ServerUnRegisterWithId(message.getFromUserId());
-                        unRegisterUser(message.getFromUserId(),client);
+                        unRegisterUser(message.getFromUserId(), client);
                     } catch (RemoteException ex) {
-                        System.out.println("exception in Client Service Impl line 109"+ e.getMessage());
+                        System.out.println("exception in Client Service Impl line 109" + e.getMessage());
                     }
                 }
             }
@@ -165,6 +183,22 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
                 return filePath.toFile();
             } else {
                 throw new FileNotFoundException("File not found: " + fileName);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private File readFileFromDirectory(Message message) {
+        try {
+            String absolutePath = message.getAttachment();
+            Path filePath = Paths.get(absolutePath);
+
+            // Check if the file exists before returning
+            if (Files.exists(filePath)) {
+                return filePath.toFile();
+            } else {
+                throw new FileNotFoundException("File not found: " + message.getBody());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -268,40 +302,43 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
         }
     }
 
-    @Override
-    public List<File> getAllFilesForRoomChat(int roomChatId) throws RemoteException {
-        List<File> files = new ArrayList<>();
-        MessageDaoInterface messageDao = MessageDao.getInstance(MyDatabase.getInstance());
-        try {
-            List<Message> messages =  messageDao.getAllByChatId(roomChatId);
-            for (Message message: messages){
-                if (message.getAttachment() != null){
-                    File file = readFileFromDirectory(message.getBody());
-                    files.add(file);
-                }
-            }
-            return files;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @Override
+    /*@Override
     public HashMap<Message, File> getMessagesAndFilesForRoomChat(int roomChatId) throws RemoteException {
-        HashMap<Message,File> mesFiles = new HashMap<>();
+        HashMap<Message, File> mesFiles = new HashMap<>();
         MessageDaoInterface messageDao = MessageDao.getInstance(MyDatabase.getInstance());
         try {
-            List<Message> messages =  messageDao.getAllByChatId(roomChatId);
-            for (Message message: messages){
-                if (message.getAttachment() == null){
-                    mesFiles.put(message,null);
-                }else{
-                    File file = readFileFromDirectory(message.getBody());
-                    mesFiles.put(message,file);
+            List<Message> messages = messageDao.getAllByChatId(roomChatId);
+            for (Message message : messages) {
+                if (message.getAttachment() == null) {
+                    mesFiles.put(message, null);
+                } else {
+                    File file = readFileFromDirectory(message);
+                    mesFiles.put(message, file);
                 }
             }
             return mesFiles;
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
+    @Override
+    public HashMap<Message, byte[]> getMessagesAndFilesForRoomChat(int roomChatId) throws RemoteException {
+        HashMap<Message, byte[]> mesFiles = new HashMap<>();
+        MessageDaoInterface messageDao = MessageDao.getInstance(MyDatabase.getInstance());
+        try {
+            List<Message> messages = messageDao.getAllByChatId(roomChatId);
+            for (Message message : messages) {
+                if (message.getAttachment() == null) {
+                    mesFiles.put(message, null);
+                } else {
+                    File file = readFileFromDirectory(message);
+                    mesFiles.put(message, Converters.convertFileToBytes(file));
+                }
+            }
+            return mesFiles;
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }

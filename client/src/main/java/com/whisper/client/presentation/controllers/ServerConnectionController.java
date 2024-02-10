@@ -10,8 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.serverinterfaces.AuthenticationServiceInt;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -33,12 +35,13 @@ public class ServerConnectionController
         if(!ip.isEmpty()){
             try {
                 Registry reg = LocateRegistry.getRegistry(ip,8000);
+                AuthenticationServiceInt authService = (AuthenticationServiceInt) reg.lookup("authService");
                 Stage primaryStage = (Stage) startBtn.getScene().getWindow();
                 IPConfig.serverIP = ip;
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/signInView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
                 primaryStage.setScene(scene);
-            } catch (IOException e) {
+            } catch (IOException | NotBoundException e) {
                 DialogueManager.getInstance().showWarningDialog("ServerConnection","sorry, this IP does not have a server");
             }
         }
