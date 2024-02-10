@@ -73,12 +73,12 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/enterIPView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Whisper!");
-        Image icon = new Image(getClass().getResourceAsStream("images/logo.png")); // Adjust the path accordingly
+        Image icon = new Image(getClass().getResourceAsStream("images/wlogo.png")); // Adjust the path accordingly
         stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
-        //stage.setResizable(false);
+        stage.setResizable(false);
 
         stage.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

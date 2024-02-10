@@ -10,4 +10,6 @@ public interface ClientInterface extends Remote {
     void notifyUserWithMessage(Message message) throws RemoteException;
 
     void notifyUserWithFile(Message message, File file) throws RemoteException;
+
+    void notifyUserWithFile(Message message, byte[] fileBytes) throws RemoteException;
 }

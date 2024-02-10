@@ -10,8 +10,13 @@ import org.example.entities.Message;
 import org.example.entities.RoomChat;
 import org.example.entities.User;
 import org.example.serverinterfaces.ChatServiceInt;
+import org.example.utils.Converters;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -20,6 +25,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ChattingService {
@@ -86,9 +92,10 @@ public class ChattingService {
 
     public void sendFile(int senderId, int roomChatId, File file){
         try {
-            chatService.sendFileMessage(senderId,roomChatId,file);
-        } catch (RemoteException e) {
-
+            byte[] fileBytes = Converters.convertFileToBytes(file);
+            System.out.println("file Name ===="+ file.getName());
+            chatService.sendFileMessage(senderId,roomChatId,fileBytes, file.getName());
+        } catch (IOException e) {
             System.out.println("Exception is  : "+e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
             alert.showAndWait();
@@ -208,10 +215,11 @@ public class ChattingService {
         }
     }
 
-    public List<File> getAllFilesForRoomChat(int roomChatId){
+    public HashMap<Message,File> getMessagesWithFilesForRoomChat(int roomChatId){
         try {
-            return chatService.getAllFilesForRoomChat(roomChatId);
-        } catch (RemoteException e) {
+            HashMap<Message, byte[]> filesInBytes = chatService.getMessagesAndFilesForRoomChat(roomChatId);
+            return convertHashMapToFiles(filesInBytes);
+        } catch (IOException e) {
             System.out.println("Exception is  : "+e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
             alert.showAndWait();
@@ -221,17 +229,18 @@ public class ChattingService {
         }
     }
 
-    public HashMap<Message,File> getMessagesWithFilesForRoomChat(int roomChatId){
-        try {
-            return chatService.getMessagesAndFilesForRoomChat(roomChatId);
-        } catch (RemoteException e) {
-            System.out.println("Exception is  : "+e.getMessage());
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Sorry there is a problem with connection", ButtonType.OK);
-            alert.showAndWait();
-            Platform.exit();
-            System.exit(0);
-            return null;
+    private HashMap<Message, File> convertHashMapToFiles(HashMap<Message, byte[]> originalHashMap) throws IOException {
+        HashMap<Message, File> resultHashMap = new HashMap<>();
+
+        for (Map.Entry<Message, byte[]> entry : originalHashMap.entrySet()) {
+
+            Message message = entry.getKey();
+            byte[] fileBytes = entry.getValue();
+            File file = fileBytes!= null?Converters.convertBytesToFile(fileBytes, message.getBody()):null;
+            resultHashMap.put(message, file);
         }
+
+        return resultHashMap;
     }
 
     public RoomChat getRoomChatByID(int roomChatId) {

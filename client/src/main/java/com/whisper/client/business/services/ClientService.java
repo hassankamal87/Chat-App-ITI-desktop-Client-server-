@@ -11,8 +11,11 @@ import org.example.entities.Message;
 import org.example.entities.NotifactionType;
 import org.example.entities.Notification;
 import org.example.entities.User;
+import org.example.utils.Converters;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -72,7 +75,7 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
         Platform.runLater(()->{
             ReceiveMessageInterface toChat = chats.get(message.getToChatId());
             if(toChat!= null)
-                toChat.receiveMessageFromList(message);
+                toChat.receiveFileFromList(message,file);
             else{
                 sendNotification(message, user);
                 handlingChatInHome.addRoomChat(message.getToChatId());
@@ -80,6 +83,25 @@ public class ClientService extends UnicastRemoteObject implements ClientInterfac
         });
     }
 
+    @Override
+    public void notifyUserWithFile(Message message, byte[] fileBytes) throws RemoteException {
+        User user = ChattingService.getInstance().getUserById(message.getFromUserId());
+        System.out.println(message.getBody());
+        Platform.runLater(()->{
+            ReceiveMessageInterface toChat = chats.get(message.getToChatId());
+            if(toChat!= null) {
+                try {
+                    toChat.receiveFileFromList(message, Converters.convertBytesToFile(fileBytes,message.getBody()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else{
+                sendNotification(message, user);
+                handlingChatInHome.addRoomChat(message.getToChatId());
+            }
+        });
+    }
     private void sendNotification(Message message, User user) {
         Notification messageNotification = new Notification(-1, MyApp.getInstance().getCurrentUser().getUserId(), user.getUserName(), NotifactionType.msg, message.getBody());
         NotificationService notifyService = new NotificationService();
