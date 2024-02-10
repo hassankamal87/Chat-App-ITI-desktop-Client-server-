@@ -114,11 +114,12 @@ public class profileGroupController implements Initializable {
         myUser = MyApp.getInstance().getCurrentUser();
         otherContacts = contactService.getContacts(myUser.getUserId());
 //        otherContacts = contactService.getContacts(myUser.getUserId());
-        groupMembers = chattingService.getGroupMembers(25);
+        groupMembers = chattingService.getGroupMembers(20);
         System.out.println(groupMembers.size());
-        roomChat = chattingService.getRoomChatByID(25);
-
+        roomChat = chattingService.getRoomChatByID(20);
+        groupMembers.removeIf(user -> user.getUserId() == myUser.getUserId());
         for (User user: groupMembers){
+
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/groupMemberView.fxml"));
             try{
                 hBox = fxmlLoader.load();
@@ -133,10 +134,11 @@ public class profileGroupController implements Initializable {
 
         for (int i=0; i<groupMembers.size(); i++){
             for (int j=0; j<otherContacts.size(); j++){
+                System.out.println(groupMembers.size()+" "+otherContacts.size());
                 if (groupMembers.get(i).getUserId() == otherContacts.get(j).getUserId())
                     otherContacts.remove(j);
-                if (groupMembers.get(i).getUserId() == myUser.getUserId())
-                    groupMembers.remove(i);
+
+
             }
         }
 
@@ -147,6 +149,7 @@ public class profileGroupController implements Initializable {
                 groupMemberController = fxmlLoader.getController();
                 groupMemberController.setData(user);
                 othersBox.add(hBox);
+                System.out.println(user.getUserId()+" "+user.getUserName());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -179,31 +182,39 @@ public class profileGroupController implements Initializable {
 
     @javafx.fxml.FXML
     public void onClickRemove(ActionEvent actionEvent) {
-//        System.out.println(groupMembers.size());
+        System.out.println(groupMembers.size());
         int userIndex = groupMembersList.getSelectionModel().getSelectedIndex();
         if (groupMembersList.getSelectionModel().getSelectedIndex() == -1){
             dialogueManager.showInformationDialog("Button Disabled", "No member selected!");
             return;
         }
-        chattingService.removeGroupMember(5, groupMembers.get(userIndex).getUserId());
-        System.out.println(groupMembers.size());
+        User removeUser= groupMembers.get(userIndex);
+        chattingService.removeGroupMember(20, removeUser.getUserId());
+        System.out.println(removeUser.getUserId());
 //        contactList.setItems(othersBox);
         HBox removedBox = boxes.remove(userIndex);
-        otherContacts.add(groupMembers.get(userIndex));
+        otherContacts.add(removeUser);
         groupMembers.remove(userIndex);
         othersBox.add(removedBox);
+        boxes.remove(removedBox);
     }
 
     @javafx.fxml.FXML
     public void onClickAdd(ActionEvent actionEvent) {
         int userIndex = contactList.getSelectionModel().getSelectedIndex();
         if (contactList.getSelectionModel().getSelectedIndex() == -1){
+            System.out.println("here");
             dialogueManager.showInformationDialog("Button Disabled", "No contact selected!");
             return;
         }
         HBox box = (HBox) contactList.getSelectionModel().getSelectedItem();
-        chattingService.addGroupMember(5, otherContacts.get(userIndex).getUserId());
-        groupMembers.add(otherContacts.get(userIndex));
+
+        User addUser = otherContacts.get(userIndex);
+
+        System.out.println(addUser.getUserId());
+        chattingService.addGroupMember(20, addUser.getUserId());
+        groupMembers.add(addUser);
+        otherContacts.remove(userIndex);
         boxes.add(box);
         othersBox.remove(box);
     }
