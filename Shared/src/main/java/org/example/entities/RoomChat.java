@@ -10,14 +10,14 @@ public class RoomChat implements Serializable {
     private Date createdDate;
     private boolean timeStamp;
     private String groupName;
-    private Blob photoBlob;
+    private byte[] photoBlob;
     private int adminId;
     private String description;
     private List<RoomMember> roomMembers;
     private Type type;
 
 
-    public RoomChat(int roomChatId, Date createdDate, boolean timeStamp, String groupName, Blob photo, int adminId, String description, Type type) {
+    public RoomChat(int roomChatId, Date createdDate, boolean timeStamp, String groupName, byte[] photo, int adminId, String description, Type type) {
         this.roomChatId = roomChatId;
         this.createdDate = createdDate;
         this.timeStamp = timeStamp;
@@ -72,11 +72,11 @@ public class RoomChat implements Serializable {
     }
 
 
-    public Blob getPhotoBlob() {
+    public byte[] getPhotoBlob() {
         return photoBlob;
     }
 
-    public void setPhotoBlob(Blob photoBlob) {
+    public void setPhotoBlob(byte[] photoBlob) {
         this.photoBlob = photoBlob;
     }
 

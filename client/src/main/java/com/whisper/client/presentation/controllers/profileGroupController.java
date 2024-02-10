@@ -100,12 +100,9 @@ public class profileGroupController implements Initializable {
         roomChat.setGroupName(groupName.getText());
         roomChat.setDescription(groupDescription.getText());
         byte[] imageByteArray = imageViewToByteArray(groupImage);
-        try {
-            Blob imageBlob = new SerialBlob(imageByteArray);
-            roomChat.setPhotoBlob(imageBlob); // Set the photo blob with the Blob object
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
-        }
+
+        roomChat.setPhotoBlob(imageByteArray); // Set the photo blob with the Blob object
+
         groupService.editGroup(roomChat);
     }
 
@@ -113,7 +110,7 @@ public class profileGroupController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         myUser = MyApp.getInstance().getCurrentUser();
         otherContacts = contactService.getContacts(myUser.getUserId());
-//        otherContacts = contactService.getContacts(myUser.getUserId());
+
         groupMembers = chattingService.getGroupMembers(20);
         System.out.println(groupMembers.size());
         roomChat = chattingService.getRoomChatByID(20);
@@ -165,15 +162,12 @@ public class profileGroupController implements Initializable {
         groupName.setText(roomChat.getGroupName());
         groupDescription.appendText(roomChat.getDescription());
 //        groupImage.setImage(new Image(new ByteArrayInputStream(roomChat.getPhotoBlob().toString().getBytes())));
-        Blob photoBlob = roomChat.getPhotoBlob();
+        byte[] photoBlob = roomChat.getPhotoBlob();
         if (photoBlob != null) {
-            try {
-                InputStream inputStream = photoBlob.getBinaryStream();
-                Image image = new Image(inputStream);
+
+                Image image = new Image(new ByteArrayInputStream(photoBlob));
                 groupImage.setImage(image);
-            } catch (SQLException e) {
-                e.printStackTrace(); // Handle the exception appropriately
-            }
+
 
         }else {
             groupImage.setImage(defaultImage);
