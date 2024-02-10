@@ -1,5 +1,6 @@
 package com.whisper.client.business.services;
 
+import com.whisper.client.IPConfig;
 import com.whisper.client.MyApp;
 import com.whisper.client.presentation.controllers.HandlingChatInterface;
 import javafx.application.Platform;
@@ -39,7 +40,7 @@ public class ChattingService {
 
     private ChattingService() {
         try {
-            Registry reg = LocateRegistry.getRegistry(8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP,8000);
             chatService = (ChatServiceInt) reg.lookup("ChatService");
             ClientInterface client = ClientService.getInstance();
             chatService.registerUser(MyApp.getInstance().getCurrentUser().getUserId(), client);

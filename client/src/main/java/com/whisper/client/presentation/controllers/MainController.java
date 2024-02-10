@@ -1,6 +1,7 @@
 package com.whisper.client.presentation.controllers;
 
 import com.whisper.client.HelloApplication;
+import com.whisper.client.IPConfig;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
@@ -127,7 +128,7 @@ public class MainController {
 
     @FXML
     public void onSignOutClicked(Event event) throws RemoteException, NotBoundException {
-        Registry reg = LocateRegistry.getRegistry(8000);
+        Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP,8000);
         SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
         ClientServiceInt clientService = ClientServiceImpl.getInstance();
         serverRef.ServerUnRegister(clientService);
