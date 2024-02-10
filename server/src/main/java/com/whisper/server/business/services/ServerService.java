@@ -1,5 +1,6 @@
 package com.whisper.server.business.services;
 
+import com.whisper.server.business.services.interfaces.EditGroupServiceImpl;
 import com.whisper.server.business.services.interfaces.ServerServiceInt;
 import com.whisper.server.persistence.daos.UserDao;
 import com.whisper.server.persistence.daos.interfaces.UserDaoInterface;
@@ -49,6 +50,7 @@ public class ServerService implements ServerServiceInt {
             ChatServiceInt chatService = ChatServiceImpl.getInstance();
             NotificationServiceInt notificationService = NotificationServiceImpl.getInstance();
             EditProfileServiceInt editProfileService = EditProfileServiceImpl.getInstance();
+            EditGroupServiceInt editGroupServiceInt = EditGroupServiceImpl.getInstance();
             reg.rebind("EditProfileService", editProfileService);
             reg.rebind("AddContactsService", addContactsService);
             reg.rebind("SendContactsInvitationService", sendContactsInvitationService);
@@ -58,6 +60,7 @@ public class ServerService implements ServerServiceInt {
             reg.rebind("ContactsService",contactService);
             reg.rebind("NotificationService",notificationService);
             reg.rebind("ChatService",chatService);
+            reg.rebind("GroupService",editGroupServiceInt);
 
         } catch (RemoteException e) {
             System.out.println(e.getMessage() + " Server Service line 36");

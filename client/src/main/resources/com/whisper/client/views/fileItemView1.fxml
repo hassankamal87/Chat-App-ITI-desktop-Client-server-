@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane fx:id="messageContainer" style="-fx-background-color: transparent;">
+         <children>
+            <AnchorPane layoutX="69.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="60.0" prefWidth="241.0" styleClass="message-send" stylesheets="@../lineargrad.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label fx:id="fileName" alignment="CENTER" layoutX="159.0" layoutY="17.0" maxWidth="200.0" text=" File NameFile Name" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="16.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+            <Label fx:id="timeLabel" layoutX="153.0" layoutY="45.0" maxWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="50.0" text="06:23 PM" textFill="#FFFFFF">
+               <font>
+                  <Font name="Bell MT Bold" size="9.0" />
+               </font>
+            </Label>
+            <Button fx:id="downloadBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="152.0" layoutY="12.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="40.0" styleClass="ripple" stylesheets="@../lineargrad.css">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/download.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </center>
+   <right>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" stylesheets="@../lineargrad.css" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="ImageView" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" styleClass="personal-Image">
+               <image>
+                  <Image url="@../images/person.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nameLabel" text="You">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="8.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>

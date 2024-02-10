@@ -183,9 +183,9 @@ public class RoomChatController implements ReceiveMessageInterface {
         }
     }
 
-    private void appendMessageFile(File selectedFile, Date date) {
+    private void appendMessageFile(File selectedFile, Date date,String fileN) {
         try {
-            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemView.fxml")));
+            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemView1.fxml")));
 
             ImageView myImage = (ImageView) node.lookup("#ImageView");
             Button downloadBtn = (Button) node.lookup("#downloadBtn");
@@ -194,7 +194,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
             //timeLabel.setText(formatUtilDate(date));
             timeLabel.setText("06:23 AM");
-            fileName.setText(selectedFile.getName());
+            fileName.setText(fileN);
             myImage.setImage(new Image(new ByteArrayInputStream(MyApp.getInstance().getCurrentUser().getProfilePhoto())));
             makeImageRounded(myImage);
 
@@ -204,6 +204,11 @@ public class RoomChatController implements ReceiveMessageInterface {
             messageList.getChildren().add(node);
 
             messagesScrollPane.setVvalue(1D);
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.seconds(1), // Set the delay duration here (e.g., 0.5 seconds)
+                    event -> messagesScrollPane.setVvalue(1D) // Code to execute after the delay
+            ));
+            timeline.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -212,7 +217,7 @@ public class RoomChatController implements ReceiveMessageInterface {
     @Override
     public void receiveFileFromList(Message message, File file) {
         try {
-            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemViewReceiver.fxml")));
+            Node node = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("views/fileItemViewReciever2.fxml")));
 
             User friendUser = friendsOnChat.stream().filter(friend -> friend.getUserId() == message.getFromUserId()).findFirst().get();
 
@@ -225,7 +230,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
             timeLabel.setText(formatUtilDate(message.getSentDate()));
             nameLabel.setText(friendUser.getUserName());
-            fileName.setText(file.getName());
+            fileName.setText(message.getBody());
             myImage.setImage(new Image(new ByteArrayInputStream(friendUser.getProfilePhoto())));
             makeImageRounded(myImage);
 
@@ -235,6 +240,11 @@ public class RoomChatController implements ReceiveMessageInterface {
             messageList.getChildren().add(node);
 
             messagesScrollPane.setVvalue(1D);
+            Timeline timeline = new Timeline(new KeyFrame(
+                    Duration.seconds(1), // Set the delay duration here (e.g., 0.5 seconds)
+                    event -> messagesScrollPane.setVvalue(1D) // Code to execute after the delay
+            ));
+            timeline.play();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -255,7 +265,7 @@ public class RoomChatController implements ReceiveMessageInterface {
                 if (file == null)
                     appendMessageInList(message.getBody());
                 else
-                    appendMessageFile(file, message.getSentDate());
+                    appendMessageFile(file, message.getSentDate(), message.getBody());
             } else {
                 if (file == null)
                     receiveMessageFromList(message);
@@ -285,9 +295,8 @@ public class RoomChatController implements ReceiveMessageInterface {
         // Check if a file was selected
         if (selectedFile != null) {
             // Print the absolute path of the selected file
-            System.out.println("Selected File: " + selectedFile.getAbsolutePath());
             //append file message in list view and send it to server
-            appendMessageFile(selectedFile, Calendar.getInstance().getTime());
+            appendMessageFile(selectedFile, Calendar.getInstance().getTime(),selectedFile.getName());
             sendMessageFile(selectedFile);
 
         } else {
@@ -326,7 +335,7 @@ public class RoomChatController implements ReceiveMessageInterface {
     }
 
     private void makeWebViewTransparent(WebEngine engine) {
-        //final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
-        //webPage.setBackgroundColor(0);
+        final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
+        webPage.setBackgroundColor(0);
     }
 }

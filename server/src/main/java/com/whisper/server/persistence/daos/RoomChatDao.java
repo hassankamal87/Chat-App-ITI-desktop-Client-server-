@@ -10,6 +10,7 @@ import org.example.entities.Mode;
 import org.example.entities.Status;
 import org.example.entities.Type;
 
+import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public class RoomChatDao implements RoomChatDaoInterface {
             ps.setString(1, String.valueOf(date));
             ps.setString(2, roomChat.getTimeStamp() ? "true" : "false");
             ps.setString(3, roomChat.getGroupName());
-            ps.setBlob(4, roomChat.getPhotoBlob());
+            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(roomChat.getPhotoBlob());
+            ps.setBlob(4, profilePhoto);
             ps.setObject(5, roomChat.getAdminId());
             ps.setString(6, roomChat.getDescription());
             ps.setString(7, roomChat.getType().name());
@@ -76,12 +78,18 @@ public class RoomChatDao implements RoomChatDaoInterface {
             if (rs.next()){
                 String roomChatType = rs.getString("type");
                 Type type = Type.valueOf(roomChatType);
+                Blob profilePhotoBlob = rs.getBlob("photo");
+                byte[] profilePhotoBytes =null;
+                if (profilePhotoBlob != null) {
+                    int blobLength = (int) profilePhotoBlob.length();
+                    profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+                }
                 roomChat = new RoomChat(
                         rs.getInt("room_chat_id"),
                         rs.getDate("created_date"),
                         rs.getString("time_stamp") == "true",
                         rs.getString("group_name"),
-                        rs.getBlob("photo"),
+                        profilePhotoBytes,
                         rs.getInt("admin_id"),
                         rs.getString("description"),
                         Objects.equals(rs.getString("type"), "individual") ? Type.individual : Type.group
@@ -109,12 +117,20 @@ public class RoomChatDao implements RoomChatDaoInterface {
             Date createdDate = rs.getDate(2);
             boolean timeStamp = rs.getString(3) == "true";
             String groupName = rs.getString(4);
-            Blob photoBlob = rs.getBlob(5);
+
+            Blob profilePhotoBlob = rs.getBlob(5);
+            byte[] profilePhotoBytes =null;
+            if (profilePhotoBlob != null) {
+                int blobLength = (int) profilePhotoBlob.length();
+                profilePhotoBytes = profilePhotoBlob.getBytes(1, blobLength);
+            }
+
+
             int adminId = rs.getInt(6);
             String desc = rs.getString(7);
             Type type = rs.getString(8) == "individual" ? Type.individual : Type.group;
 
-            RoomChat room = new RoomChat(roomChatId,createdDate,timeStamp,groupName,photoBlob,adminId,desc,type);
+            RoomChat room = new RoomChat(roomChatId,createdDate,timeStamp,groupName,profilePhotoBytes,adminId,desc,type);
             roomChats.add(room);
         }
         rs.close();
@@ -268,5 +284,19 @@ public class RoomChatDao implements RoomChatDaoInterface {
         rs.close();
         ps.close();
         return users;
+    }
+
+    @Override
+    public int updateRoomChat(RoomChat roomChat) throws SQLException{
+        String query = "Update room_chat set group_name = ?, photo=?, description= ? " +
+                "where room_chat_id = ?";
+        try(PreparedStatement ps = myDatabase.getConnection().prepareStatement(query)){
+            ps.setString(1, roomChat.getGroupName());
+            ByteArrayInputStream profilePhoto = new ByteArrayInputStream(roomChat.getPhotoBlob());
+            ps.setBlob(2, profilePhoto);
+            ps.setString(3, roomChat.getDescription());
+            ps.setInt(4, roomChat.getRoomChatId());
+            return ps.executeUpdate();
+        }
     }
 }

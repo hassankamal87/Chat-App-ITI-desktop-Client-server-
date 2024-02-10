@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,7 +33,9 @@ public class HelloApplication extends Application {
         });
         SceneManager.getInstance().initStage(stage);
         SceneManager.getInstance().loadView("homeServerView");
-        stage.setTitle("Hello!");
+        stage.setTitle("Whisper Server");
+        Image icon = new Image(getClass().getResourceAsStream("images/server.png")); // Adjust the path accordingly
+        stage.getIcons().add(icon);
         stage.setResizable(false);
 
         stage.show();
