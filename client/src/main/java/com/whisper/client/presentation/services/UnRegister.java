@@ -1,5 +1,6 @@
 package com.whisper.client.presentation.services;
 
+import com.whisper.client.IPConfig;
 import com.whisper.client.MyApp;
 import com.whisper.client.business.services.ChattingService;
 import com.whisper.client.business.services.ClientService;
@@ -30,7 +31,7 @@ public class UnRegister {
     public void unregister(){
 
         try {
-            Registry reg = LocateRegistry.getRegistry(8000);
+            Registry reg = LocateRegistry.getRegistry(IPConfig.serverIP,8000);
             SendContactsInvitationServiceInt serverRef = (SendContactsInvitationServiceInt) reg.lookup("SendContactsInvitationService");
 
             if(MyApp.getInstance().getCurrentUser()!=null){
