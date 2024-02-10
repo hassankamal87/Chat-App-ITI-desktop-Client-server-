@@ -325,4 +325,35 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatServiceI
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<User> getGroupMembers(int roomId) throws RemoteException{
+        List<User> members;
+        RoomChatDaoInterface roomDao = RoomChatDao.getInstance(MyDatabase.getInstance());
+        try{
+            members = roomDao.getAllUsers(roomId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return members;
+    }
+
+    @Override
+    public void removeGroupMembers(int roomId, int memberId) throws RemoteException {
+        RoomChatDaoInterface roomDao = RoomChatDao.getInstance(MyDatabase.getInstance());
+        try {
+            roomDao.removeRoomMember(roomId, memberId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void addRoomMember(int roomId, int memberId) throws RemoteException{
+        RoomChatDaoInterface roomDao = RoomChatDao.getInstance(MyDatabase.getInstance());
+        try{
+            roomDao.addRoomMember(new RoomMember(roomId, memberId));
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

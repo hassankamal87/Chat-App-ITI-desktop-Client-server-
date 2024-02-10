@@ -92,7 +92,7 @@ public class UserDao implements UserDaoInterface {
 
 
     // Updating a user using the user object
-    public int updateUser(User user) throws SQLException {
+    public int  updateUser(User user) throws SQLException {
         String query = "UPDATE user SET phone_number = ?, password = ?, email = ?," +
                 " user_name = ?, gender = ?, date_of_birth = ?, country = ?, bio = ?," +
                 " mode = ?, status = ? ,profile_photo = ? WHERE user_id = ?";
