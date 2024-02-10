@@ -68,6 +68,8 @@ public class profileGroupController implements Initializable {
     HBox hBox;
     RoomChat roomChat;
 
+    int roomChatId;
+
     DialogueManager dialogueManager = DialogueManager.getInstance();
     GroupService groupService = new GroupService();
 
@@ -111,9 +113,13 @@ public class profileGroupController implements Initializable {
         myUser = MyApp.getInstance().getCurrentUser();
         otherContacts = contactService.getContacts(myUser.getUserId());
 
-        groupMembers = chattingService.getGroupMembers(20);
+    }
+
+    public void setData(int roomChatId){
+        this.roomChatId = roomChatId;
+        groupMembers = chattingService.getGroupMembers(roomChatId);
         System.out.println(groupMembers.size());
-        roomChat = chattingService.getRoomChatByID(20);
+        roomChat = chattingService.getRoomChatByID(roomChatId);
         groupMembers.removeIf(user -> user.getUserId() == myUser.getUserId());
         for (User user: groupMembers){
 
@@ -183,7 +189,7 @@ public class profileGroupController implements Initializable {
             return;
         }
         User removeUser= groupMembers.get(userIndex);
-        chattingService.removeGroupMember(20, removeUser.getUserId());
+        chattingService.removeGroupMember(roomChatId, removeUser.getUserId());
         System.out.println(removeUser.getUserId());
 //        contactList.setItems(othersBox);
         HBox removedBox = boxes.remove(userIndex);
@@ -206,7 +212,7 @@ public class profileGroupController implements Initializable {
         User addUser = otherContacts.get(userIndex);
 
         System.out.println(addUser.getUserId());
-        chattingService.addGroupMember(20, addUser.getUserId());
+        chattingService.addGroupMember(roomChatId, addUser.getUserId());
         groupMembers.add(addUser);
         otherContacts.remove(userIndex);
         boxes.add(box);
