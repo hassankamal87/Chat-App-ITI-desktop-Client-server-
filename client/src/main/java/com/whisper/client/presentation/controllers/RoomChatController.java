@@ -346,8 +346,8 @@ public class RoomChatController implements ReceiveMessageInterface {
     }
 
     private void makeWebViewTransparent(WebEngine engine) {
-       // final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
-       // webPage.setBackgroundColor(0);
+        final com.sun.webkit.WebPage webPage = com.sun.javafx.webkit.Accessor.getPageFor(engine);
+        webPage.setBackgroundColor(0);
     }
 
     @FXML
