@@ -352,7 +352,7 @@ public class RoomChatController implements ReceiveMessageInterface {
 
     @FXML
     public void onEditBtnClickLed(Event event) {
-       /* try {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("views/profileGroupView.fxml"));
             Parent root = fxmlLoader.load();
 
@@ -365,11 +365,9 @@ public class RoomChatController implements ReceiveMessageInterface {
             newStage.setScene(scene);
             newStage.setResizable(false);
             newStage.setTitle("Edit Group");
-            //   Image icon = new Image(getClass().getResourceAsStream("images/wlogo.png")); // Adjust the path accordingly
-            //   newStage.getIcons().add(icon);
             newStage.show();
         } catch (IOException e) {
             System.out.println("exception in main Controller class line 93");
-        }*/
+        }
     }
 }
